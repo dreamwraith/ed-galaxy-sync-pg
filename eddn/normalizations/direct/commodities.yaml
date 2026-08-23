@@ -1,0 +1,914 @@
+# Canonical normalization mappings for station market commodities
+AI Relics:
+  - AI_Relics
+AZ Cancri Formula 42:
+  - AZ_Cancri_Formula_42
+Advanced Catalysers:
+  - Advanced_Catalysers
+Advanced Medicines:
+  - Advanced_Medicines
+Aepyornis Egg:
+  - Aepyornis_Egg
+  - CetiAepyornisEgg
+Aganippe Rush:
+  - Aganippe_Rush
+Agri-Medicines:
+  - Agri-Medicines
+  - AgriculturalMedicines
+Agronomic Treatment:
+  - Agronomic_Treatment
+Alacarakmo Skin Art:
+  - Alacarakmo_Skin_Art
+Albino Quechua Mammoth Meat:
+  - Albino_Quechua_Mammoth_Meat
+  - AlbinoQuechuaMammoth
+Alexandrite:
+  - Alexandrite
+Algae:
+  - Algae
+Altairian Skin:
+  - Altairian_Skin
+Aluminium:
+  - Aluminium
+Alya Body Soap:
+  - Alya_Body_Soap
+  - AlyaBodilySoap
+Ancient Artefact:
+  - Ancient_Artefact
+  - USSCargoAncientArtefact
+Ancient Key:
+  - Ancient_Key
+Anduliga Fire Works:
+  - Anduliga_Fire_Works
+Animal Meat:
+  - Animal_Meat
+Animal Monitors:
+  - Animal_Monitors
+Anomaly Particles:
+  - Anomaly_Particles
+  - P_ParticulateSample
+Antimatter Containment Unit:
+  - Antimatter_Containment_Unit
+Antique Jewellery:
+  - Antique_Jewellery
+Antiquities:
+  - Antiquities
+Any Na Coffee:
+  - Any_Na_Coffee
+Apa Vietii:
+  - Apa_Vietii
+Aquaponic Systems:
+  - Aquaponic_Systems
+Arouca Conventual Sweets:
+  - Arouca_Conventual_Sweets
+Articulation Motors:
+  - Articulation_Motors
+Assault Plans:
+  - Assault_Plans
+Atmospheric Processors:
+  - Atmospheric_Processors
+  - AtmosphericExtractors
+Auto-Fabricators:
+  - Auto-Fabricators
+Azure Milk:
+  - Azure_Milk
+  - BlueMilk
+Baked Greebles:
+  - Baked_Greebles
+Baltah'sine Vacuum Krill:
+  - Baltah'sine_Vacuum_Krill
+Banki Amphibious Leather:
+  - Banki_Amphibious_Leather
+Basic Medicines:
+  - Basic_Medicines
+Bast Snake Gin:
+  - Bast_Snake_Gin
+Battle Weapons:
+  - Battle_Weapons
+Bauxite:
+  - Bauxite
+Beer:
+  - Beer
+Belalans Ray Leather:
+  - Belalans_Ray_Leather
+Benitoite:
+  - Benitoite
+Bertrandite:
+  - Bertrandite
+Beryllium:
+  - Beryllium
+Bioreducing Lichen:
+  - Bioreducing_Lichen
+Biowaste:
+  - Biowaste
+Bismuth:
+  - Bismuth
+Black Box:
+  - Black_Box
+  - USSCargoBlackBox
+Bone Fragments:
+  - Bone_Fragments
+  - ThargoidBoneFragments
+Bootleg Liquor:
+  - Bootleg_Liquor
+Borasetani Pathogenetics:
+  - Borasetani_Pathogenetics
+Bromellite:
+  - Bromellite
+Buckyball Beer Mats:
+  - Buckyball_Beer_Mats
+Building Fabricators:
+  - Building_Fabricators
+Burnham Bile Distillate:
+  - Burnham_Bile_Distillate
+CD-75 Kitten Brand Coffee:
+  - CD-75_Kitten_Brand_Coffee
+  - CD75CatCoffee
+CMM Composite:
+  - CMM_Composite
+Caustic Tissue Sample:
+  - Caustic_Tissue_Sample
+  - ThargoidGeneratorTissueSample
+Centauri Mega Gin:
+  - Centauri_Mega_Gin
+Ceramic Composites:
+  - Ceramic_Composites
+Ceremonial Heike Tea:
+  - Ceremonial_Heike_Tea
+Ceti Rabbits:
+  - Ceti_Rabbits
+Chameleon Cloth:
+  - Chameleon_Cloth
+Chateau De Aegaeon:
+  - Chateau_De_Aegaeon
+Chemical Waste:
+  - Chemical_Waste
+Cherbones Blood Crystals:
+  - Cherbones_Blood_Crystals
+Chi Eridani Marine Paste:
+  - Chi_Eridani_Marine_Paste
+Classified Experimental Equipment:
+  - Classified_Experimental_Equipment
+Clothing:
+  - Clothing
+Cobalt:
+  - Cobalt
+Coffee:
+  - Coffee
+Coltan:
+  - Coltan
+Combat Stabilisers:
+  - Combat_Stabilisers
+Commercial Samples:
+  - Commercial_Samples
+  - ComercialSamples
+Computer Components:
+  - Computer_Components
+Conductive Fabrics:
+  - Conductive_Fabrics
+Consumer Technology:
+  - Consumer_Technology
+Copper:
+  - Copper
+Coquim Spongiform Victuals:
+  - Coquim_Spongiform_Victuals
+Coral Sap:
+  - Coral_Sap
+Crom Silver Fesh:
+  - Crom_Silver_Fesh
+  - AnimalEffigies
+Crop Harvesters:
+  - Crop_Harvesters
+Curated Commodity:
+  - Curated_Commodity
+Cryolite:
+  - Cryolite
+Crystalline Spheres:
+  - Crystalline_Spheres
+Cyst Specimen:
+  - Cyst_Specimen
+  - ThargoidCystSpecimen
+Damaged Escape Pod:
+  - Damaged_Escape_Pod
+Damna Carapaces:
+  - Damna_Carapaces
+Data Core:
+  - Data_Core
+Delta Phoenicis Palms:
+  - Delta_Phoenicis_Palms
+Deuringas Truffles:
+  - Deuringas_Truffles
+Diplomatic Bag:
+  - Diplomatic_Bag
+Diso Ma Corn:
+  - Diso_Ma_Corn
+Domestic Appliances:
+  - Domestic_Appliances
+Duradrives:
+  - Duradrives
+Earth Relics:
+  - Earth_Relics
+Eden Apples of Aerial:
+  - Eden_Apples_of_Aerial
+  - AerialEdenApple
+Eleu Thermals:
+  - Eleu_Thermals
+Emergency Power Cells:
+  - Emergency_Power_Cells
+Encrypted Correspondence:
+  - Encrypted_Correspondence
+Encrypted Data Storage:
+  - Encrypted_Data_Storage
+  - EncriptedDataStorage
+Energy Grid Assembly:
+  - Energy_Grid_Assembly
+  - PowerGridAssembly
+Eranin Pearl Whisky:
+  - Eranin_Pearl_Whisky
+Eshu Umbrellas:
+  - Eshu_Umbrellas
+Esuseku Caviar:
+  - Esuseku_Caviar
+Ethgreze Tea Buds:
+  - Ethgreze_Tea_Buds
+Evacuation Shelter:
+  - Evacuation_Shelter
+Exhaust Manifold:
+  - Exhaust_Manifold
+Experimental Chemicals:
+  - Experimental_Chemicals
+  - USSCargoExperimentalChemicals
+Explosives:
+  - Explosives
+Festive Gifts:
+  - Festive_Gifts
+  - PersonalGifts
+Fish:
+  - Fish
+Food Cartridges:
+  - Food_Cartridges
+Fossil Remnants:
+  - Fossil_Remnants
+Fruit and Vegetables:
+  - Fruit_and_Vegetables
+Fujin Tea:
+  - Fujin_Tea
+Galactic Travel Guide:
+  - Galactic_Travel_Guide
+Gallite:
+  - Gallite
+Gallium:
+  - Gallium
+Geawen Dance Dust:
+  - Geawen_Dance_Dust
+Gene Bank:
+  - Gene_Bank
+Geological Equipment:
+  - Geological_Equipment
+Geological Samples:
+  - Geological_Samples
+Gerasian Gueuze Beer:
+  - Gerasian_Gueuze_Beer
+Giant Irukama Snails:
+  - Giant_Irukama_Snails
+Giant Verrix:
+  - Giant_Verrix
+Gilya Signature Weapons:
+  - Gilya_Signature_Weapons
+Gold:
+  - Gold
+Goman Yaupon Coffee:
+  - Goman_Yaupon_Coffee
+Goslarite:
+  - Goslarite
+Grain:
+  - Grain
+Grandidierite:
+  - Grandidierite
+Guardian Casket:
+  - Guardian_Casket
+  - AncientCasket
+Guardian Orb:
+  - Guardian_Orb
+  - AncientOrb
+Guardian Relic:
+  - Guardian_Relic
+  - AncientRelic
+Guardian Tablet:
+  - Guardian_Tablet
+  - AncientTablet
+Guardian Totem:
+  - Guardian_Totem
+  - AncientTotem
+Guardian Urn:
+  - Guardian_Urn
+  - AncientUrn
+H.E. Suits:
+  - H.E._Suits
+  - HazardousEnvironmentSuits
+HIP 10175 Bush Meat:
+  - HIP_10175_Bush_Meat
+HIP 118311 Swarm:
+  - HIP_118311_Swarm
+HIP Organophosphates:
+  - HIP_Organophosphates
+HIP Proto-Squid:
+  - HIP_Proto-Squid
+  - HIP41181Squid
+HN Shock Mount:
+  - HN_Shock_Mount
+HR 7221 Wheat:
+  - HR_7221_Wheat
+Haematite:
+  - Haematite
+Hafnium 178:
+  - Hafnium_178
+Haiden Black Brew:
+  - Haiden_Black_Brew
+  - HaidneBlackBrew
+Hardware Diagnostic Sensor:
+  - Hardware_Diagnostic_Sensor
+  - DiagnosticSensor
+Harma Silver Sea Rum:
+  - Harma_Silver_Sea_Rum
+Havasupai Dream Catcher:
+  - Havasupai_Dream_Catcher
+Heatsink Interlink:
+  - Heatsink_Interlink
+Helvetitj Pearls:
+  - Helvetitj_Pearls
+Holva Duelling Blades:
+  - Holva_Duelling_Blades
+Honesty Pills:
+  - Honesty_Pills
+Hostages:
+  - Hostages
+  - Hostage
+Hydrogen Fuel:
+  - Hydrogen_Fuel
+Hydrogen Peroxide:
+  - Hydrogen_Peroxide
+Imperial Slaves:
+  - Imperial_Slaves
+Impure Spire Mineral:
+  - Impure_Spire_Mineral
+  - UnknownMineral
+Indi Bourbon:
+  - Indi_Bourbon
+Indite:
+  - Indite
+Indium:
+  - Indium
+Insulating Membrane:
+  - Insulating_Membrane
+Ion Distributor:
+  - Ion_Distributor
+Jadeite:
+  - Jadeite
+Jaques Quinentian Still:
+  - Jaques_Quinentian_Still
+Jaradharre Puzzle Box:
+  - Jaradharre_Puzzle_Box
+Jaroua Rice:
+  - Jaroua_Rice
+Jotun Mookah:
+  - Jotun_Mookah
+Kachirigin Filter Leeches:
+  - Kachirigin_Filter_Leeches
+  - KachiriginLeaches
+Kamitra Cigars:
+  - Kamitra_Cigars
+Kamorin Historic Weapons:
+  - Kamorin_Historic_Weapons
+Karetii Couture:
+  - Karetii_Couture
+Karsuki Locusts:
+  - Karsuki_Locusts
+Kinago Violins:
+  - Kinago_Violins
+  - KinagoInstruments
+Kongga Ale:
+  - Kongga_Ale
+Koro Kung Pellets:
+  - Koro_Kung_Pellets
+  - KorroKungPellets
+LTT Hyper Sweet:
+  - LTT_Hyper_Sweet
+Land Enrichment Systems:
+  - Land_Enrichment_Systems
+  - TerrainEnrichmentSystems
+Landmines:
+  - Landmines
+Lanthanum:
+  - Lanthanum
+Large Survey Data Cache:
+  - Large_Survey_Data_Cache
+  - LargeExplorationDataCash
+Lavian Brandy:
+  - Lavian_Brandy
+Leather:
+  - Leather
+Leathery Eggs:
+  - Leathery_Eggs
+  - AlienEggs
+Leestian Evil Juice:
+  - Leestian_Evil_Juice
+Lepidolite:
+  - Lepidolite
+Limpets:
+  - Limpets
+  - Drones
+Liquid oxygen:
+  - Liquid_oxygen
+Liquor:
+  - Liquor
+Lithium:
+  - Lithium
+Lithium Hydroxide:
+  - Lithium_Hydroxide
+Live Hecate Sea Worms:
+  - Live_Hecate_Sea_Worms
+Low Temperature Diamonds:
+  - Low_Temperature_Diamonds
+  - LowTemperatureDiamond
+  - Low Temp. Diamonds
+Lucan Onionhead:
+  - Lucan_Onionhead
+  - TransgenicOnionHead
+Lyrae Weed:
+  - Lyrae_Weed
+Magnetic Emitter Coil:
+  - Magnetic_Emitter_Coil
+Marine Equipment:
+  - Marine_Equipment
+  - MarineSupplies
+Master Chefs:
+  - Master_Chefs
+Mechucos High Tea:
+  - Mechucos_High_Tea
+Medb Starlube:
+  - Medb_Starlube
+Medical Diagnostic Equipment:
+  - Medical_Diagnostic_Equipment
+Meta-Alloys:
+  - Meta-Alloys
+Methane Clathrate:
+  - Methane_Clathrate
+Methanol Monohydrate Crystals:
+  - Methanol_Monohydrate_Crystals
+Micro Controllers:
+  - Micro_Controllers
+Micro-weave Cooling Hoses:
+  - Micro-weave_Cooling_Hoses
+  - CoolingHoses
+Microbial Furnaces:
+  - Microbial_Furnaces
+  - HeliostaticFurnaces
+Military Grade Fabrics:
+  - Military_Grade_Fabrics
+Military Intelligence:
+  - Military_Intelligence
+Military Plans:
+  - Military_Plans
+  - USSCargoMilitaryPlans
+Mineral Extractors:
+  - Mineral_Extractors
+Mineral Oil:
+  - Mineral_Oil
+Modular Terminals:
+  - Modular_Terminals
+Moissanite:
+  - Moissanite
+Mokojing Beast Feast:
+  - Mokojing_Beast_Feast
+Mollusc Brain Tissue:
+  - Mollusc_Brain_Tissue
+  - M_TissueSample_Nerves
+Mollusc Fluid:
+  - Mollusc_Fluid
+  - M_TissueSample_Fluid
+Mollusc Membrane:
+  - Mollusc_Membrane
+  - M3_TissueSample_Membrane
+Mollusc Mycelium:
+  - Mollusc_Mycelium
+  - M3_TissueSample_Mycelium
+Mollusc Soft Tissue:
+  - Mollusc_Soft_Tissue
+  - M_TissueSample_Soft
+Mollusc Spores:
+  - Mollusc_Spores
+  - M3_TissueSample_Spores
+Momus Bog Spaniel:
+  - Momus_Bog_Spaniel
+Monazite:
+  - Monazite
+Motrona Experience Jelly:
+  - Motrona_Experience_Jelly
+Mukusubii Chitin-os:
+  - Mukusubii_Chitin-os
+Mulachi Giant Fungus:
+  - Mulachi_Giant_Fungus
+Muon Imager:
+  - Muon_Imager
+  - MuTomImager
+Musgravite:
+  - Musgravite
+Mysterious Idol:
+  - Mysterious_Idol
+Nanobreakers:
+  - Nanobreakers
+Nanomedicines:
+  - Nanomedicines
+Narcotics:
+  - Narcotics
+  - BasicNarcotics
+Natural Fabrics:
+  - Natural_Fabrics
+Neofabric Insulation:
+  - Neofabric_Insulation
+Neritus Berries:
+  - Neritus_Berries
+Nerve Agents:
+  - Nerve_Agents
+Ngadandari Fire Opals:
+  - Ngadandari_Fire_Opals
+Nguna Modern Antiques:
+  - Nguna_Modern_Antiques
+Njangari Saddles:
+  - Njangari_Saddles
+Non Euclidian Exotanks:
+  - Non_Euclidian_Exotanks
+Non-Lethal Weapons:
+  - Non-Lethal_Weapons
+Occupied Escape Pod:
+  - Occupied_Escape_Pod
+  - OccupiedCryoPod
+Ochoeng Chillies:
+  - Ochoeng_Chillies
+Onionhead:
+  - Onionhead
+Onionhead Alpha Strain:
+  - Onionhead_Alpha_Strain
+  - OnionHeadA
+Onionhead Beta Strain:
+  - Onionhead_Beta_Strain
+  - OnionHeadB
+Onionhead Gamma Strain:
+  - Onionhead_Gamma_Strain
+  - OnionHeadC
+Ophiuch Exino Artefacts:
+  - Ophiuch_Exino_Artefacts
+  - OphiuchiExinoArtefacts
+Organ Sample:
+  - Organ_Sample
+  - ThargoidOrganSample
+Orrerian Vicious Brew:
+  - Orrerian_Vicious_Brew
+Osmium:
+  - Osmium
+Painite:
+  - Painite
+Palladium:
+  - Palladium
+Pantaa Prayer Sticks:
+  - Pantaa_Prayer_Sticks
+Pavonis Ear Grubs:
+  - Pavonis_Ear_Grubs
+Performance Enhancers:
+  - Performance_Enhancers
+Personal Effects:
+  - Personal_Effects
+Personal Weapons:
+  - Personal_Weapons
+Pesticides:
+  - Pesticides
+Platinum:
+  - Platinum
+Platinum Alloy:
+  - Platinum_Alloy
+  - PlatinumAloy
+Pod Core Tissue:
+  - Pod_Core_Tissue
+  - S_TissueSample_Cells
+Pod Dead Tissue:
+  - Pod_Dead_Tissue
+  - S_TissueSample_Surface
+Pod Mesoglea:
+  - Pod_Mesoglea
+  - S6_TissueSample_Mesoglea
+Pod Outer Tissue:
+  - Pod_Outer_Tissue
+  - S6_TissueSample_Cells
+Pod Shell Tissue:
+  - Pod_Shell_Tissue
+  - S6_TissueSample_Coenosarc
+Pod Surface Tissue:
+  - Pod_Surface_Tissue
+  - S_TissueSample_Core
+Pod Tissue:
+  - Pod_Tissue
+  - S9_TissueSample_Shell
+Political Prisoners:
+  - Political_Prisoners
+  - PoliticalPrisoner
+Polymers:
+  - Polymers
+Power Converter:
+  - Power_Converter
+Power Generators:
+  - Power_Generators
+Power Transfer Bus:
+  - Power_Transfer_Bus
+  - PowerTransferConduits
+Praseodymium:
+  - Praseodymium
+Precious Gems:
+  - Precious_Gems
+Progenitor Cells:
+  - Progenitor_Cells
+Prohibited Research Materials:
+  - Prohibited_Research_Materials
+Protective Membrane Scrap:
+  - Protective_Membrane_Scrap
+  - UnknownSack
+Prototype Tech:
+  - Prototype_Tech
+  - USSCargoPrototypeTech
+Pyrophyllite:
+  - Pyrophyllite
+Radiation Baffle:
+  - Radiation_Baffle
+Rajukru Multi-Stoves:
+  - Rajukru_Multi-Stoves
+  - RajukruStoves
+Rapa Bao Snake Skins:
+  - Rapa_Bao_Snake_Skins
+Rare Artwork:
+  - Rare_Artwork
+  - USSCargoRareArtwork
+Reactive Armour:
+  - Reactive_Armour
+Rebel Transmissions:
+  - Rebel_Transmissions
+  - USSCargoRebelTransmissions
+Reinforced Mounting Plate:
+  - Reinforced_Mounting_Plate
+Resonating Separators:
+  - Resonating_Separators
+Rhodplumsite:
+  - Rhodplumsite
+Robotics:
+  - Robotics
+Rockforth Fertiliser:
+  - Rockforth_Fertiliser
+Rusani Old Smokey:
+  - Rusani_Old_Smokey
+Rutile:
+  - Rutile
+SAP 8 Core Container:
+  - SAP_8_Core_Container
+Samarium:
+  - Samarium
+Sanuma Decorative Meat:
+  - Sanuma_Decorative_Meat
+  - SanumaMEAT
+Saxon Wine:
+  - Saxon_Wine
+Scientific Research:
+  - Scientific_Research
+Scientific Samples:
+  - Scientific_Samples
+Scrap:
+  - Scrap
+Semi-Refined Spire Mineral:
+  - Semi-Refined_Spire_Mineral
+  - UnknownRefinedMineral
+Semiconductors:
+  - Semiconductors
+Serendibite:
+  - Serendibite
+Shan's Charis Orchid:
+  - Shans's_Charis_Orchid
+Silver:
+  - Silver
+Skimmer Components:
+  - Skimmer_Components
+  - SkimerComponents
+Slaves:
+  - Slaves
+Small Survey Data Cache:
+  - Small_Survey_Data_Cache
+  - SmallExplorationDataCash
+Soontill Relics:
+  - Soontill_Relics
+Sothis Crystalline Gold:
+  - Sothis_Crystalline_Gold
+Space Pioneer Relics:
+  - Space_Pioneer_Relics
+Steel:
+  - Steel
+Structural Regulators:
+  - Structural_Regulators
+Superconductors:
+  - Superconductors
+Surface Stabilisers:
+  - Surface_Stabilisers
+Survival Equipment:
+  - Survival_Equipment
+Synthetic Fabrics:
+  - Synthetic_Fabrics
+Synthetic Meat:
+  - Synthetic_Meat
+Synthetic Reagents:
+  - Synthetic_Reagents
+Taaffeite:
+  - Taaffeite
+Tactical Data:
+  - Tactical_Data
+Tanmark Tranquil Tea:
+  - Tanmark_Tranquil_Tea
+Tantalum:
+  - Tantalum
+Tarach Spice:
+  - Tarach_Spice
+  - TarachTorSpice
+Tauri Chimes:
+  - Tauri_Chimes
+Tea:
+  - Tea
+Technical Blueprints:
+  - Technical_Blueprints
+  - USSCargoTechnicalBlueprints
+Telemetry Suite:
+  - Telemetry_Suite
+Terra Mater Blood Bores:
+  - Terra_Mater_Blood_Bores
+Thallium:
+  - Thallium
+Thargoid Basilisk Tissue Sample:
+  - Thargoid_Basilisk_Tissue_Sample
+  - ThargoidTissueSampleType2
+Thargoid Biological Matter:
+  - Thargoid_Biological_Matter
+  - UnknownBiologicalMatter
+Thargoid Cyclops Tissue Sample:
+  - Thargoid_Cyclops_Tissue_Sample
+  - ThargoidTissueSampleType1
+Thargoid Glaive Tissue Sample:
+  - Thargoid_Glaive_Tissue_Sample
+  - ThargoidTissueSampleType6
+Thargoid Heart:
+  - Thargoid_Heart
+Thargoid Hydra Tissue Sample:
+  - Thargoid_Hydra_Tissue_Sample
+  - ThargoidTissueSampleType4
+Thargoid Link:
+  - Thargoid_Link
+  - UnknownArtifact3
+Thargoid Medusa Tissue Sample:
+  - Thargoid_Medusa_Tissue_Sample
+  - ThargoidTissueSampleType3
+Thargoid Orthrus Tissue Sample:
+  - Thargoid_Orthrus_Tissue_Sample
+  - ThargoidTissueSampleType5
+Thargoid Probe:
+  - Thargoid_Probe
+  - UnknownArtifact2
+Thargoid Resin:
+  - Thargoid_Resin
+  - UnknownResin
+Thargoid Scout Tissue Sample:
+  - Thargoid_Scout_Tissue_Sample
+Thargoid Scythe Tissue Sample:
+  - Thargoid_Scythe_Tissue_Sample
+  - ThargoidTissueSampleType7
+Thargoid Sensor:
+  - Thargoid_Sensor
+  - UnknownArtifact
+Thargoid Technology Samples:
+  - Thargoid_Technology_Samples
+  - UnknownTechnologySamples
+The Hutton Mug:
+  - The_Hutton_Mug
+The Waters of Shintara:
+  - The_Waters_of_Shintara
+  - WatersOfShintara
+Thermal Cooling Units:
+  - Thermal_Cooling_Units
+Thorium:
+  - Thorium
+Thrutis Cream:
+  - Thrutis_Cream
+Tiegfries Synth Silk:
+  - Tiegfries_Synth_Silk
+Time Capsule:
+  - Time_Capsule
+Tiolce Waste2Paste Units:
+  - Tiolce_Waste2Paste_Units
+Titan Deep Tissue Sample:
+  - Titan_Deep_Tissue_Sample
+  - ThargoidTissueSampleType9a
+Titan Drive Component:
+  - Titan_Drive_Component
+  - ThargoidTitanDriveComponent
+Titan Maw Deep Tissue Sample:
+  - Titan_Maw_Deep_Tissue_Sample
+  - ThargoidTissueSampleType10a
+Titan Maw Partial Tissue Sample:
+  - Titan_Maw_Partial_Tissue_Sample
+  - ThargoidTissueSampleType10c
+Titan Maw Tissue Sample:
+  - Titan_Maw_Tissue_Sample
+  - ThargoidTissueSampleType10b
+Titan Partial Tissue Sample:
+  - Titan_Partial_Tissue_Sample
+  - ThargoidTissueSampleType9c
+Titan Tissue Sample:
+  - Titan_Tissue_Sample
+  - ThargoidTissueSampleType9b
+Titanium:
+  - Titanium
+Tobacco:
+  - Tobacco
+Toxandji Virocide:
+  - Toxandji_Virocide
+Toxic Waste:
+  - Toxic_Waste
+Trade Data:
+  - Trade_Data
+  - USSCargoTradeData
+Trinkets of Hidden Fortune:
+  - Trinkets_of_Hidden_Fortune
+  - TrinketsOfFortune
+Tritium:
+  - Tritium
+Ultra-Compact Processor Prototypes:
+  - Ultra-Compact_Processor_Prototypes
+  - Advert1
+Unclassified Relic:
+  - Unclassified_Relic
+  - AncientRelicTG
+Unoccupied Escape Pod:
+  - Unoccupied_Escape_Pod
+  - UnocuppiedEscapePod
+Unstable Data Core:
+  - Unstable_Data_Core
+Uraninite:
+  - Uraninite
+Uranium:
+  - Uranium
+Uszaian Tree Grub:
+  - Uszaian_Tree_Grub
+Utgaroar Millennial Eggs:
+  - Utgaroar_Millennial_Eggs
+  - UtgaroarMillenialEggs
+Uzumoku Low-G Wings:
+  - Uzumoku_Low-G_Wings
+V Herculis Body Rub:
+  - V_Herculis_Body_Rub
+Vanayequi Ceratomorpha Fur:
+  - Vanayequi_Ceratomorpha_Fur
+  - VanayequiRhinoFur
+Vega Slimweed:
+  - Vega_Slimweed
+Vidavantian Lace:
+  - Vidavantian_Lace
+Void Extract Coffee:
+  - Void_Extract_Coffee
+  - LFTVoidExtractCoffee
+Void Opal:
+  - Void_Opal
+  - Opal
+Volkhab Bee Drones:
+  - Volkhab_Bee_Drones
+Water:
+  - Water
+Water Purifiers:
+  - Water_Purifiers
+Wheemete Wheat Cakes:
+  - Wheemete_Wheat_Cakes
+Wine:
+  - Wine
+Witchhaul Kobe Beef:
+  - Witchhaul_Kobe_Beef
+Wolf Fesh:
+  - Wolf_Fesh
+  - Wolf1301Fesh
+Wreckage Components:
+  - Wreckage_Components
+Wulpa Hyperbore Systems:
+  - Wulpa_Hyperbore_Systems
+Wuthielo Ku Froth:
+  - Wuthielo_Ku_Froth
+Xenobiological Prison Pod:
+  - Xenobiological_Prison_Pod
+  - ThargoidPod
+Xihe Biomorphic Companions:
+  - Xihe_Biomorphic_Companions
+  - XiheCompanions
+Yaso Kondi Leaf:
+  - Yaso_Kondi_Leaf
+Zeessze Ant Grub Glue:
+  - Zeessze_Ant_Grub_Glue
+  - ZeesszeAntGlue

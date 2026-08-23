@@ -1,0 +1,714 @@
+# Canonical multi-attribute entity normalization definitions for scenarios and FSS signals
+# Schema: name (display string), signal_type (canonical category enum), severity (threat level / severity rating)
+# ==========================================================================
+# Resource Extraction Sites (12 entries)
+# ==========================================================================
+MULTIPLAYER_SCENARIO77_TITLE:
+  name: Resource Extraction Site
+  signal_type: ResourceExtraction
+  severity: Medium
+Resource Extraction Site:
+  name: Resource Extraction Site
+  signal_type: ResourceExtraction
+  severity: Medium
+Fixed_Event_HighThreatRes:
+  name: Resource Extraction Site [Hazardous]
+  signal_type: ResourceExtraction
+  severity: Hazardous
+MULTIPLAYER_SCENARIO79_TITLE:
+  name: Resource Extraction Site [Hazardous]
+  signal_type: ResourceExtraction
+  severity: Hazardous
+Resource Extraction Site [Hazardous]:
+  name: Resource Extraction Site [Hazardous]
+  signal_type: ResourceExtraction
+  severity: Hazardous
+Fixed_Event_MedThreatRes:
+  name: Resource Extraction Site [High]
+  signal_type: ResourceExtraction
+  severity: High
+MULTIPLAYER_SCENARIO78_TITLE:
+  name: Resource Extraction Site [High]
+  signal_type: ResourceExtraction
+  severity: High
+Resource Extraction Site [High]:
+  name: Resource Extraction Site [High]
+  signal_type: ResourceExtraction
+  severity: High
+Fixed_Event_NoThreatRes:
+  name: Resource Extraction Site [Low]
+  signal_type: ResourceExtraction
+  severity: Low
+MULTIPLAYER_SCENARIO14_TITLE:
+  name: Resource Extraction Site [Low]
+  signal_type: ResourceExtraction
+  severity: Low
+Resource Extraction Site [Low]:
+  name: Resource Extraction Site [Low]
+  signal_type: ResourceExtraction
+  severity: Low
+Fixed_Event_LowThreatRes:
+  name: Resource Extraction Site [Medium]
+  signal_type: ResourceExtraction
+  severity: Medium
+# ==========================================================================
+# Conflict Zones & Combat Scenarios (22 entries)
+# ==========================================================================
+Warzone_TG:
+  name: AX Conflict Zone
+  signal_type: Combat
+  severity: Medium
+Gro_controlScenarioTitle:
+  name: Armed Revolt
+  signal_type: Combat
+  severity: High
+FIXED_EVENT_CAPSHIP:
+  name: Capital Ship
+  signal_type: Combat
+  severity: High
+Conflict Zone [High Intensity]:
+  name: Conflict Zone [High Intensity]
+  signal_type: Combat
+  severity: High
+Warzone_PointRace_High:
+  name: Conflict Zone [High]
+  signal_type: Combat
+  severity: High
+Conflict Zone [Low Intensity]:
+  name: Conflict Zone [Low Intensity]
+  signal_type: Combat
+  severity: Low
+Warzone_PointRace_Low:
+  name: Conflict Zone [Low]
+  signal_type: Combat
+  severity: Low
+Conflict Zone [Medium Intensity]:
+  name: Conflict Zone [Medium Intensity]
+  signal_type: Combat
+  severity: Medium
+Warzone_PointRace_Med:
+  name: Conflict Zone [Medium]
+  signal_type: Combat
+  severity: Medium
+Debris field:
+  name: Debris Field
+  signal_type: CombatAftermath
+  severity: null
+Fixed_Event_CAPSHIP_FED:
+  name: Federal Capital Ship
+  signal_type: Combat
+  severity: High
+Fixed_Event_CAPSHIP_EMP:
+  name: Imperial Capital Ship
+  signal_type: Combat
+  severity: High
+FIXED_EVENT_HIGHTHREATSCENARIO_T5:
+  name: Pirate Activity [Threat 5]
+  signal_type: Combat
+  severity: High
+FIXED_EVENT_HIGHTHREATSCENARIO_T6:
+  name: Pirate Activity [Threat 6]
+  signal_type: Combat
+  severity: High
+FIXED_EVENT_HIGHTHREATSCENARIO_T7:
+  name: Pirate Activity [Threat 7]
+  signal_type: Combat
+  severity: High
+Power Conflict Zone [High Intensity]:
+  name: Power Conflict Zone [High Intensity]
+  signal_type: Combat
+  severity: High
+Power Conflict Zone [Medium Intensity]:
+  name: Power Conflict Zone [Medium Intensity]
+  signal_type: Combat
+  severity: Medium
+Warzone_Powerplay_Med:
+  name: Powerplay Conflict Zone [Medium]
+  signal_type: Combat
+  severity: Medium
+Warzone_TG_High:
+  name: Thargoid War Conflict Zone [High]
+  signal_type: Combat
+  severity: High
+Warzone_TG_Low:
+  name: Thargoid War Conflict Zone [Low]
+  signal_type: Combat
+  severity: Low
+Warzone_TG_Med:
+  name: Thargoid War Conflict Zone [Medium]
+  signal_type: Combat
+  severity: Medium
+Warzone_TG_VeryHigh:
+  name: Thargoid War Conflict Zone [Very High]
+  signal_type: Combat
+  severity: Very High
+# ==========================================================================
+# Nav Beacons (3 entries)
+# ==========================================================================
+MULTIPLAYER_SCENARIO80_TITLE:
+  name: Compromised Nav Beacon
+  signal_type: NavBeacon
+  severity: Compromised
+Compromised Navigation Beacon:
+  name: Compromised Navigation Beacon
+  signal_type: NavBeacon
+  severity: Hazardous
+MULTIPLAYER_SCENARIO42_TITLE:
+  name: Nav Beacon
+  signal_type: NavBeacon
+  severity: Standard
+# ==========================================================================
+# Unidentified Signal Sources (USS) (43 entries)
+# ==========================================================================
+USS_Anomaly:
+  name: Anomaly
+  signal_type: USS
+  severity: High
+USS_Type_Anomaly:
+  name: Anomaly
+  signal_type: USS
+  severity: High
+USS_Ceremonial:
+  name: Ceremonial Comms
+  signal_type: USS
+  severity: Low
+USS_CeremonialComms:
+  name: Ceremonial Comms
+  signal_type: USS
+  severity: Low
+USS_Type_Ceremonial:
+  name: Ceremonial Comms
+  signal_type: USS
+  severity: Low
+USS_Aftermath:
+  name: Combat Aftermath
+  signal_type: USS
+  severity: Medium
+USS_SalvageHaulageWreckage:
+  name: Combat Aftermath
+  signal_type: USS
+  severity: Medium
+USS_Type_Aftermath:
+  name: Combat Aftermath
+  signal_type: USS
+  severity: Medium
+USS_Convoy:
+  name: Convoy Dispersal Pattern
+  signal_type: USS
+  severity: Medium
+USS_ConvoyDispersalPattern:
+  name: Convoy Dispersal Pattern
+  signal_type: USS
+  severity: Medium
+USS_Type_Convoy:
+  name: Convoy Dispersal Pattern
+  signal_type: USS
+  severity: Medium
+USS_DegradedEmissions:
+  name: Degraded Emissions
+  signal_type: USS
+  severity: Low
+USS_Type_DegradedEmissions:
+  name: Degraded Emissions
+  signal_type: USS
+  severity: Low
+USS_Type_Salvage:
+  name: Degraded Emissions
+  signal_type: USS
+  severity: Low
+USS_DistressCall:
+  name: Distress Call
+  signal_type: USS
+  severity: Medium
+USS_DistressSignal:
+  name: Distress Call
+  signal_type: USS
+  severity: Medium
+USS_Type_DistressSignal:
+  name: Distress Call
+  signal_type: USS
+  severity: Medium
+USS_EncodedEmissions:
+  name: Encoded Emissions
+  signal_type: USS
+  severity: Low
+USS_Type_EncodedEmissions:
+  name: Encoded Emissions
+  signal_type: USS
+  severity: Low
+USS_Type_ValuableSalvage:
+  name: Encoded Emissions
+  signal_type: USS
+  severity: Low
+USS_HighGradeEmissions:
+  name: High Grade Emissions
+  signal_type: USS
+  severity: Low
+USS_Type_HighGradeEmissions:
+  name: High Grade Emissions
+  signal_type: USS
+  severity: Low
+USS_Type_VeryValuableSalvage:
+  name: High Grade Emissions
+  signal_type: USS
+  severity: Low
+USS_MissionTarget:
+  name: Mission Target
+  signal_type: USS
+  severity: null
+USS_Type_MissionTarget:
+  name: Mission Target
+  signal_type: USS
+  severity: null
+USS_NonHuman:
+  name: Non-Human Signal Source
+  signal_type: USS
+  severity: Hazardous
+USS_NonHumanSignalSource:
+  name: Non-Human Signal Source
+  signal_type: USS
+  severity: Hazardous
+USS_Type_NonHuman:
+  name: Non-Human Signal Source
+  signal_type: USS
+  severity: Hazardous
+USS_PowerConvoy:
+  name: Powerplay Convoy
+  signal_type: USS
+  severity: Medium
+USS_Type_PowerConvoy:
+  name: Powerplay Convoy
+  signal_type: USS
+  severity: Medium
+USS_PowerplayConvoyDistressSignal:
+  name: Powerplay Convoy Distress Signal
+  signal_type: USS
+  severity: High
+USS_Type_PowerplayConvoyDistressSignal:
+  name: Powerplay Convoy Distress Signal
+  signal_type: USS
+  severity: High
+USS_PowerWeaponsFire:
+  name: Powerplay Weapons Fire
+  signal_type: USS
+  severity: High
+USS_Type_PowerWeaponsFire:
+  name: Powerplay Weapons Fire
+  signal_type: USS
+  severity: High
+USS_PowerEmissions:
+  name: Powerplay Wreckage Signature
+  signal_type: USS
+  severity: Low
+USS_Type_PowerEmissions:
+  name: Powerplay Wreckage Signature
+  signal_type: USS
+  severity: Low
+MULTIPLAYER_SCENARIO81_TITLE:
+  name: Salvageable Wreckage
+  signal_type: USS
+  severity: Low
+USS_TradingBeacon:
+  name: Trading Beacon
+  signal_type: USS
+  severity: Low
+USS_Type_TradingBeacon:
+  name: Trading Beacon
+  signal_type: USS
+  severity: Low
+USS:
+  name: Unidentified Signal Source
+  signal_type: USS
+  severity: null
+Unidentified signal source:
+  name: Unidentified Signal Source
+  signal_type: USS
+  severity: null
+USS_Type_WeaponsFire:
+  name: Weapons Fire
+  signal_type: USS
+  severity: High
+USS_WeaponsFire:
+  name: Weapons Fire
+  signal_type: USS
+  severity: High
+# ==========================================================================
+# Operations & Missions (2 entries)
+# ==========================================================================
+Operations_Megaship_Massacre_Megaship_Strike_name:
+  name: Operation Megaship Strike
+  signal_type: Operations
+  severity: High
+Operations_Runner_Name:
+  name: Operation Runner
+  signal_type: Operations
+  severity: null
+# ==========================================================================
+# Notable Stellar Phenomena (4 entries)
+# ==========================================================================
+Fixed_Event_Lagrange_Cloud:
+  name: Notable Stellar Phenomena
+  signal_type: NotableStellarPhenomena
+  severity: null
+Fixed_Event_Life_Cloud:
+  name: Notable Stellar Phenomena
+  signal_type: NotableStellarPhenomena
+  severity: null
+Fixed_Event_Life_Ring:
+  name: Notable Stellar Phenomena
+  signal_type: NotableStellarPhenomena
+  severity: null
+Fixed_Event_Proto_Lagrange_Cloud:
+  name: Notable Stellar Phenomena
+  signal_type: NotableStellarPhenomena
+  severity: null
+# ==========================================================================
+# Mining Ring Hotspots (33 entries)
+# ==========================================================================
+Alexandrite:
+  name: Alexandrite
+  signal_type: Hotspot
+  severity: null
+Bauxite:
+  name: Bauxite
+  signal_type: Hotspot
+  severity: null
+Benitoite:
+  name: Benitoite
+  signal_type: Hotspot
+  severity: null
+Bertrandite:
+  name: Bertrandite
+  signal_type: Hotspot
+  severity: null
+Bromellite:
+  name: Bromellite
+  signal_type: Hotspot
+  severity: null
+Cobalt:
+  name: Cobalt
+  signal_type: Hotspot
+  severity: null
+Coltan:
+  name: Coltan
+  signal_type: Hotspot
+  severity: null
+Gallite:
+  name: Gallite
+  signal_type: Hotspot
+  severity: null
+Grandidierite:
+  name: Grandidierite
+  signal_type: Hotspot
+  severity: null
+HydrogenPeroxide:
+  name: Hydrogen Peroxide
+  signal_type: Hotspot
+  severity: null
+Indite:
+  name: Indite
+  signal_type: Hotspot
+  severity: null
+Lepidolite:
+  name: Lepidolite
+  signal_type: Hotspot
+  severity: null
+LiquidOxygen:
+  name: Liquid Oxygen
+  signal_type: Hotspot
+  severity: null
+LithiumHydroxide:
+  name: Lithium Hydroxide
+  signal_type: Hotspot
+  severity: null
+Low Temp. Diamonds:
+  name: Low Temperature Diamonds
+  signal_type: Hotspot
+  severity: null
+Low Temperature Diamonds:
+  name: Low Temperature Diamonds
+  signal_type: Hotspot
+  severity: null
+LowTemperatureDiamond:
+  name: Low Temperature Diamonds
+  signal_type: Hotspot
+  severity: null
+MethaneClathrate:
+  name: Methane Clathrate
+  signal_type: Hotspot
+  severity: null
+MethanolMonohydrateCrystals:
+  name: Methanol Monohydrate Crystals
+  signal_type: Hotspot
+  severity: null
+Monazite:
+  name: Monazite
+  signal_type: Hotspot
+  severity: null
+Musgravite:
+  name: Musgravite
+  signal_type: Hotspot
+  severity: null
+Painite:
+  name: Painite
+  signal_type: Hotspot
+  severity: null
+Platinum:
+  name: Platinum
+  signal_type: Hotspot
+  severity: null
+Praseodymium:
+  name: Praseodymium
+  signal_type: Hotspot
+  severity: null
+Rhodplumsite:
+  name: Rhodplumsite
+  signal_type: Hotspot
+  severity: null
+Rutile:
+  name: Rutile
+  signal_type: Hotspot
+  severity: null
+Samarium:
+  name: Samarium
+  signal_type: Hotspot
+  severity: null
+Serendibite:
+  name: Serendibite
+  signal_type: Hotspot
+  severity: null
+Tritium:
+  name: Tritium
+  signal_type: Hotspot
+  severity: null
+Uraninite:
+  name: Uraninite
+  signal_type: Hotspot
+  severity: null
+Opal:
+  name: Void Opal
+  signal_type: Hotspot
+  severity: null
+Void Opal:
+  name: Void Opal
+  signal_type: Hotspot
+  severity: null
+Water:
+  name: Water
+  signal_type: Hotspot
+  severity: null
+# ==========================================================================
+# Guardian Entities & Sites (6 entries)
+# ==========================================================================
+Ancient:
+  name: Ancient Guardian Ruins
+  signal_type: Guardian
+  severity: null
+Ancient_Medium:
+  name: Guardian Structure [Medium]
+  signal_type: Guardian
+  severity: null
+Ancient_Small:
+  name: Guardian Structure [Small]
+  signal_type: Guardian
+  severity: null
+Ancient_Tiny:
+  name: Guardian Structure [Tiny]
+  signal_type: Guardian
+  severity: null
+SAA_SignalType_Guardian:
+  name: Guardian Surface Signal
+  signal_type: Guardian
+  severity: null
+Wreckage_AncientProbe:
+  name: Minor Wreckage
+  signal_type: Guardian
+  severity: null
+# ==========================================================================
+# Thargoid Sites & Signals (4 entries)
+# ==========================================================================
+Settlement_Unflattened_WreckedUnknown:
+  name: Crashed Thargoid Ship
+  signal_type: Thargoid
+  severity: null
+Settlement_Unflattened_Unknown:
+  name: Thargoid Barnacle
+  signal_type: Thargoid
+  severity: null
+Settlement_Unflattened_TGMegaBarnacle:
+  name: Thargoid Spire Site
+  signal_type: Thargoid
+  severity: null
+SAA_SignalType_Thargoid:
+  name: Thargoid Surface Signal
+  signal_type: Thargoid
+  severity: null
+# ==========================================================================
+# Surface Signals (2 entries)
+# ==========================================================================
+SAA_SignalType_Biological:
+  name: Biological Surface Signal
+  signal_type: Biological
+  severity: null
+SAA_SignalType_Geological:
+  name: Geological Surface Signal
+  signal_type: Geological
+  severity: null
+# ==========================================================================
+# Fleet Carriers & Strongholds (2 entries)
+# ==========================================================================
+Stronghold Carrier:
+  name: Stronghold Carrier
+  signal_type: FleetCarrier
+  severity: High
+USS_Scenario_StrongholdCarrier:
+  name: Stronghold Carrier
+  signal_type: FleetCarrier
+  severity: High
+# ==========================================================================
+# Installations, Megaships & Generic POIs (35 entries)
+# ==========================================================================
+Perimeter:
+  name: Active Power Source
+  signal_type: GenericPOI
+  severity: null
+FIXED_EVENT_PROBE:
+  name: Ancient Probe
+  signal_type: GenericPOI
+  severity: null
+AttackAftermath:
+  name: Attack Aftermath
+  signal_type: GenericPOI
+  severity: null
+EXT_PANEL_ColonisationBeacon_DeploymentSite:
+  name: Beacon Deployment Site
+  signal_type: GenericPOI
+  severity: null
+Checkpoint:
+  name: Checkpoint
+  signal_type: Generic
+  severity: null
+Fixed_Event_CheckPoint:
+  name: Checkpoint
+  signal_type: GenericPOI
+  severity: null
+FIXED_EVENT_CONVOY:
+  name: Convoy Beacon
+  signal_type: GenericPOI
+  severity: null
+Wrecks_Eagle:
+  name: Crash Site
+  signal_type: GenericPOI
+  severity: null
+Wrecks_Sidewinder:
+  name: Crash Site
+  signal_type: GenericPOI
+  severity: null
+CrashedShip:
+  name: Crashed Ship
+  signal_type: GenericPOI
+  severity: null
+Fixed_Event_Debris:
+  name: Debris Field
+  signal_type: GenericPOI
+  severity: null
+Fixed_Event_DebrisField:
+  name: Debris Field
+  signal_type: GenericPOI
+  severity: null
+Abandoned_Buggy:
+  name: Distress Beacon
+  signal_type: GenericPOI
+  severity: null
+Damaged_Eagle:
+  name: Distress Beacon
+  signal_type: GenericPOI
+  severity: null
+Damaged_Sidewinder:
+  name: Distress Beacon
+  signal_type: GenericPOI
+  severity: null
+FIXED_EVENT_DISTRIBUTIONCENTRE:
+  name: Distribution Center
+  signal_type: GenericPOI
+  severity: null
+Damaged_Eagle_Assassination:
+  name: Encrypted Signal
+  signal_type: GenericPOI
+  severity: null
+Damaged_Sidewinder_Assassination:
+  name: Encrypted Signal
+  signal_type: GenericPOI
+  severity: null
+SAA_SignalType_Human:
+  name: Human Surface Signal
+  signal_type: GenericPOI
+  severity: null
+Wreckage_Probe:
+  name: Impact Site
+  signal_type: GenericPOI
+  severity: null
+Wreckage_Satellite:
+  name: Impact Site
+  signal_type: GenericPOI
+  severity: null
+Smugglers_Cache:
+  name: Irregular Markers
+  signal_type: GenericPOI
+  severity: null
+Trap_Cargo:
+  name: Irregular Markers
+  signal_type: GenericPOI
+  severity: null
+Trap_Data:
+  name: Irregular Markers
+  signal_type: GenericPOI
+  severity: null
+Aftermath_Large:
+  name: Large Attack Aftermath
+  signal_type: GenericPOI
+  severity: null
+ListeningPost:
+  name: Listening Post
+  signal_type: GenericPOI
+  severity: null
+Cargo:
+  name: Minor Wreckage
+  signal_type: GenericPOI
+  severity: null
+Wreckage_Buggy:
+  name: Minor Wreckage
+  signal_type: GenericPOI
+  severity: null
+Wreckage_Cargo:
+  name: Minor Wreckage
+  signal_type: GenericPOI
+  severity: null
+SAA_SignalType_Other:
+  name: Other Surface Signal
+  signal_type: GenericPOI
+  severity: null
+SAA_SignalType_PlanetAnomaly:
+  name: Planetary Anomaly
+  signal_type: GenericPOI
+  severity: null
+GenericSignalSource:
+  name: Signal Source
+  signal_type: GenericPOI
+  severity: null
+EXT_PANEL_ColonisationBeacon_Site:
+  name: System Colonisation Beacon
+  signal_type: GenericPOI
+  severity: null
+EXT_PANEL_ColonisationShip:
+  name: System Colonisation Ship
+  signal_type: GenericPOI
+  severity: null
+NumberStation:
+  name: Unregistered Comms Beacon
+  signal_type: GenericPOI
+  severity: null
+Toll Beacon:
+  name: Toll Beacon
+  signal_type: GenericPOI
+  severity: null

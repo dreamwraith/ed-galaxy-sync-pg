@@ -1,0 +1,43 @@
+# Canonical normalization mappings for system, station, and faction governments
+Anarchy:
+  - Anarchy
+Communism:
+  - Communism
+  - Communist
+Confederacy:
+  - Confederacy
+Cooperative:
+  - Cooperative
+Corporate:
+  - Corporate
+Democracy:
+  - Democracy
+Dictatorship:
+  - Dictatorship
+Feudal:
+  - Feudal
+Imperial:
+  - Imperial
+Patronage:
+  - Patronage
+Theocracy:
+  - Theocracy
+Prison Colony:
+  - Prison_Colony
+Prison:
+  - Prison
+  - Detention Centre
+  - Detention Facility
+Engineer:
+  - Engineer
+  - Workshop
+Carrier:
+  - Carrier
+Colony:
+  - Colony
+Private Ownership:
+  - Private_Ownership
+Megaconstruction:
+  - Megaconstruction
+"None":
+  - "None"

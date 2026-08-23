@@ -1,0 +1,37 @@
+# IDE
+.vscode/
+
+# Python-generated files
+__pycache__/
+.pytest_cache
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.ruff_cache/
+
+# Virtual environments
+.venv/
+
+# Runtime & Temporary Directories
+.duckdb_temp/
+.temp_chunks/
+.run_logs/
+.rumdl_cache/
+
+# Coverage & Type Caching
+.coverage
+htmlcov/
+.mypy_cache/
+.rumdl_cache/
+
+# Coverage & Type Caching
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Environment & Secrets (NEVER commit secrets)
+.env
+*.env
+!.env_example

@@ -1,0 +1,29 @@
+# Canonical normalization mappings for non-station FSS signal categories
+Tourist Beacon:
+  - Tourist_Beacon
+Nav Beacon:
+  - Nav_Beacon
+Resource Extraction:
+  - Resource_Extraction
+  - RES
+Combat:
+  - Combat
+  - ConflictZone
+  - Low Conflict Zone
+  - Medium Conflict Zone
+  - High Conflict Zone
+Titan:
+  - Titan
+Generic:
+  - Generic
+  - GenericPOI
+  - Other
+Notable Stellar Phenomena:
+  - Notable_Stellar_Phenomena
+Uncapped Point of Interest:
+  - Uncapped_Point_of_Interest
+Combat Aftermath:
+  - Combat_Aftermath
+Unidentified Signal Source:
+  - Unidentified_Signal_Source
+  - USS

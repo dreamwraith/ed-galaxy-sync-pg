@@ -1,0 +1,13 @@
+# Canonical normalization mappings for outfitting module categories
+Standard:
+  - Standard
+Internal:
+  - Internal
+Hardpoint:
+  - Hardpoint
+  - Weapon
+Utility:
+  - Utility
+Armour:
+  - Armour
+  - Armor

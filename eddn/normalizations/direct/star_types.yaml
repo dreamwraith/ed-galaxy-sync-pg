@@ -1,0 +1,128 @@
+# Canonical normalization mappings for stellar body star spectral types
+O (Blue-White) Star:
+  - O_(Blue-White)_Star
+  - O
+  - O_Star
+B (Blue-White) Star:
+  - B_(Blue-White)_Star
+  - B
+  - B_Star
+A (Blue-White) Star:
+  - A_(Blue-White)_Star
+  - A
+  - A_Star
+F (White) Star:
+  - F_(White)_Star
+  - F
+  - F_Star
+G (White-Yellow) Star:
+  - G_(White-Yellow)_Star
+  - G
+  - G_Star
+K (Yellow-Orange) Star:
+  - K_(Yellow-Orange)_Star
+  - K
+  - K_Star
+M (Red dwarf) Star:
+  - M_(Red_dwarf)_Star
+  - M
+  - M_Star
+  - Red Dwarf
+L (Brown dwarf) Star:
+  - L_(Brown_dwarf)_Star
+  - L
+  - L_Star
+T (Brown dwarf) Star:
+  - T_(Brown_dwarf)_Star
+  - T
+  - T_Star
+Y (Brown dwarf) Star:
+  - Y_(Brown_dwarf)_Star
+  - Y
+  - Y_Star
+T Tauri Star:
+  - T_Tauri_Star
+  - TTS
+  - T_Tauri
+Herbig Ae/Be Star:
+  - Herbig_Ae/Be_Star
+  - AeBe
+  - Herbig_AeBe
+Wolf-Rayet Star:
+  - Wolf-Rayet_Star
+  - W
+  - WN
+  - WNC
+  - WC
+  - WO
+  - Wolf_Rayet
+Carbon Star:
+  - Carbon_Star
+  - C
+  - CS
+  - CN
+  - CJ
+  - CH
+  - CHd
+  - MS
+  - S
+White Dwarf:
+  - White_Dwarf
+  - D
+  - DA
+  - DAB
+  - DAO
+  - DAZ
+  - DAV
+  - DB
+  - DBZ
+  - DBV
+  - DO
+  - DOV
+  - DQ
+  - DC
+  - DCV
+  - DX
+Neutron Star:
+  - Neutron_Star
+  - N
+Black Hole:
+  - Black_Hole
+  - H
+Supermassive Black Hole:
+  - Supermassive_Black_Hole
+Quark Star:
+  - Quark_Star
+X-ray Source:
+  - X-ray_Source
+  - X
+M (Red giant) Star:
+  - M_(Red_giant)_Star
+  - M_Red_Giant
+  - Red Giant
+M (Red super giant) Star:
+  - M_(Red_super_giant)_Star
+  - M_Red_Super_Giant
+  - Red Super Giant
+K (Yellow-orange giant) Star:
+  - K_(Yellow-orange_giant)_Star
+  - K (Orange giant) Star
+  - K_Orange_Giant
+  - Orange Giant
+  - Yellow-Orange Giant
+B (Blue-white super giant) Star:
+  - B_(Blue-white_super_giant)_Star
+  - B_Blue_White_Super_Giant
+  - Blue-White Super Giant
+A (Blue-white super giant) Star:
+  - A_(Blue-white_super_giant)_Star
+  - A_Blue_White_Super_Giant
+F (White super giant) Star:
+  - F_(White_super_giant)_Star
+  - F_White_Super_Giant
+G (White-yellow super giant) Star:
+  - G_(White-yellow_super_giant)_Star
+  - G_White_Super_Giant
+O (Blue-white super giant) Star:
+  - O_(Blue-white_super_giant)_Star
+  - O_Blue_White_Super_Giant

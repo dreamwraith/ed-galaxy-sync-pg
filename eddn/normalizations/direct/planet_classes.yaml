@@ -1,0 +1,45 @@
+# Canonical normalization mappings for stellar body planet and moon classifications
+Earth-like World:
+  - Earth-like_World
+  - Earthlike body
+High Metal Content World:
+  - High_Metal_Content_World
+  - High metal content body
+Metal-rich Body:
+  - Metal-rich_Body
+Ammonia World:
+  - Ammonia_World
+Water World:
+  - Water_World
+Class I Gas Giant:
+  - Class_I_Gas_Giant
+  - Sudarsky class I gas giant
+  - Gas giant with water based life
+  - Gas giant with ammonia based life
+Class II Gas Giant:
+  - Class_II_Gas_Giant
+  - Sudarsky class II gas giant
+Class III Gas Giant:
+  - Class_III_Gas_Giant
+  - Sudarsky class III gas giant
+Class IV Gas Giant:
+  - Class_IV_Gas_Giant
+  - Sudarsky class IV gas giant
+Class V Gas Giant:
+  - Class_V_Gas_Giant
+  - Sudarsky class V gas giant
+Helium Gas Giant:
+  - Helium_Gas_Giant
+Helium-rich Gas Giant:
+  - Helium-rich_Gas_Giant
+Water Giant:
+  - Water_Giant
+Water Giant with Life:
+  - Water_Giant_with_Life
+Icy Body:
+  - Icy_Body
+Rocky Body:
+  - Rocky_Body
+  - RockBody
+Rocky Ice Body:
+  - Rocky_Ice_Body

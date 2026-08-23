@@ -1,0 +1,39 @@
+# Canonical normalization mappings for system and station economies
+Agriculture:
+  - Agriculture
+  - Agri
+Extraction:
+  - Extraction
+High Tech:
+  - High_Tech
+Industrial:
+  - Industrial
+Military:
+  - Military
+Refinery:
+  - Refinery
+Terraforming:
+  - Terraforming
+Tourism:
+  - Tourism
+Service:
+  - Service
+Colony:
+  - Colony
+Repair:
+  - Repair
+Rescue:
+  - Rescue
+Prison:
+  - Prison
+Private Enterprise:
+  - Private_Enterprise
+Engineer:
+  - Engineer
+  - Engineering
+Carrier:
+  - Carrier
+Damaged:
+  - Damaged
+"None":
+  - "None"

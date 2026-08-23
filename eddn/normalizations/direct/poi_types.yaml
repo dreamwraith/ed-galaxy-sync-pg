@@ -1,0 +1,100 @@
+# Canonical normalization mappings for planetary points of interest (body_pois)
+Anomaly:
+  - Anomaly
+  - Point of Interest
+  - POI
+  - Unknown POI
+Crash Site:
+  - Crash_Site
+  - Distress_Beacon
+  - Impact_Site
+  - Wreckage
+  - Crash
+  - Wreck
+Facility:
+  - Facility
+  - Agricultural Facility
+  - Extraction Facility
+  - Military Base
+  - Research Facility
+Geological:
+  - Geological
+  - Surface_Geological
+  - Surface_Volcanism
+  - Geysers
+  - Fumaroles
+  - Gas_Vents
+  - Lava_Spouts
+  - Ice_Geysers
+  - Silicate_Vapour_Geysers
+  - Water_Geysers
+  - Methane_Ice_Geysers
+  - Nitrogen_Ice_Geysers
+  - CarbonDioxide_Ice_Geysers
+  - Water_Magma
+  - Silicate_Magma
+  - Iron_Magma
+  - Ammonia_Magma
+  - Sulphur_Dioxide_Fumaroles
+  - Fumarole
+  - Ледяные Гейзеры
+  - Гейзеры
+Guardian:
+  - Guardian
+  - Ancient
+  - Ancient_Medium_001
+  - Ancient_Medium_002
+  - Ancient_Medium_003
+  - Ancient_Medium_004
+  - Ancient_Medium_005
+  - Ancient_Medium_006
+  - Ancient_Ruin
+  - Ancient_Small_001
+  - Ancient_Small_002
+  - Ancient_Small_003
+  - Ancient_Small_004
+  - Ancient_Small_005
+  - Ancient_Small_006
+  - Ancient_Structure
+  - Ancient_Tiny_001
+  - Ancient_Tiny_002
+  - Ancient_Tiny_003
+  - Ancient_Tiny_004
+  - Ancient_Tiny_005
+  - Guardian_Structures
+  - Guardian_Ruins
+  - Relic_Tower
+  - Ancient Medium
+  - Ancient Small
+  - Ancient Tiny
+  - Guardian Ruin
+  - Guardian Site
+  - Guardian Structure
+Settlement:
+  - Settlement
+  - Planetary_Settlement
+  - Outpost
+  - Installation
+Thargoid:
+  - Thargoid
+  - Thargoid_Barnacle
+  - Thargoid_Barnacle_001
+  - Thargoid_Barnacle_002
+  - Thargoid_Barnacle_003
+  - Thargoid_Barnacle_004
+  - Thargoid_Barnacle_005
+  - Thargoid_Structure
+  - Thargoid_Structure_001
+  - Thargoid_Structure_002
+  - Thargoid_Structure_003
+  - Thargoid_Structure_004
+  - Thargoid_Structure_005
+  - Thargoid_Spire
+  - Thargoid_Surface_Site
+  - Thargoid_Scout_Wreck
+  - Thargoid_Ship_Wreck
+  - Thargoid_Structures
+  - Thargoid_Barnacles
+  - Thargoid_Spire_Sites
+  - Barnacle
+  - Spire Site
