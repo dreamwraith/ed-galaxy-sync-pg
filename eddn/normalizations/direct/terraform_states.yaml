@@ -1,0 +1,14 @@
+# Canonical normalization mappings for stellar body terraforming states
+Terraformable:
+  - Terraformable
+  - Terraformable_Candidate
+  - Candidate_For_Terraforming
+Terraforming:
+  - Terraforming
+  - Terraforming_Candidate
+Terraformed:
+  - Terraformed
+Not Terraformable:
+  - Not_Terraformable
+  - Uninhabitable
+  - "None"

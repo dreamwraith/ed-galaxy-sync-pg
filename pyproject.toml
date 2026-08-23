@@ -1,0 +1,110 @@
+[project]
+name = "ed-galaxy-sync-pg"
+version = "1.0.1"
+description = "Elite Dangerous Galaxy Sync for PostgreSQL"
+authors = [
+    { name = "Carl Lee Wiles II" }
+]
+license = { file = "license.md" }
+readme = "readme.md"
+requires-python = ">=3.14"
+keywords = ["elite-dangerous", "eddn", "spansh", "postgresql", "duckdb", "astrophysics", "spatial-search"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Database",
+    "Topic :: Games/Entertainment :: Simulation",
+    "Topic :: Scientific/Engineering :: Astronomy",
+]
+dependencies = [
+    "duckdb>=1.5.5,<2.0.0",
+    "psycopg[binary]>=3.3.4,<4.0.0",
+    "pyzmq>=27.2.0,<28.0.0",
+    "orjson>=3.12.0,<4.0.0",
+    "pyyaml>=6.0.3,<7.0.0",
+    "python-dotenv>=1.0.1,<2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/dreamwraith/ed-galaxy-sync-pg"
+Repository = "https://github.com/dreamwraith/ed-galaxy-sync-pg"
+Issues = "https://github.com/dreamwraith/ed-galaxy-sync-pg/issues"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.4",
+    "yamllint>=1.38.0",
+    "rumdl>=0.2.60",
+    "pip-audit>=2.8.0",
+]
+
+[project.scripts]
+galaxy-sync = "galaxy_sync:main"
+galaxy_sync = "galaxy_sync:main"
+ed-galaxy-sync-pg = "galaxy_sync:main"
+apply-schema = "db_setup.apply_schema:main"
+apply_schema = "db_setup.apply_schema:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["eddn", "spansh", "db_setup", "galaxy_sync.py"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 132
+
+[tool.ruff.lint]
+extend-select = ["I", "UP", "SIM", "PERF", "B", "PIE", "C4", "RET", "PTH"]
+ignore = ["BLE001", "G201", "DTZ005", "RUF059", "PLR0402"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint.isort]
+force-single-line = false
+lines-after-imports = 2
+split-on-trailing-comma = true
+combine-as-imports = true
+
+[tool.rumdl]
+respect-gitignore = true
+exclude = [
+    ".git",
+    "node_modules",
+    "build",
+    "dist",
+    "CHANGELOG.md"
+]
+disable = [
+    "MD033",
+    "MD013",
+]
+
+[tool.rumdl.per-file-ignores]
+"readme.md" = ["MD033"]
+"usage.md" = ["MD033"]
+
+[tool.rumdl.MD003]
+style = "atx"
+
+[tool.rumdl.MD004]
+style = "asterisk"
+
+[tool.rumdl.MD007]
+indent = 4

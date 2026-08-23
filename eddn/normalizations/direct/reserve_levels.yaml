@@ -1,0 +1,19 @@
+# Canonical normalization mappings for stellar body and ring resource reserve levels
+Pristine:
+  - Pristine
+  - PristineResources
+Major:
+  - Major
+  - MajorResources
+Common:
+  - Common
+  - CommonResources
+Low:
+  - Low
+  - LowResources
+  - Minor
+Depleted:
+  - Depleted
+  - DepletedResources
+"None":
+  - "None"

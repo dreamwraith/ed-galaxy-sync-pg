@@ -1,0 +1,10 @@
+# Canonical normalization mappings for planetary rings and asteroid belt compositions
+Metallic:
+  - Metallic
+  - Metalic
+Metal Rich:
+  - Metal_Rich
+Icy:
+  - Icy
+Rocky:
+  - Rocky

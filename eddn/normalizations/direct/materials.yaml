@@ -1,0 +1,821 @@
+# Canonical normalization mappings for fleet carrier and engineer materials
+Aberrant Shield Pattern Analysis:
+  - Aberrant_Shield_Pattern_Analysis
+  - Shieldpatternanalysis
+Abnormal Compact Emissions Data:
+  - Abnormal_Compact_Emissions_Data
+  - Compactemissionsdata
+Accident Logs:
+  - Accident_Logs
+Adaptive Encryptors Capture:
+  - Adaptive_Encryptors_Capture
+  - Adaptiveencryptors
+Aerogel:
+  - Aerogel
+Agricultural Process Sample:
+  - Agricultural_Process_Sample
+Air Quality Reports:
+  - Air_Quality_Reports
+Anomalous Bulk Scan Data:
+  - Anomalous_Bulk_Scan_Data
+  - Bulkscandata
+Anomalous FSD Telemetry:
+  - Anomalous_FSD_Telemetry
+  - Fsdtelemetry
+Antimony:
+  - Antimony
+Arsenic:
+  - Arsenic
+Atmospheric Data:
+  - Atmospheric_Data
+Atypical Disrupted Wake Echoes:
+  - Atypical_Disrupted_Wake_Echoes
+  - Disruptedwakeechoes
+Atypical Encryption Archives:
+  - Atypical_Encryption_Archives
+  - Encryptionarchives
+Audio Logs:
+  - Audio_Logs
+AX Combat Logs:
+  - AX_Combat_Logs
+Ballistics Data:
+  - Ballistics_Data
+Basic Conductors:
+  - Basic_Conductors
+Bio-Mechanical Conduits:
+  - Bio-Mechanical_Conduits
+  - Tg_Biomechanicalconduits
+Biochemical Agent:
+  - Biochemical_Agent
+Biological Sample:
+  - Biological_Sample
+  - Geneticsample
+Biological Weapon Data:
+  - Biological_Weapon_Data
+Biometric Data:
+  - Biometric_Data
+Biotech Conductors:
+  - Biotech_Conductors
+Blacklist Data:
+  - Blacklist_Data
+Blood Test Results:
+  - Blood_Test_Results
+Boron:
+  - Boron
+Building Schematic:
+  - Building_Schematic
+Cadmium:
+  - Cadmium
+Californium:
+  - Californium
+Campaign Plans:
+  - Campaign_Plans
+Carbon:
+  - Carbon
+Carbon Fibre Plating:
+  - Carbon_Fibre_Plating
+Cast Fossil:
+  - Cast_Fossil
+Cat Media:
+  - Cat_Media
+Census Data:
+  - Census_Data
+Chemical Catalyst:
+  - Chemical_Catalyst
+Chemical Distillery:
+  - Chemical_Distillery
+Chemical Experiment Data:
+  - Chemical_Experiment_Data
+Chemical Formulae:
+  - Chemical_Formulae
+Chemical Inventory:
+  - Chemical_Inventory
+Chemical Manipulators:
+  - Chemical_Manipulators
+Chemical Patents:
+  - Chemical_Patents
+Chemical Process Sample:
+  - Chemical_Process_Sample
+Chemical Processors:
+  - Chemical_Processors
+Chemical Sample:
+  - Chemical_Sample
+Chemical Storage Units:
+  - Chemical_Storage_Units
+Chemical Superbase:
+  - Chemical_Superbase
+Chemical Weapon Data:
+  - Chemical_Weapon_Data
+Chromium:
+  - Chromium
+Circuit Board:
+  - Circuit_Board
+Circuit Switch:
+  - Circuit_Switch
+Classic Entertainment:
+  - Classic_Entertainment
+Classified Scan Databanks:
+  - Classified_Scan_Databanks
+  - Scandatabanks
+Classified Scan Fragment:
+  - Classified_Scan_Fragment
+  - Classifiedscandata
+Clinical Trial Records:
+  - Clinical_Trial_Records
+  - Medicaltrialrecords
+Cocktail Recipes:
+  - Cocktail_Recipes
+Combat Training Material:
+  - Combat_Training_Material
+Combatant Performance:
+  - Combatant_Performance
+Compact Composites:
+  - Compact_Composites
+Compact Library:
+  - Compact_Library
+Compound Shielding:
+  - Compound_Shielding
+Compression-Liquefied Gas:
+  - Compression-Liquefied_Gas
+Conductive Ceramics:
+  - Conductive_Ceramics
+Conductive Components:
+  - Conductive_Components
+Conductive Polymers:
+  - Conductive_Polymers
+Configurable Components:
+  - Configurable_Components
+Conflict History:
+  - Conflict_History
+Core Dynamics Composites:
+  - Core_Dynamics_Composites
+  - Fedcorecomposites
+Cracked Industrial Firmware:
+  - Cracked_Industrial_Firmware
+  - Industrialfirmware
+Criminal Records:
+  - Criminal_Records
+Crop Yield Analysis:
+  - Crop_Yield_Analysis
+Crystal Shards:
+  - Crystal_Shards
+Culinary Recipes:
+  - Culinary_Recipes
+Datamined Wake Exceptions:
+  - Datamined_Wake_Exceptions
+  - Dataminedwake
+Decoded Emission Data:
+  - Decoded_Emission_Data
+Deep Mantle Sample:
+  - Deep_Mantle_Sample
+Degraded Power Regulator:
+  - Degraded_Power_Regulator
+Digital Designs:
+  - Digital_Designs
+Distorted Shield Cycle Recordings:
+  - Distorted_Shield_Cycle_Recordings
+  - Shieldcyclerecordings
+Divergent Scan Data:
+  - Divergent_Scan_Data
+  - Encodedscandata
+Duty Rota:
+  - Duty_Rota
+E-Breach:
+  - E-Breach
+  - Bypass
+Eccentric Hyperspace Trajectories:
+  - Eccentric_Hyperspace_Trajectories
+  - Hyperspacetrajectories
+Electrical Fuse:
+  - Electrical_Fuse
+Electrical Wiring:
+  - Electrical_Wiring
+Electrochemical Arrays:
+  - Electrochemical_Arrays
+Electromagnet:
+  - Electromagnet
+Employee Directory:
+  - Employee_Directory
+Employee Expenses:
+  - Employee_Expenses
+Employee Genetic Data:
+  - Employee_Genetic_Data
+Employment History:
+  - Employment_History
+Encrypted Memory Chip:
+  - Encrypted_Memory_Chip
+Energy Cell:
+  - Energy_Cell
+Enhanced Interrogation Recordings:
+  - Enhanced_Interrogation_Recordings
+Epinephrine:
+  - Epinephrine
+Epoxy Adhesive:
+  - Epoxy_Adhesive
+Espionage Material:
+  - Espionage_Material
+Evacuation Protocols:
+  - Evacuation_Protocols
+Exceptional Scrambled Emission Data:
+  - Exceptional_Scrambled_Emission_Data
+  - Scrambledemissiondata
+Exploration Journals:
+  - Exploration_Journals
+Exquisite Focus Crystals:
+  - Exquisite_Focus_Crystals
+Extraction Yield Data:
+  - Extraction_Yield_Data
+Faction Associates:
+  - Faction_Associates
+  - Associates
+Faction Donator List:
+  - Faction_Donator_List
+  - Donator_List
+Faction News:
+  - Faction_News
+  - News
+Filament Composites:
+  - Filament_Composites
+Financial Projections:
+  - Financial_Projections
+Flawed Focus Crystals:
+  - Flawed_Focus_Crystals
+  - Uncutfocuscrystals
+Fleet Registry:
+  - Fleet_Registry
+Focus Crystals:
+  - Focus_Crystals
+Frag Grenade:
+  - Frag_Grenade
+  - Amm_Grenade_Frag
+G-Meds:
+  - G-Meds
+Galvanising Alloys:
+  - Galvanising_Alloys
+Gene Sequencing Data:
+  - Gene_Sequencing_Data
+Genetic Repair Meds:
+  - Genetic_Repair_Meds
+Genetic Research:
+  - Genetic_Research
+Geological Data:
+  - Geological_Data
+Germanium:
+  - Germanium
+Graphene:
+  - Graphene
+Grid Resistors:
+  - Grid_Resistors
+Guardian Module Blueprint Segment:
+  - Guardian_Module_Blueprint_Segment
+  - Guardian_Moduleblueprint
+  - Guardian Module Blueprint Fragment
+Guardian Power Cell:
+  - Guardian_Power_Cell
+Guardian Power Conduit:
+  - Guardian_Power_Conduit
+Guardian Sentinel Weapon Parts:
+  - Guardian_Sentinel_Weapon_Parts
+Guardian Sentinel Wreckage Components:
+  - Guardian_Sentinel_Wreckage_Components
+  - Guardian_Wreckagecomponents
+Guardian Technology Component:
+  - Guardian_Technology_Component
+  - Guardian_Techcomponent
+Guardian Vessel Blueprint Segment:
+  - Guardian_Vessel_Blueprint_Segment
+  - Guardian_Vesselblueprint
+  - Guardian Vessel Blueprint Fragment
+Guardian Weapon Blueprint Segment:
+  - Guardian_Weapon_Blueprint_Segment
+  - Guardian_Weaponblueprint
+  - Guardian Weapon Blueprint Fragment
+Health Monitor:
+  - Health_Monitor
+Heat Conduction Wiring:
+  - Heat_Conduction_Wiring
+Heat Dispersion Plate:
+  - Heat_Dispersion_Plate
+Heat Exchangers:
+  - Heat_Exchangers
+Heat Resistant Ceramics:
+  - Heat_Resistant_Ceramics
+Heat Vanes:
+  - Heat_Vanes
+High Density Composites:
+  - High_Density_Composites
+Hush:
+  - Hush
+Hybrid Capacitors:
+  - Hybrid_Capacitors
+Hydroponic Data:
+  - Hydroponic_Data
+Imperial Shielding:
+  - Imperial_Shielding
+Improvised Components:
+  - Improvised_Components
+Incident Logs:
+  - Incident_Logs
+Inconsistent Shield Soak Analysis:
+  - Inconsistent_Shield_Soak_Analysis
+  - Shieldsoakanalysis
+Inertia Canister:
+  - Inertia_Canister
+Infinity:
+  - Infinity
+Influence Projections:
+  - Influence_Projections
+Inorganic Contaminant:
+  - Inorganic_Contaminant
+Insight:
+  - Insight
+Insight Data Bank:
+  - Insight_Data_Bank
+Insight Entertainment Suite:
+  - Insight_Entertainment_Suite
+Internal Correspondence:
+  - Internal_Correspondence
+Interrogation Recordings:
+  - Interrogation_Recordings
+Interview Recordings:
+  - Interview_Recordings
+Ion Battery:
+  - Ion_Battery
+Ionised Gas:
+  - Ionised_Gas
+Iron:
+  - Iron
+Irregular Emission Data:
+  - Irregular_Emission_Data
+  - Archivedemissiondata
+Job Applications:
+  - Job_Applications
+Kompromat:
+  - Kompromat
+Lazarus:
+  - Lazarus
+Lead:
+  - Lead
+Literary Fiction:
+  - Literary_Fiction
+Maintenance Logs:
+  - Maintenance_Logs
+Manganese:
+  - Manganese
+Manufacturing Instructions:
+  - Manufacturing_Instructions
+Mechanical Components:
+  - Mechanical_Components
+Mechanical Equipment:
+  - Mechanical_Equipment
+Mechanical Scrap:
+  - Mechanical_Scrap
+Medical Records:
+  - Medical_Records
+Medkit:
+  - Medkit
+  - Healthpack
+Meeting Minutes:
+  - Meeting_Minutes
+Memory Chip:
+  - Memory_Chip
+Mercury:
+  - Mercury
+Metal Coil:
+  - Metal_Coil
+Micro Hydraulics:
+  - Micro_Hydraulics
+Micro Supercapacitor:
+  - Micro_Supercapacitor
+Micro Thrusters:
+  - Micro_Thrusters
+Micro Transformer:
+  - Micro_Transformer
+Microbial Inhibitor:
+  - Microbial_Inhibitor
+Microelectrode:
+  - Microelectrode
+Military Grade Alloys:
+  - Military_Grade_Alloys
+Military Supercapacitors:
+  - Military_Supercapacitors
+Mineral Survey:
+  - Mineral_Survey
+Mining Analytics:
+  - Mining_Analytics
+Modified Consumer Firmware:
+  - Modified_Consumer_Firmware
+  - Consumerfirmware
+Modified Embedded Firmware:
+  - Modified_Embedded_Firmware
+  - Embeddedfirmware
+Molybdenum:
+  - Molybdenum
+Motor:
+  - Motor
+Multimedia Entertainment:
+  - Multimedia_Entertainment
+Mutagenic Catalyst:
+  - Mutagenic_Catalyst
+Network Access History:
+  - Network_Access_History
+Network Security Protocols:
+  - Network_Security_Protocols
+Next of Kin Records:
+  - Next_of_Kin_Records
+Nickel:
+  - Nickel
+Niobium:
+  - Niobium
+NOC Data:
+  - NOC_Data
+Nutritional Concentrate:
+  - Nutritional_Concentrate
+Open Symmetric Keys:
+  - Open_Symmetric_Keys
+  - Symmetrickeys
+Operational Manual:
+  - Operational_Manual
+Opinion Polls:
+  - Opinion_Polls
+Optical Fibre:
+  - Optical_Fibre
+Optical Lens:
+  - Optical_Lens
+Oxygenic Bacteria:
+  - Oxygenic_Bacteria
+Patient History:
+  - Patient_History
+Patrol Routes:
+  - Patrol_Routes
+Pattern Alpha Obelisk Data:
+  - Pattern_Alpha_Obelisk_Data
+  - Ancientbiologicaldata
+Pattern Beta Obelisk Data:
+  - Pattern_Beta_Obelisk_Data
+  - Ancientculturaldata
+Pattern Delta Obelisk Data:
+  - Pattern_Delta_Obelisk_Data
+  - Ancientlanguagedata
+Pattern Epsilon Obelisk Data:
+  - Pattern_Epsilon_Obelisk_Data
+  - Ancienttechnologicaldata
+Pattern Gamma Obelisk Data:
+  - Pattern_Gamma_Obelisk_Data
+  - Ancienthistoricaldata
+Payroll Information:
+  - Payroll_Information
+Peculiar Shield Frequency Data:
+  - Peculiar_Shield_Frequency_Data
+  - Shieldfrequencydata
+Personal Computer:
+  - Personal_Computer
+Personal Documents:
+  - Personal_Documents
+Personal Logs:
+  - Personal_Logs
+Petrified Fossil:
+  - Petrified_Fossil
+pH Neutraliser:
+  - pH_Neutraliser
+Pharmaceutical Isolators:
+  - Pharmaceutical_Isolators
+Pharmaceutical Patents:
+  - Pharmaceutical_Patents
+Phase Alloys:
+  - Phase_Alloys
+Phosphorus:
+  - Phosphorus
+Photo Albums:
+  - Photo_Albums
+Plant Growth Charts:
+  - Plant_Growth_Charts
+Political Affiliations:
+  - Political_Affiliations
+Polonium:
+  - Polonium
+Polymer Capacitors:
+  - Polymer_Capacitors
+Power Regulator:
+  - Power_Regulator
+  - Largecapacitypowerregulator
+Precipitated Alloys:
+  - Precipitated_Alloys
+Prisoner Logs:
+  - Prisoner_Logs
+Production Reports:
+  - Production_Reports
+Production Schedule:
+  - Production_Schedule
+Propaganda:
+  - Propaganda
+Proprietary Composites:
+  - Proprietary_Composites
+  - Fedproprietarycomposites
+Propulsion Elements:
+  - Propulsion_Elements
+  - Tg_Propulsionelement
+Proto Heat Radiators:
+  - Proto_Heat_Radiators
+Proto Light Alloys:
+  - Proto_Light_Alloys
+Proto Radiolic Alloys:
+  - Proto_Radiolic_Alloys
+Purchase Records:
+  - Purchase_Records
+Purchase Requests:
+  - Purchase_Requests
+Push:
+  - Push
+Pyrolytic Catalyst:
+  - Pyrolytic_Catalyst
+Radioactivity Data:
+  - Radioactivity_Data
+RDX:
+  - RDX
+Reactor Output Review:
+  - Reactor_Output_Review
+Recycling Logs:
+  - Recycling_Logs
+Refined Focus Crystals:
+  - Refined_Focus_Crystals
+Refinement Process Sample:
+  - Refinement_Process_Sample
+Residential Directory:
+  - Residential_Directory
+Rhenium:
+  - Rhenium
+Risk Assessments:
+  - Risk_Assessments
+Ruthenium:
+  - Ruthenium
+Sales Records:
+  - Sales_Records
+Salvaged Alloys:
+  - Salvaged_Alloys
+Scrambler:
+  - Scrambler
+Security Expenses:
+  - Security_Expenses
+Security Firmware Patch:
+  - Security_Firmware_Patch
+  - Securityfirmware
+Seed Geneaology:
+  - Seed_Geneaology
+Selenium:
+  - Selenium
+Sensor Fragment:
+  - Sensor_Fragment
+  - Unknownenergysource
+Settlement Assault Plans:
+  - Settlement_Assault_Plans
+Settlement Defence Plans:
+  - Settlement_Defence_Plans
+Shareholder Information:
+  - Shareholder_Information
+Shield Disruptor:
+  - Shield_Disruptor
+  - Amm_Grenade_Emp
+Shield Emitters:
+  - Shield_Emitters
+Shield Projector:
+  - Shield_Projector
+  - Amm_Grenade_Shield
+Shielding Sensors:
+  - Shielding_Sensors
+Ship Flight Data:
+  - Ship_Flight_Data
+  - Tg_Shipflightdata
+Ship Schematic:
+  - Ship_Schematic
+Ship Systems Data:
+  - Ship_Systems_Data
+  - Tg_Shipsystemsdata
+Slush Fund Logs:
+  - Slush_Fund_Logs
+Smear Campaign Plans:
+  - Smear_Campaign_Plans
+Specialised Legacy Firmware:
+  - Specialised_Legacy_Firmware
+  - Legacyfirmware
+Spectral Analysis Data:
+  - Spectral_Analysis_Data
+Spyware:
+  - Spyware
+Stellar Activity Logs:
+  - Stellar_Activity_Logs
+Strange Wake Solutions:
+  - Strange_Wake_Solutions
+  - Wakesolutions
+Suit Schematic:
+  - Suit_Schematic
+Sulphur:
+  - Sulphur
+Surveillance Equipment:
+  - Surveillance_Equipment
+Surveillance Logs:
+  - Surveillance_Logs
+  - Surveilleancelogs
+Synthetic Genome:
+  - Synthetic_Genome
+Synthetic Pathogen:
+  - Synthetic_Pathogen
+Tactical Plans:
+  - Tactical_Plans
+Tagged Encryption Codes:
+  - Tagged_Encryption_Codes
+  - Encryptioncodes
+Tax Records:
+  - Tax_Records
+Technetium:
+  - Technetium
+Tellurium:
+  - Tellurium
+Tempered Alloys:
+  - Tempered_Alloys
+Thargoid Carapace:
+  - Thargoid_Carapace
+  - Unknowncarapace
+Thargoid Energy Cell:
+  - Thargoid_Energy_Cell
+  - Unknownenergycell
+Thargoid Material Composition Data:
+  - Thargoid_Material_Composition_Data
+  - Tg_Compositiondata
+Thargoid Organic Circuitry:
+  - Thargoid_Organic_Circuitry
+  - Unknownorganiccircuitry
+Thargoid Residue Data:
+  - Thargoid_Residue_Data
+  - Tg_Residuedata
+Thargoid Ship Signature:
+  - Thargoid_Ship_Signature
+  - Unknownshipsignature
+Thargoid Structural Data:
+  - Thargoid_Structural_Data
+  - Tg_Structuraldata
+Thargoid Technological Components:
+  - Thargoid_Technological_Components
+  - Unknowntechnologycomponents
+Thargoid Wake Data:
+  - Thargoid_Wake_Data
+  - Unknownwakedata
+Thermic Alloys:
+  - Thermic_Alloys
+Tin:
+  - Tin
+Titanium Plating:
+  - Titanium_Plating
+Topographical Surveys:
+  - Topographical_Surveys
+Transmitter:
+  - Transmitter
+Travel Permits:
+  - Travel_Permits
+Troop Deployment Records:
+  - Troop_Deployment_Records
+True Form Fossil:
+  - True_Form_Fossil
+Tungsten:
+  - Tungsten
+Tungsten Carbide:
+  - Tungsten_Carbide
+Unexpected Emission Data:
+  - Unexpected_Emission_Data
+  - Emissiondata
+Unidentified Scan Archives:
+  - Unidentified_Scan_Archives
+  - Scanarchives
+Union Membership:
+  - Union_Membership
+Universal Translator:
+  - Universal_Translator
+Untypical Shield Scans:
+  - Untypical_Shield_Scans
+  - Shielddensityreports
+Unusual Encrypted Files:
+  - Unusual_Encrypted_Files
+  - Encryptedfiles
+Vaccination Records:
+  - Vaccination_Records
+Vaccine Research:
+  - Vaccine_Research
+Vanadium:
+  - Vanadium
+Vehicle Schematic:
+  - Vehicle_Schematic
+VIP Security Detail:
+  - VIP_Security_Detail
+Virology Data:
+  - Virology_Data
+Virus:
+  - Virus
+Viscoelastic Polymer:
+  - Viscoelastic_Polymer
+Visitor Register:
+  - Visitor_Register
+Weapon Component:
+  - Weapon_Component
+Weapon Inventory:
+  - Weapon_Inventory
+Weapon Parts:
+  - Weapon_Parts
+  - Tg_Weaponparts
+Weapon Schematic:
+  - Weapon_Schematic
+Weapon Test Data:
+  - Weapon_Test_Data
+Worn Shield Emitters:
+  - Worn_Shield_Emitters
+Wreckage Components:
+  - Wreckage_Components
+  - Tg_Wreckagecomponents
+Xeno-Defence Protocols:
+  - Xeno-Defence_Protocols
+Yttrium:
+  - Yttrium
+Zinc:
+  - Zinc
+Zirconium:
+  - Zirconium
+Thargoid Interdiction Telemetry:
+  - Thargoid_Interdiction_Telemetry
+  - Tg_Interdictiondata
+Massive Energy Surge Analytics:
+  - Massive_Energy_Surge_Analytics
+  - Tg_Shutdowndata
+Caustic Crystal:
+  - Caustic_Crystal
+  - Tg_Causticcrystal
+Corrosive Mechanisms:
+  - Corrosive_Mechanisms
+  - Tg_Causticgeneratorparts
+Caustic Shard:
+  - Caustic_Shard
+  - Tg_Causticshard
+Thargoid Capitol Ship Data:
+  - tg_structuraldata02
+Search and Rescue Voucher:
+  - searchrescuevoucher
+Hardened Surface Fragments:
+  - tg_abrasion03
+Tactical Core Chip:
+  - unknowncorechip
+Phasing Membrane Residue:
+  - tg_abrasion02
+Heat Exposure Specimen:
+  - tg_abrasion01
+Power Association Data:
+  - PowerEmployeeData
+Power Classified Data:
+  - PowerClassifiedData
+Power Industrial Data:
+  - PowerFinancialRecords
+Power Injection Malware:
+  - PowerPreparationSpyware
+Power Political Data:
+  - PowerPropagandaData
+Power Research Data:
+  - PowerResearchData
+Power Tracker Malware:
+  - PowerSpyware
+Researcher Location Data:
+  - OperationsStrikeData
+Installation Intelligence Report:
+  - OperationsCounterAttackData
+Spire Refinery Compound:
+  - BiomechanicalComponent
+Contaminated Spire Compound:
+  - SabotagedComponent
+Unica Seed:
+  - nm_seed
+Agricultural Sample:
+  - PowerAgriculture
+Computer Parts:
+  - PowerComputer
+Electronics Package:
+  - PowerElectronics
+Personal Protective Equipment:
+  - PowerEquipment
+Experiment Prototype:
+  - PowerExperiment
+Extraction Sample:
+  - PowerExtraction
+Industrial Component:
+  - PowerIndustrial
+Inventory Record:
+  - PowerInventory
+Medical Sample:
+  - PowerMedical
+Data Storage Device:
+  - PowerMiscComputer
+Industrial Machinery:
+  - PowerMiscIndust
+Military Schematic:
+  - PowerplayMilitary
+Energy Regulator:
+  - PowerPower
+Research Notes:
+  - PowerResearch
+Security Logs:
+  - PowerSecurity

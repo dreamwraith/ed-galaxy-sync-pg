@@ -1,0 +1,39 @@
+# Canonical normalization mappings for station commodity market categories
+Chemicals:
+  - Chemicals
+Consumer Items:
+  - Consumer_Items
+Foods:
+  - Foods
+Industrial Materials:
+  - Industrial_Materials
+Legal Drugs:
+  - Legal_Drugs
+  - Drugs
+  - Narcotics
+Machinery:
+  - Machinery
+Medicines:
+  - Medicines
+Metals:
+  - Metals
+Minerals:
+  - Minerals
+Salvage:
+  - Salvage
+Slavery:
+  - Slavery
+  - Slaves
+Technology:
+  - Technology
+Textiles:
+  - Textiles
+Waste:
+  - Waste
+Weapons:
+  - Weapons
+NonMarketable:
+  - NonMarketable
+  - Drones
+Powerplay:
+  - Powerplay

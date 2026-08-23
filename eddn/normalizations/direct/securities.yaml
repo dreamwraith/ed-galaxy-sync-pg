@@ -1,0 +1,19 @@
+# Canonical normalization mappings for system security levels
+High:
+  - High
+  - Galaxy_Map_Lawless_Security_High
+  - State_High
+Medium:
+  - Medium
+  - Galaxy_Map_Lawless_Security_Medium
+  - State_Medium
+Low:
+  - Low
+  - Galaxy_Map_Lawless_Security_Low
+  - State_Low
+Anarchy:
+  - Anarchy
+  - High_Anarchy
+  - Lawless
+  - State_Anarchy
+  - State_Lawless

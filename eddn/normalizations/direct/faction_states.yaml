@@ -1,0 +1,92 @@
+# Canonical normalization mappings for minor faction and station states
+Boom:
+  - Boom
+Bust:
+  - Bust
+Civil War:
+  - Civil_War
+War:
+  - War
+Civil Unrest:
+  - Civil_Unrest
+Civil Liberty:
+  - Civil_Liberty
+Expansion:
+  - Expansion
+Lockdown:
+  - Lockdown
+Outbreak:
+  - Outbreak
+Retreat:
+  - Retreat
+Election:
+  - Election
+Famine:
+  - Famine
+Investment:
+  - Investment
+Incursion:
+  - Incursion
+Infestation:
+  - Infestation
+Pirate Attack:
+  - Pirate_Attack
+Blight:
+  - Blight
+Drought:
+  - Drought
+Infrastructure Failure:
+  - Infrastructure_Failure
+Natural Disaster:
+  - Natural_Disaster
+Public Holiday:
+  - Public_Holiday
+Terrorism:
+  - Terrorism
+  - Terrorist Attack
+Cold War:
+  - Cold_War
+Colonisation:
+  - Colonisation
+  - Colonization
+Revolution:
+  - Revolution
+Technological Leap:
+  - Technological_Leap
+Trade Surplus:
+  - Trade_Surplus
+Historic Event:
+  - Historic_Event
+Under Repairs:
+  - Under_Repairs
+  - UnderRepairsHuman
+  - UnderRepairsThargoid
+Damaged:
+  - Damaged
+  - DamagedHuman
+  - DamagedThargoid
+Under Construction:
+  - Under_Construction
+  - Construction
+Abandoned:
+  - Abandoned
+Trade War:
+  - Trade_War
+  - TradeWar
+Thargoid Probing:
+  - Thargoid_Probing
+  - ThargoidProbing
+Thargoid Harvest:
+  - Thargoid_Harvest
+  - ThargoidHarvest
+Thargoid Controlled:
+  - Thargoid_Controlled
+  - ThargoidControlled
+Thargoid Stronghold:
+  - Thargoid_Stronghold
+  - ThargoidStronghold
+Thargoid Recovery:
+  - Thargoid_Recovery
+  - ThargoidRecovery
+"None":
+  - "None"

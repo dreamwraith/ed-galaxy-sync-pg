@@ -1,0 +1,21 @@
+extends: default
+
+ignore: |
+  .venv/
+  dist/
+  build/
+  .git/
+
+rules:
+  line-length:
+    max: 132
+    level: warning
+  document-start: disable
+  truthy: disable
+  comments:
+    min-spaces-from-content: 1
+  indentation:
+    spaces: 2
+    indent-sequences: consistent
+  new-lines:
+    type: unix

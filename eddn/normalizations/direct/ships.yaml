@@ -1,0 +1,176 @@
+# Canonical normalization mappings for shipyard ship models and hull codenames
+Adder:
+  - Adder
+Alliance Challenger:
+  - Alliance_Challenger
+  - Challenger
+  - Typex_3
+Alliance Chieftain:
+  - Alliance_Chieftain
+  - Chieftain
+  - Typex
+  - AllianceChallenger
+Alliance Crusader:
+  - Alliance_Crusader
+  - Crusader
+  - Typex_2
+Anaconda:
+  - Anaconda
+Asp Explorer:
+  - Asp_Explorer
+  - Asp
+Asp Scout:
+  - Asp_Scout
+Beluga Liner:
+  - Beluga_Liner
+Caspian Explorer:
+  - Caspian_Explorer
+Cobra Mk III:
+  - Cobra_Mk_III
+Cobra Mk IV:
+  - Cobra_Mk_IV
+Cobra Mk V:
+  - Cobra_Mk_V
+Corsair:
+  - Corsair
+Diamondback Explorer:
+  - Diamondback_Explorer
+  - Diamondbackxl
+Diamondback Scout:
+  - Diamondback_Scout
+  - Diamondback
+Dolphin:
+  - Dolphin
+Eagle:
+  - Eagle
+  - Eagle_Mk_II
+Federal Assault Ship:
+  - Federal_Assault_Ship
+  - Federation_Dropship_Mkii
+Federal Corvette:
+  - Federal_Corvette
+  - Federation_Corvette
+Federal Dropship:
+  - Federal_Dropship
+  - Federation_Dropship
+Federal Gunship:
+  - Federal_Gunship
+  - Federation_Gunship
+Fer-de-Lance:
+  - Fer-de-Lance
+Hauler:
+  - Hauler
+Imperial Clipper:
+  - Imperial_Clipper
+  - Empire_Clipper
+  - Empire_Trader
+Imperial Courier:
+  - Imperial_Courier
+  - Empire_Courier
+Imperial Cutter:
+  - Imperial_Cutter
+  - Cutter
+  - Empire_Cutter
+Imperial Eagle:
+  - Imperial_Eagle
+  - Empire_Eagle
+Keelback:
+  - Keelback
+  - Independant_Trader
+Kestrel Mk II:
+  - Kestrel_Mk_II
+  - Smallcombat01_Nx
+  - Kestrel
+  - Kestrel_Mk2
+  - Kestrel_Nx
+Krait Mk II:
+  - Krait_Mk_II
+Krait Phantom:
+  - Krait_Phantom
+  - Krait_Light
+Lynx Highliner:
+  - Lynx_Highliner
+Mamba:
+  - Mamba
+Mandalay:
+  - Mandalay
+  - Explorer_Nx
+Orca:
+  - Orca
+Panther Clipper Mk II:
+  - Panther_Clipper_Mk_II
+  - Panthermkii
+  - Pantherclipper
+Python:
+  - Python
+Python Mk II:
+  - Python_Mk_II
+  - Python_Nx
+Sidewinder:
+  - Sidewinder
+  - Sidewinder Mk I
+Type-6 Transporter:
+  - Type-6_Transporter
+  - Type6
+Type-7 Transporter:
+  - Type-7_Transporter
+  - Type7
+Type-8 Transporter:
+  - Type-8_Transporter
+  - Mediumtransport01
+  - Type8
+Type-9 Heavy:
+  - Type-9_Heavy
+  - Type9
+Type-10 Defender:
+  - Type-10_Defender
+  - Type10
+  - Type9_Military
+Type-11 Prospector:
+  - Type-11_Prospector
+  - Lakonminer
+  - Type-11
+  - Type-11 Miner
+Viper Mk III:
+  - Viper_Mk_III
+  - Viper
+Viper Mk IV:
+  - Viper_Mk_IV
+Vulture:
+  - Vulture
+Taipan:
+  - Taipan
+  - Independent_Fighter
+  - Taipan Fighter
+F63 Condor:
+  - F63_Condor
+  - Federation_Fighter
+  - Condor
+Gu-97:
+  - Gu-97
+  - Empire_Fighter
+  - Imperial Fighter
+XG7 Trident:
+  - XG7_Trident
+  - Guardian_Fighter_Smallcombat01
+  - Trident
+XG8 Javelin:
+  - XG8_Javelin
+  - Guardian_Fighter_Smallcombat02
+  - Javelin
+XG9 Lance:
+  - XG9_Lance
+  - Guardian_Fighter_Smallcombat03
+  - Lance
+Scarab:
+  - Scarab
+  - Testbuggy
+  - Combat_Buggy
+  - SRV
+Scorpion:
+  - Scorpion
+  - Combat_Buggy_02
+  - Scorpion SRV
+Nomad:
+  - Nomad
+  - Lander01

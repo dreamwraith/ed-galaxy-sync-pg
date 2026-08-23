@@ -1,0 +1,61 @@
+-- ==============================================================================
+-- drop_all_indexes.sql: Drop Secondary Indexes for Rapid Bulk Ingestion
+-- ==============================================================================
+-- Run this script BEFORE performing a massive initial database bulk ingest (e.g. 560GB+ dump)
+-- to maximize write throughput and eliminate index maintenance overhead.
+-- After ingestion completes, run create_all_indexes.sql to rebuild all indexes.
+
+-- 1. systems indexes
+DROP INDEX IF EXISTS idx_systems_coords_cube;
+DROP INDEX IF EXISTS idx_systems_powers;
+DROP INDEX IF EXISTS idx_systems_name;
+DROP INDEX IF EXISTS idx_systems_name_lower;
+DROP INDEX IF EXISTS idx_systems_name_trgm;
+
+-- 2. bodies indexes
+DROP INDEX IF EXISTS idx_bodies_system;
+DROP INDEX IF EXISTS idx_bodies_subtype;
+DROP INDEX IF EXISTS idx_bodies_reserveLevel;
+DROP INDEX IF EXISTS idx_bodies_materials;
+DROP INDEX IF EXISTS idx_bodies_atmosphereComposition;
+DROP INDEX IF EXISTS idx_bodies_solidComposition;
+
+-- 3. body_rings indexes
+DROP INDEX IF EXISTS idx_body_rings_type;
+DROP INDEX IF EXISTS idx_body_rings_signals_keys;
+
+-- 4. station_materials indexes
+DROP INDEX IF EXISTS idx_station_materials_name;
+DROP INDEX IF EXISTS idx_station_materials_symbol;
+DROP INDEX IF EXISTS idx_station_materials_carrier_id;
+
+-- 5. system_signals indexes
+DROP INDEX IF EXISTS idx_system_signals_type;
+DROP INDEX IF EXISTS idx_system_signals_severity;
+DROP INDEX IF EXISTS idx_system_signals_name;
+
+-- 6. body_pois indexes
+DROP INDEX IF EXISTS idx_body_pois_system;
+DROP INDEX IF EXISTS idx_body_pois_type;
+DROP INDEX IF EXISTS idx_body_pois_name;
+
+-- 7. eddn_unhandled_events (DLQ) indexes
+DROP INDEX IF EXISTS idx_eddn_unhandled_schema;
+DROP INDEX IF EXISTS idx_eddn_unhandled_event;
+DROP INDEX IF EXISTS idx_eddn_unhandled_app_name;
+DROP INDEX IF EXISTS idx_eddn_unhandled_dlq_reason;
+DROP INDEX IF EXISTS idx_eddn_unhandled_received_at;
+
+-- 8. _raw_debug_log indexes
+DROP INDEX IF EXISTS idx_raw_debug_log_label;
+DROP INDEX IF EXISTS idx_raw_debug_log_software;
+DROP INDEX IF EXISTS idx_raw_debug_log_received_at;
+DROP INDEX IF EXISTS idx_raw_debug_log_uploader_id;
+DROP INDEX IF EXISTS idx_raw_debug_log_event;
+
+-- 9. stations indexes
+DROP INDEX IF EXISTS idx_stations_system;
+DROP INDEX IF EXISTS idx_stations_name;
+DROP INDEX IF EXISTS idx_stations_name_lower;
+DROP INDEX IF EXISTS idx_stations_name_trgm;
+DROP INDEX IF EXISTS idx_stations_type;

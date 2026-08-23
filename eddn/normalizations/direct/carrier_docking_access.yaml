@@ -1,0 +1,12 @@
+# Canonical normalization mappings for fleet carrier docking access permissions
+All:
+  - All
+"None":
+  - "None"
+Friends:
+  - Friends
+Squadron:
+  - Squadron
+Squadron and Friends:
+  - Squadron_and_Friends
+  - Squadron_Friends

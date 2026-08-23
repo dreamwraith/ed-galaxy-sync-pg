@@ -1,0 +1,68 @@
+# Canonical normalization mappings for starport, outpost, settlement, and station models
+Fleet Carrier:
+  - Fleet_Carrier
+  - Drake-Class Carrier
+Squadron Carrier:
+  - Squadron_Carrier
+Coriolis Starport:
+  - Coriolis_Starport
+  - Coriolis
+  - StationCoriolis
+Orbis Starport:
+  - Orbis_Starport
+  - Orbis
+  - StationONeilOrbis
+  - StationONeilCylinder
+Ocellus Starport:
+  - Ocellus_Starport
+  - Ocellus
+  - Bernal
+  - Bernal Starport
+  - StationBernalSphere
+Dodec Starport:
+  - Dodec_Starport
+  - Dodec
+  - StationDodec
+Asteroid Base:
+  - Asteroid_Base
+  - StationAsteroid
+Station:
+  - Station
+  - Starport
+Mega Ship:
+  - Mega_Ship
+  - MegaShipCivilian
+  - StationMegaShip
+Planetary Outpost:
+  - Planetary_Outpost
+  - CraterOutpost
+  - Planetary Engineer Base
+Planetary Port:
+  - Planetary_Port
+  - CraterPort
+  - SurfaceStation
+  - Planetary Settlement
+  - Unknown Planetary
+Settlement:
+  - Settlement
+  - OnFootSettlement
+  - Surface Settlement
+  - Odyssey Settlement
+Outpost:
+  - Outpost
+  - OutpostScientific
+  - Civilian Outpost
+  - Commercial Outpost
+  - Industrial Outpost
+  - Military Outpost
+  - Mining Outpost
+  - Scientific Outpost
+  - Unknown Outpost
+Planetary Construction Depot:
+  - Planetary_Construction_Depot
+Space Construction Depot:
+  - Space_Construction_Depot
+Installation:
+  - Installation
+  - GameplayPOI
+  - Surface Installation

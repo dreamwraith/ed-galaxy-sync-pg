@@ -1,0 +1,21 @@
+# Canonical normalization mappings for system, station, and faction allegiances
+Federation:
+  - Federation
+Empire:
+  - Empire
+Alliance:
+  - Alliance
+Independent:
+  - Independent
+  - Pirate
+  - FrontlineSolutions
+Pilots Federation:
+  - Pilots_Federation
+Player Pilots:
+  - Player_Pilots
+Guardian:
+  - Guardian
+Thargoid:
+  - Thargoid
+"None":
+  - "None"

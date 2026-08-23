@@ -1,0 +1,50 @@
+name: CI & Security Audit
+
+on:
+  push:
+    branches: ["master", "main"]
+  pull_request:
+    branches: ["master", "main"]
+  schedule:
+    # Run weekly dependency audit scan
+    - cron: "0 6 * * 1"
+
+jobs:
+  test-and-lint:
+    name: Test, Lint & Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Lint Python with Ruff
+        run: uv run ruff check .
+
+      - name: Check code formatting with Ruff
+        run: uv run ruff format --check .
+
+      - name: Lint YAML configurations
+        run: uv run yamllint config.yaml eddn/normalizations/direct eddn/normalizations/multifield
+
+      - name: Run security & dependency audit
+        run: uv run pip-audit
+
+      - name: Run test suite with pytest
+        run: uv run pytest -v
+
+      - name: Build wheel and source distributions
+        run: uv build

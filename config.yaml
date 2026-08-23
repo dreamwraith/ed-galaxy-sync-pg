@@ -1,0 +1,66 @@
+# Global Listener Config
+min_game_version: "4.0"
+relay_url: tcp://eddn.edcd.io:9500
+timeout_ms: 30000
+enable_dlq: true
+# List of allowed senders and if they can bypass version checking.
+allowed_senders:
+  - name: E:D Market Connector [Windows]
+    bypass_version_check: false
+  - name: E:D Market Connector [Linux]
+    bypass_version_check: false
+  - name: E:D Market Connector [Mac]
+    bypass_version_check: false
+  - name: EDMarketConnector
+    bypass_version_check: false
+  - name: EDDiscovery
+    bypass_version_check: false
+  - name: EDDI
+    bypass_version_check: false
+  - name: EDDLite
+    bypass_version_check: false
+  - name: JournalX
+    bypass_version_check: false
+  - name: ED-Astro
+    bypass_version_check: false
+  - name: ED-Astro.com Fleet Activity
+    bypass_version_check: false
+  - name: ED-Astro.com System Map
+    bypass_version_check: false
+  - name: EDOMaterialsHelper
+    bypass_version_check: false
+  - name: Elite Observatory
+    bypass_version_check: false
+  - name: ObservatoryCore
+    bypass_version_check: false
+  - name: Icarus Terminal
+    bypass_version_check: false
+  - name: GameGlass
+    bypass_version_check: false
+  - name: Spansh Router
+    bypass_version_check: false
+  - name: Spansh
+    bypass_version_check: false
+# Debug Log Filter Rules: Captures full raw EDDN JSON payloads into _raw_debug_log.
+# Supports dot-notation paths for header and message fields, automatically traversing lists.
+#
+# NOTE ON COMMANDER TRACKING (uploaderID):
+# The EDDN gateway applies server-side HMAC hashing to uploader IDs using rotating salt keys.
+# As a result, uploaderID hashes are ephemeral and change across server rotation cycles.
+# To discover your current session hash, run: uv run galaxy_sync probe-cmdr --system "<CurrentSystem>"
+debug_all: false
+debug_log: []
+
+# Examples:
+# debug_all: false
+# debug_log:
+#   - label: "Example_Commander_Filter"
+#     match:
+#       "header.uploaderID": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+#   - label: "Example_Commodity_Filter"
+#     match:
+#       "message.commodities.name": "example_commodity"
+#   - label: "Example_App_Event_Filter"
+#     match:
+#       "header.softwareName": "ExampleApp"
+#       "message.event": "Docked"
