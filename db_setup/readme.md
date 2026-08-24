@@ -298,13 +298,13 @@ One row per (system, faction) minor faction presence. Composite PK: `(system_id6
 
 ### `bodies`
 
-Celestial bodies (stars, planets, moons, barycentres). `id64` is globally unique across the galaxy.
+Celestial bodies (stars, planets, moons, barycentres). `id64` is globally unique across the galaxy and deterministically computed as `(system_id64 << 9) | (bodyId & 0x1FF)`, congruent with the Spansh and EDSM canonical identification standard.
 
 | Column | Type | Description |
 |---|---|---|
 | `system_id64` | `BIGINT` | FK → `systems.id64`. B-Tree indexed (`idx_bodies_system`). |
-| `id64` | `BIGINT` PK | Globally unique Galactic ID64. |
-| `bodyId` | `BIGINT` | Numeric ID of the body within system. |
+| `id64` | `BIGINT` PK | Globally unique 64-bit Celestial ID: `(system_id64 << 9) \| (bodyId & 0x1FF)`. |
+| `bodyId` | `BIGINT` | Frontier system-local integer index (0–511). Matches `Journal.BodyID`. |
 | `name` | `TEXT` | Body name. |
 | `type` | `TEXT` | High-level classification (`Planet`, `Star`, `Barycentre`). |
 | `subType` | `TEXT` | Detailed subtype (`Earth-like world`, `Neutron Star`, `Class II gas giant`, etc.). |
@@ -346,6 +346,7 @@ All dockable space stations, surface ports, outposts, settlements, and Drake-Cla
 |---|---|---|
 | `market_id` | `BIGINT` PK | Frontier market identifier. Globally unique. |
 | `system_id64` | `BIGINT` | FK → `systems.id64`. |
+| `body_source_id64` | `BIGINT` | Parent body identifier / index for planetary surface ports & settlements. |
 | `name` | `TEXT` | Station name. |
 | `type` | `TEXT` | Physical type (`Coriolis Starport`, `Orbis Starport`, `Outpost`, `Planetary Port`, `Drake-Class Carrier`, `Settlement`). |
 | `state` | `TEXT` | Operational state (`Construction`, `Damaged`, `UnderRepairs`, `UnderAttack`). |
