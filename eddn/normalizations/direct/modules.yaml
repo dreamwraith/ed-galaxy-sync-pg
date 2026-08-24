@@ -13,6 +13,7 @@ AX Multi-Cannon:
   - Hpt_ATMultiCannon_Turret_Medium
 Abrasion Blaster:
   - Abrasion_Blaster
+  - Far-Reaching Abrasion Blaster
   - Hpt_Mining_AbrBlstr_Fixed_Small
   - Hpt_Mining_AbrBlstr_Turret_Small
 Advanced Discovery Scanner:
@@ -138,6 +139,7 @@ Cannon:
   - Hpt_Cannon_Turret_Small
 Cargo Rack:
   - Cargo_Rack
+  - Extended Cargo Rack
   - Int_CargoRack_Size1_Class1
   - Int_CargoRack_Size2_Class1
   - Int_CargoRack_Size2_Class1_free
@@ -203,10 +205,10 @@ Decontamination Limpet Controller:
   - Int_DroneControl_Decontamination_Size7_Class1
 Detailed Surface Scanner:
   - Detailed_Surface_Scanner
+  - Long Range Detailed Surface Scanner
   - Int_DetailedSurfaceScanner_Tiny
 Economy Class Passenger Cabin:
   - Economy_Class_Passenger_Cabin
-  - Class_Passenger_Cabin
   - Int_PassengerCabin_Size2_Class1
   - Int_PassengerCabin_Size3_Class1
   - Int_PassengerCabin_Size4_Class1
@@ -241,6 +243,7 @@ Enhanced Xeno Scanner:
   - Hpt_XenoScannerMk2_Basic_Tiny
 Enzyme Missile Rack:
   - Enzyme_Missile_Rack
+  - High-Yield Enzyme Missile Rack
   - Hpt_CausticMissile_Fixed_Medium
 Experimental Weapon Stabiliser:
   - Experimental_Weapon_Stabiliser
@@ -248,6 +251,7 @@ Experimental Weapon Stabiliser:
   - Int_ExpModuleStabiliser_Size5_Class3
 Fighter Hangar:
   - Fighter_Hangar
+  - Vessel Hangar
   - Int_FighterBay_Size5_Class1
   - Int_FighterBay_Size5_Class1_Free
   - Int_FighterBay_Size5_Class2
@@ -267,6 +271,7 @@ First Class Passenger Cabin:
   - Int_PassengerCabin_Size6_Class3
 Fragment Cannon:
   - Fragment_Cannon
+  - Double Screaming Fragment Cannon
   - Hpt_Slugshot_Fixed_Large
   - Hpt_Slugshot_Fixed_Medium
   - Hpt_Slugshot_Fixed_Small
@@ -759,6 +764,7 @@ Mining Lance:
   - Hpt_MiningLaser_Fixed_Small_Advanced
 Mining Laser:
   - Mining_Laser
+  - Long Range Mining Laser
   - Hpt_MiningLaser_Fixed_Medium
   - Hpt_MiningLaser_Fixed_Small
   - Hpt_MiningLaser_Turret_Medium
@@ -848,6 +854,7 @@ Mk II Cargo Rack:
   - Int_LargeCargoRack_Size8_class1
 Mk II Fighter Hangar:
   - Mk_II_Fighter_Hangar
+  - Mk II Vessel Hangar
   - Int_FighterBayMk2_Size5_Class1
   - Int_FighterBayMk2_Size5_Class1_Free
   - Int_FighterBayMk2_Size5_Class2
@@ -888,6 +895,7 @@ MkII Economy Class Passenger Cabin:
   - Int_MkII_PassengerCabin_Size6_Class1
 Module Reinforcement Package:
   - Module_Reinforcement_Package
+  - Heavy Duty Module Reinforcement Package
   - Int_ModuleReinforcement_Size1_Class1
   - Int_ModuleReinforcement_Size1_Class2
   - Int_ModuleReinforcement_Size2_Class1
@@ -900,6 +908,7 @@ Module Reinforcement Package:
   - Int_ModuleReinforcement_Size5_Class2
 Multi-Cannon:
   - Multi-Cannon
+  - Rapid Phase Multi-Cannon
   - Hpt_MultiCannon_Fixed_Huge
   - Hpt_MultiCannon_Fixed_Large
   - Hpt_MultiCannon_Fixed_Medium
@@ -944,6 +953,8 @@ Point Defence:
   - Hpt_PlasmaPointDefence_Turret_Tiny
 Power Distributor:
   - Power_Distributor
+  - Balanced Power Distributor
+  - Support Focused Power Distributor
   - Int_PowerDistributor_Size1_Class1
   - Int_PowerDistributor_Size1_Class1_free
   - Int_PowerDistributor_Size1_Class2
@@ -1084,6 +1095,7 @@ Pulse Wave Xeno Scanner:
   - Hpt_XenoScanner_Advanced_Tiny
 Rail Gun:
   - Rail_Gun
+  - Enduring Feedback Rail Gun
   - Hpt_Railgun_Fixed_Medium
   - Hpt_Railgun_Fixed_Small
 Reactive Surface Composite:
@@ -1257,6 +1269,9 @@ Rocket Propelled FSD Disruptor:
   - Hpt_DumbfireMissileRack_Fixed_Medium_Lasso
 Seeker Missile Rack:
   - Seeker_Missile_Rack
+  - Drag Seeker Missile Rack
+  - Lightweight Thermal Seeker Missile Rack
+  - Lockdown Seeker Missile Rack
   - Hpt_BasicMissileRack_Fixed_Large
   - Hpt_BasicMissileRack_Fixed_Medium
   - Hpt_BasicMissileRack_Fixed_Small

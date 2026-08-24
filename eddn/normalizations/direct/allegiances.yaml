@@ -8,7 +8,6 @@ Alliance:
 Independent:
   - Independent
   - Pirate
-  - FrontlineSolutions
 Pilots Federation:
   - Pilots_Federation
 Player Pilots:
@@ -17,5 +16,7 @@ Guardian:
   - Guardian
 Thargoid:
   - Thargoid
+FrontlineSolutions:
+  - Frontline Solutions
 "None":
   - "None"
