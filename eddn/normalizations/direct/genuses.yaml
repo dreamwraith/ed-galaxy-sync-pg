@@ -13,6 +13,7 @@ Aleoida:
   - Aleoida Arcus (T)
   - Aleoida Arcus (TTS)
   - Aleoida Arcus (W)
+  - Aleoida Arcus (Y)
   - Aleoida Coronamus (A)
   - Aleoida Coronamus (B)
   - Aleoida Coronamus (D)
@@ -55,6 +56,7 @@ Aleoida:
   - Aleoida Spica (N)
   - Aleoida Spica (T)
   - Aleoida Spica (TTS)
+  - Aleoida Spica (Y)
   - Aleoida_01_A
   - Aleoida_01_B
   - Aleoida_01_D
@@ -66,6 +68,7 @@ Aleoida:
   - Aleoida_01_T
   - Aleoida_01_TTS
   - Aleoida_01_W
+  - Aleoida_01_Y
   - Aleoida_02_A
   - Aleoida_02_B
   - Aleoida_02_D
@@ -87,8 +90,10 @@ Aleoida:
   - Aleoida_03_N
   - Aleoida_03_T
   - Aleoida_03_TTS
+  - Aleoida_03_Y
   - Aleoida_04_A
   - Aleoida_04_B
+  - Aleoida_04_D
   - Aleoida_04_F
   - Aleoida_04_K
   - Aleoida_04_L
@@ -120,6 +125,7 @@ Aleoida:
   - Aleoids_01_T
   - Aleoids_01_TTS
   - Aleoids_01_W
+  - Aleoids_01_Y
   - Aleoids_02_A
   - Aleoids_02_B
   - Aleoids_02_D
@@ -141,8 +147,10 @@ Aleoida:
   - Aleoids_03_N
   - Aleoids_03_T
   - Aleoids_03_TTS
+  - Aleoids_03_Y
   - Aleoids_04_A
   - Aleoids_04_B
+  - Aleoids_04_D
   - Aleoids_04_F
   - Aleoids_04_K
   - Aleoids_04_L
@@ -164,8 +172,20 @@ Aleoida:
   - Aleoids_05_Y
 Amphora Plant:
   - Amphora Plant (Vents)
+  - Amphora Plant Plant (A)
   - Vents
+  - Vents_A
 Anemone:
+  - Anemone Blatteum Bioluminescent (B)
+  - Anemone Croceum (A)
+  - Anemone Croceum (B)
+  - Anemone Luteolum (B)
+  - Anemone Prasinum Bioluminescent (O)
+  - Anemone Puniceum (O)
+  - Anemone Puniceum (W)
+  - Anemone Roseum (B)
+  - Anemone Roseum Bioluminescent (B)
+  - Anemone Rubeum Bioluminescent (B)
   - Anemones
   - Blatteum Bioluminescent Anemone (SphereEFGH)
   - Croceum Anemone (01)
@@ -176,13 +196,23 @@ Anemone:
   - Roseum Bioluminescent Anemone (03)
   - Rubeum Bioluminescent Anemone (01)
   - Sphere
+  - Sphere_B
   - SphereABCD_01
+  - SphereABCD_01_A
+  - SphereABCD_01_B
   - SphereABCD_02
+  - SphereABCD_02_O
+  - SphereABCD_02_W
   - SphereABCD_03
+  - SphereABCD_03_B
   - SphereEFGH
   - SphereEFGH_01
+  - SphereEFGH_01_B
   - SphereEFGH_02
+  - SphereEFGH_02_O
   - SphereEFGH_03
+  - SphereEFGH_03_B
+  - SphereEFGH_B
 Aster Pod:
   - Aster Pod (Bl)
   - Aster Pod (Def)
@@ -412,6 +442,110 @@ Bacterium:
   - Bacterium Volu (Technetium)
   - Bacterium Volu (Tellurium)
   - Bacterium Volu (Yttrium)
+  - Bacterium_01_A
+  - Bacterium_01_Ae
+  - Bacterium_01_B
+  - Bacterium_01_D
+  - Bacterium_01_F
+  - Bacterium_01_G
+  - Bacterium_01_K
+  - Bacterium_01_L
+  - Bacterium_01_M
+  - Bacterium_01_N
+  - Bacterium_01_O
+  - Bacterium_01_T
+  - Bacterium_01_TTS
+  - Bacterium_01_W
+  - Bacterium_01_Y
+  - Bacterium_02_Antimony
+  - Bacterium_02_Polonium
+  - Bacterium_02_Ruthenium
+  - Bacterium_02_Technetium
+  - Bacterium_02_Tellurium
+  - Bacterium_02_Yttrium
+  - Bacterium_03_Cadmium
+  - Bacterium_03_Mercury
+  - Bacterium_03_Molybdenum
+  - Bacterium_03_Niobium
+  - Bacterium_03_Tin
+  - Bacterium_03_Tungsten
+  - Bacterium_04_Antimony
+  - Bacterium_04_Polonium
+  - Bacterium_04_Ruthenium
+  - Bacterium_04_Technetium
+  - Bacterium_04_Tellurium
+  - Bacterium_04_Yttrium
+  - Bacterium_05_Antimony
+  - Bacterium_05_Polonium
+  - Bacterium_05_Ruthenium
+  - Bacterium_05_Technetium
+  - Bacterium_05_Tellurium
+  - Bacterium_05_Yttrium
+  - Bacterium_06_A
+  - Bacterium_06_B
+  - Bacterium_06_D
+  - Bacterium_06_F
+  - Bacterium_06_G
+  - Bacterium_06_K
+  - Bacterium_06_L
+  - Bacterium_06_M
+  - Bacterium_06_N
+  - Bacterium_06_O
+  - Bacterium_06_T
+  - Bacterium_06_TTS
+  - Bacterium_06_W
+  - Bacterium_06_Y
+  - Bacterium_07_Cadmium
+  - Bacterium_07_Mercury
+  - Bacterium_07_Molybdenum
+  - Bacterium_07_Niobium
+  - Bacterium_07_Tin
+  - Bacterium_07_Tungsten
+  - Bacterium_08_Antimony
+  - Bacterium_08_Polonium
+  - Bacterium_08_Ruthenium
+  - Bacterium_08_Technetium
+  - Bacterium_08_Tellurium
+  - Bacterium_08_Yttrium
+  - Bacterium_09_Antimony
+  - Bacterium_09_Polonium
+  - Bacterium_09_Ruthenium
+  - Bacterium_09_Technetium
+  - Bacterium_09_Tellurium
+  - Bacterium_09_Yttrium
+  - Bacterium_10_Antimony
+  - Bacterium_10_Polonium
+  - Bacterium_10_Ruthenium
+  - Bacterium_10_Technetium
+  - Bacterium_10_Tellurium
+  - Bacterium_10_Yttrium
+  - Bacterium_11_Cadmium
+  - Bacterium_11_Mercury
+  - Bacterium_11_Molybdenum
+  - Bacterium_11_Niobium
+  - Bacterium_11_Tin
+  - Bacterium_11_Tungsten
+  - Bacterium_12_A
+  - Bacterium_12_Ae
+  - Bacterium_12_B
+  - Bacterium_12_D
+  - Bacterium_12_F
+  - Bacterium_12_G
+  - Bacterium_12_K
+  - Bacterium_12_L
+  - Bacterium_12_M
+  - Bacterium_12_N
+  - Bacterium_12_O
+  - Bacterium_12_T
+  - Bacterium_12_TTS
+  - Bacterium_12_W
+  - Bacterium_12_Y
+  - Bacterium_13_Cadmium
+  - Bacterium_13_Mercury
+  - Bacterium_13_Molybdenum
+  - Bacterium_13_Niobium
+  - Bacterium_13_Tin
+  - Bacterium_13_Tungsten
 Bark Mounds:
   - Bark Mound
   - Bark Mounds (Cone)
@@ -468,9 +602,12 @@ Bullet Mollusc:
 Cactoida:
   - Cactoid
   - Cactoid_01_A
+  - Cactoid_01_B
   - Cactoid_01_D
   - Cactoid_01_F
   - Cactoid_01_G
+  - Cactoid_01_H
+  - Cactoid_01_K
   - Cactoid_01_L
   - Cactoid_01_M
   - Cactoid_01_N
@@ -478,9 +615,12 @@ Cactoida:
   - Cactoid_01_TTS
   - Cactoid_01_Y
   - Cactoid_02_A
+  - Cactoid_02_B
   - Cactoid_02_D
   - Cactoid_02_F
   - Cactoid_02_G
+  - Cactoid_02_H
+  - Cactoid_02_K
   - Cactoid_02_L
   - Cactoid_02_M
   - Cactoid_02_N
@@ -490,26 +630,35 @@ Cactoida:
   - Cactoid_02_W
   - Cactoid_02_Y
   - Cactoid_03_A
+  - Cactoid_03_B
   - Cactoid_03_F
   - Cactoid_03_G
+  - Cactoid_03_H
+  - Cactoid_03_K
   - Cactoid_03_L
   - Cactoid_03_M
   - Cactoid_03_N
   - Cactoid_03_T
   - Cactoid_03_TTS
   - Cactoid_04_A
+  - Cactoid_04_B
   - Cactoid_04_D
   - Cactoid_04_F
   - Cactoid_04_G
+  - Cactoid_04_H
+  - Cactoid_04_K
   - Cactoid_04_L
   - Cactoid_04_M
   - Cactoid_04_N
   - Cactoid_04_T
   - Cactoid_04_TTS
   - Cactoid_05_A
+  - Cactoid_05_B
   - Cactoid_05_D
   - Cactoid_05_F
   - Cactoid_05_G
+  - Cactoid_05_H
+  - Cactoid_05_K
   - Cactoid_05_L
   - Cactoid_05_M
   - Cactoid_05_N
@@ -517,9 +666,12 @@ Cactoida:
   - Cactoid_05_TTS
   - Cactoid_05_Y
   - Cactoida Cortexum (A)
+  - Cactoida Cortexum (B)
   - Cactoida Cortexum (D)
   - Cactoida Cortexum (F)
   - Cactoida Cortexum (G)
+  - Cactoida Cortexum (H)
+  - Cactoida Cortexum (K)
   - Cactoida Cortexum (L)
   - Cactoida Cortexum (M)
   - Cactoida Cortexum (N)
@@ -527,9 +679,12 @@ Cactoida:
   - Cactoida Cortexum (TTS)
   - Cactoida Cortexum (Y)
   - Cactoida Lapis (A)
+  - Cactoida Lapis (B)
   - Cactoida Lapis (D)
   - Cactoida Lapis (F)
   - Cactoida Lapis (G)
+  - Cactoida Lapis (H)
+  - Cactoida Lapis (K)
   - Cactoida Lapis (L)
   - Cactoida Lapis (M)
   - Cactoida Lapis (N)
@@ -539,9 +694,12 @@ Cactoida:
   - Cactoida Lapis (W)
   - Cactoida Lapis (Y)
   - Cactoida Peperatis (A)
+  - Cactoida Peperatis (B)
   - Cactoida Peperatis (D)
   - Cactoida Peperatis (F)
   - Cactoida Peperatis (G)
+  - Cactoida Peperatis (H)
+  - Cactoida Peperatis (K)
   - Cactoida Peperatis (L)
   - Cactoida Peperatis (M)
   - Cactoida Peperatis (N)
@@ -549,22 +707,92 @@ Cactoida:
   - Cactoida Peperatis (TTS)
   - Cactoida Peperatis (Y)
   - Cactoida Pullulanta (A)
+  - Cactoida Pullulanta (B)
   - Cactoida Pullulanta (D)
   - Cactoida Pullulanta (F)
   - Cactoida Pullulanta (G)
+  - Cactoida Pullulanta (H)
+  - Cactoida Pullulanta (K)
   - Cactoida Pullulanta (L)
   - Cactoida Pullulanta (M)
   - Cactoida Pullulanta (N)
   - Cactoida Pullulanta (T)
   - Cactoida Pullulanta (TTS)
   - Cactoida Vermis (A)
+  - Cactoida Vermis (B)
   - Cactoida Vermis (F)
   - Cactoida Vermis (G)
+  - Cactoida Vermis (H)
+  - Cactoida Vermis (K)
   - Cactoida Vermis (L)
   - Cactoida Vermis (M)
   - Cactoida Vermis (N)
   - Cactoida Vermis (T)
   - Cactoida Vermis (TTS)
+  - Cactoida_01_A
+  - Cactoida_01_B
+  - Cactoida_01_D
+  - Cactoida_01_F
+  - Cactoida_01_G
+  - Cactoida_01_H
+  - Cactoida_01_K
+  - Cactoida_01_L
+  - Cactoida_01_M
+  - Cactoida_01_N
+  - Cactoida_01_T
+  - Cactoida_01_TTS
+  - Cactoida_01_Y
+  - Cactoida_02_A
+  - Cactoida_02_B
+  - Cactoida_02_D
+  - Cactoida_02_F
+  - Cactoida_02_G
+  - Cactoida_02_H
+  - Cactoida_02_K
+  - Cactoida_02_L
+  - Cactoida_02_M
+  - Cactoida_02_N
+  - Cactoida_02_O
+  - Cactoida_02_T
+  - Cactoida_02_TTS
+  - Cactoida_02_W
+  - Cactoida_02_Y
+  - Cactoida_03_A
+  - Cactoida_03_B
+  - Cactoida_03_F
+  - Cactoida_03_G
+  - Cactoida_03_H
+  - Cactoida_03_K
+  - Cactoida_03_L
+  - Cactoida_03_M
+  - Cactoida_03_N
+  - Cactoida_03_T
+  - Cactoida_03_TTS
+  - Cactoida_04_A
+  - Cactoida_04_B
+  - Cactoida_04_D
+  - Cactoida_04_F
+  - Cactoida_04_G
+  - Cactoida_04_H
+  - Cactoida_04_K
+  - Cactoida_04_L
+  - Cactoida_04_M
+  - Cactoida_04_N
+  - Cactoida_04_T
+  - Cactoida_04_TTS
+  - Cactoida_05_A
+  - Cactoida_05_B
+  - Cactoida_05_D
+  - Cactoida_05_F
+  - Cactoida_05_G
+  - Cactoida_05_H
+  - Cactoida_05_K
+  - Cactoida_05_L
+  - Cactoida_05_M
+  - Cactoida_05_N
+  - Cactoida_05_T
+  - Cactoida_05_TTS
+  - Cactoida_05_Y
   - Cactoids
 Calcite Plates:
   - Calcite Plates (Bl)
@@ -618,6 +846,7 @@ Clypeus:
   - Clypeus Speculumi (F)
   - Clypeus Speculumi (G)
   - Clypeus Speculumi (K)
+  - Clypeus Speculumi (L)
   - Clypeus Speculumi (M)
   - Clypeus Speculumi (N)
   - Clypeus_01_A
@@ -644,6 +873,7 @@ Clypeus:
   - Clypeus_03_F
   - Clypeus_03_G
   - Clypeus_03_K
+  - Clypeus_03_L
   - Clypeus_03_M
   - Clypeus_03_N
 Collared Pod:
@@ -687,6 +917,37 @@ Concha:
   - Concha Renibus (Niobium)
   - Concha Renibus (Tin)
   - Concha Renibus (Tungsten)
+  - Concha_01_Cadmium
+  - Concha_01_Mercury
+  - Concha_01_Molybdenum
+  - Concha_01_Niobium
+  - Concha_01_Tin
+  - Concha_01_Tungsten
+  - Concha_02_A
+  - Concha_02_B
+  - Concha_02_D
+  - Concha_02_F
+  - Concha_02_G
+  - Concha_02_K
+  - Concha_02_L
+  - Concha_02_N
+  - Concha_02_Y
+  - Concha_03_A
+  - Concha_03_B
+  - Concha_03_D
+  - Concha_03_F
+  - Concha_03_G
+  - Concha_03_K
+  - Concha_03_L
+  - Concha_03_N
+  - Concha_03_W
+  - Concha_03_Y
+  - Concha_04_Antimony
+  - Concha_04_Polonium
+  - Concha_04_Ruthenium
+  - Concha_04_Technetium
+  - Concha_04_Tellurium
+  - Concha_04_Yttrium
   - Conchas
   - Conchas_01_Cadmium
   - Conchas_01_Mercury
@@ -720,8 +981,20 @@ Concha:
   - Conchas_04_Tellurium
   - Conchas_04_Yttrium
 Crystalline Shards:
+  - Crystalline Shards (A)
+  - Crystalline Shards (F)
+  - Crystalline Shards (G)
   - Crystalline Shards (Ice)
+  - Crystalline Shards (K)
+  - Crystalline Shards (M)
+  - Crystalline Shards (S)
   - Ground_Struct_Ice
+  - Ground_Struct_Ice_A
+  - Ground_Struct_Ice_F
+  - Ground_Struct_Ice_G
+  - Ground_Struct_Ice_K
+  - Ground_Struct_Ice_M
+  - Ground_Struct_Ice_S
   - Ground_Struct_Organics
   - Ground_Struct_Silica
   - IceCrystals
@@ -729,7 +1002,9 @@ Crystalline Shards:
   - MineralSpheres
   - SilicateCrystals
 Electricae:
+  - Electricae Pluma (A)
   - Electricae Pluma (Antimony)
+  - Electricae Pluma (N)
   - Electricae Pluma (Polonium)
   - Electricae Pluma (Ruthenium)
   - Electricae Pluma (Technetium)
@@ -741,7 +1016,9 @@ Electricae:
   - Electricae Radialem (Technetium)
   - Electricae Radialem (Tellurium)
   - Electricae Radialem (Yttrium)
+  - Electricae_01_A
   - Electricae_01_Antimony
+  - Electricae_01_N
   - Electricae_01_Polonium
   - Electricae_01_Ruthenium
   - Electricae_01_Technetium
@@ -757,6 +1034,7 @@ Fonticulua:
   - Fonticula
   - Fonticulua Campestris (A)
   - Fonticulua Campestris (Ae)
+  - Fonticulua Campestris (AEBE)
   - Fonticulua Campestris (B)
   - Fonticulua Campestris (D)
   - Fonticulua Campestris (F)
@@ -770,6 +1048,7 @@ Fonticulua:
   - Fonticulua Campestris (TTS)
   - Fonticulua Campestris (Y)
   - Fonticulua Digitos (A)
+  - Fonticulua Digitos (AEBE)
   - Fonticulua Digitos (B)
   - Fonticulua Digitos (D)
   - Fonticulua Digitos (F)
@@ -782,7 +1061,9 @@ Fonticulua:
   - Fonticulua Digitos (TTS)
   - Fonticulua Digitos (Y)
   - Fonticulua Fluctus (A)
+  - Fonticulua Fluctus (AEBE)
   - Fonticulua Fluctus (B)
+  - Fonticulua Fluctus (D)
   - Fonticulua Fluctus (F)
   - Fonticulua Fluctus (G)
   - Fonticulua Fluctus (K)
@@ -791,8 +1072,10 @@ Fonticulua:
   - Fonticulua Fluctus (N)
   - Fonticulua Fluctus (T)
   - Fonticulua Fluctus (TTS)
+  - Fonticulua Fluctus (Y)
   - Fonticulua Lapida (A)
   - Fonticulua Lapida (Ae)
+  - Fonticulua Lapida (AEBE)
   - Fonticulua Lapida (B)
   - Fonticulua Lapida (D)
   - Fonticulua Lapida (F)
@@ -807,6 +1090,7 @@ Fonticulua:
   - Fonticulua Lapida (Y)
   - Fonticulua Segmentatus (A)
   - Fonticulua Segmentatus (Ae)
+  - Fonticulua Segmentatus (AEBE)
   - Fonticulua Segmentatus (B)
   - Fonticulua Segmentatus (D)
   - Fonticulua Segmentatus (F)
@@ -820,6 +1104,7 @@ Fonticulua:
   - Fonticulua Segmentatus (Y)
   - Fonticulua Upupam (A)
   - Fonticulua Upupam (Ae)
+  - Fonticulua Upupam (AEBE)
   - Fonticulua Upupam (B)
   - Fonticulua Upupam (D)
   - Fonticulua Upupam (F)
@@ -832,9 +1117,95 @@ Fonticulua:
   - Fonticulua Upupam (TTS)
   - Fonticulua Upupam (W)
   - Fonticulua Upupam (Y)
+  - Fonticulua_01_A
+  - Fonticulua_01_Ae
+  - Fonticulua_01_AEBE
+  - Fonticulua_01_B
+  - Fonticulua_01_D
+  - Fonticulua_01_F
+  - Fonticulua_01_G
+  - Fonticulua_01_K
+  - Fonticulua_01_L
+  - Fonticulua_01_M
+  - Fonticulua_01_N
+  - Fonticulua_01_T
+  - Fonticulua_01_TTS
+  - Fonticulua_01_Y
+  - Fonticulua_02_A
+  - Fonticulua_02_Ae
+  - Fonticulua_02_AEBE
+  - Fonticulua_02_B
+  - Fonticulua_02_D
+  - Fonticulua_02_F
+  - Fonticulua_02_G
+  - Fonticulua_02_K
+  - Fonticulua_02_L
+  - Fonticulua_02_M
+  - Fonticulua_02_N
+  - Fonticulua_02_O
+  - Fonticulua_02_T
+  - Fonticulua_02_TTS
+  - Fonticulua_02_Y
+  - Fonticulua_03_A
+  - Fonticulua_03_Ae
+  - Fonticulua_03_AEBE
+  - Fonticulua_03_B
+  - Fonticulua_03_D
+  - Fonticulua_03_F
+  - Fonticulua_03_G
+  - Fonticulua_03_K
+  - Fonticulua_03_L
+  - Fonticulua_03_M
+  - Fonticulua_03_N
+  - Fonticulua_03_T
+  - Fonticulua_03_TTS
+  - Fonticulua_03_W
+  - Fonticulua_03_Y
+  - Fonticulua_04_A
+  - Fonticulua_04_Ae
+  - Fonticulua_04_AEBE
+  - Fonticulua_04_B
+  - Fonticulua_04_D
+  - Fonticulua_04_F
+  - Fonticulua_04_G
+  - Fonticulua_04_K
+  - Fonticulua_04_L
+  - Fonticulua_04_M
+  - Fonticulua_04_N
+  - Fonticulua_04_O
+  - Fonticulua_04_T
+  - Fonticulua_04_TTS
+  - Fonticulua_04_Y
+  - Fonticulua_05_A
+  - Fonticulua_05_AEBE
+  - Fonticulua_05_B
+  - Fonticulua_05_D
+  - Fonticulua_05_F
+  - Fonticulua_05_G
+  - Fonticulua_05_K
+  - Fonticulua_05_L
+  - Fonticulua_05_M
+  - Fonticulua_05_N
+  - Fonticulua_05_T
+  - Fonticulua_05_TTS
+  - Fonticulua_05_Y
+  - Fonticulua_06_A
+  - Fonticulua_06_AEBE
+  - Fonticulua_06_B
+  - Fonticulua_06_D
+  - Fonticulua_06_F
+  - Fonticulua_06_G
+  - Fonticulua_06_K
+  - Fonticulua_06_L
+  - Fonticulua_06_M
+  - Fonticulua_06_N
+  - Fonticulua_06_T
+  - Fonticulua_06_TTS
+  - Fonticulua_06_Y
   - Fonticulus
   - Fonticulus_01_A
   - Fonticulus_01_Ae
+  - Fonticulus_01_AEBE
   - Fonticulus_01_B
   - Fonticulus_01_D
   - Fonticulus_01_F
@@ -848,6 +1219,7 @@ Fonticulua:
   - Fonticulus_01_Y
   - Fonticulus_02_A
   - Fonticulus_02_Ae
+  - Fonticulus_02_AEBE
   - Fonticulus_02_B
   - Fonticulus_02_D
   - Fonticulus_02_F
@@ -862,6 +1234,7 @@ Fonticulua:
   - Fonticulus_02_Y
   - Fonticulus_03_A
   - Fonticulus_03_Ae
+  - Fonticulus_03_AEBE
   - Fonticulus_03_B
   - Fonticulus_03_D
   - Fonticulus_03_F
@@ -876,6 +1249,7 @@ Fonticulua:
   - Fonticulus_03_Y
   - Fonticulus_04_A
   - Fonticulus_04_Ae
+  - Fonticulus_04_AEBE
   - Fonticulus_04_B
   - Fonticulus_04_D
   - Fonticulus_04_F
@@ -889,7 +1263,9 @@ Fonticulua:
   - Fonticulus_04_TTS
   - Fonticulus_04_Y
   - Fonticulus_05_A
+  - Fonticulus_05_AEBE
   - Fonticulus_05_B
+  - Fonticulus_05_D
   - Fonticulus_05_F
   - Fonticulus_05_G
   - Fonticulus_05_K
@@ -898,7 +1274,9 @@ Fonticulua:
   - Fonticulus_05_N
   - Fonticulus_05_T
   - Fonticulus_05_TTS
+  - Fonticulus_05_Y
   - Fonticulus_06_A
+  - Fonticulus_06_AEBE
   - Fonticulus_06_B
   - Fonticulus_06_D
   - Fonticulus_06_F
@@ -964,6 +1342,7 @@ Frutexa:
   - Frutexa Metallicum (N)
   - Frutexa Metallicum (TTS)
   - Frutexa Sponsae (B)
+  - Frutexa Sponsae (D)
   - Frutexa Sponsae (F)
   - Frutexa Sponsae (G)
   - Frutexa Sponsae (L)
@@ -1014,6 +1393,7 @@ Frutexa:
   - Frutexa_05_N
   - Frutexa_05_TTS
   - Frutexa_06_B
+  - Frutexa_06_D
   - Frutexa_06_F
   - Frutexa_06_G
   - Frutexa_06_L
@@ -1074,6 +1454,7 @@ Frutexa:
   - Shrubs_05_N
   - Shrubs_05_TTS
   - Shrubs_06_B
+  - Shrubs_06_D
   - Shrubs_06_F
   - Shrubs_06_G
   - Shrubs_06_L
@@ -1113,6 +1494,30 @@ Fumerola:
   - Fumerola Nitris (Niobium)
   - Fumerola Nitris (Tin)
   - Fumerola Nitris (Tungsten)
+  - Fumerola_01_Cadmium
+  - Fumerola_01_Mercury
+  - Fumerola_01_Molybdenum
+  - Fumerola_01_Niobium
+  - Fumerola_01_Tin
+  - Fumerola_01_Tungsten
+  - Fumerola_02_Cadmium
+  - Fumerola_02_Mercury
+  - Fumerola_02_Molybdenum
+  - Fumerola_02_Niobium
+  - Fumerola_02_Tin
+  - Fumerola_02_Tungsten
+  - Fumerola_03_Cadmium
+  - Fumerola_03_Mercury
+  - Fumerola_03_Molybdenum
+  - Fumerola_03_Niobium
+  - Fumerola_03_Tin
+  - Fumerola_03_Tungsten
+  - Fumerola_04_Cadmium
+  - Fumerola_04_Mercury
+  - Fumerola_04_Molybdenum
+  - Fumerola_04_Niobium
+  - Fumerola_04_Tin
+  - Fumerola_04_Tungsten
   - Fumerolas
   - Fumerolas_01_Cadmium
   - Fumerolas_01_Mercury
@@ -1253,8 +1658,6 @@ Gyre Tree:
   - SPOI_SeedPolyp01_V1
   - SPOI_SeedPolyp01_V1_Gld
   - Viride Gyre Tree (V1)
-Gyre Trees:
-  []
 Ice Crystals:
   - Ice Crystals (Bl)
   - Ice Crystals (Gr)
@@ -1276,8 +1679,6 @@ Ingensradices:
 Lattice Mineral Spheres:
   - Lattice Mineral Spheres (Lattice)
   - SPOI_Ball_Lattice
-Loricatus:
-  []
 Metallic Crystals:
   - L_Cry_MetCry_Gr
   - L_Cry_MetCry_Pur
@@ -1528,6 +1929,7 @@ Solid Mineral Spheres:
   - Sphere
   - Spheres
   - SPOI_Ball
+  - SPOI_Ball_Lattice
 Squid Mollusc:
   - Small_Org_Moll01_V3_Bl
   - Small_Org_Moll01_V3_Def
@@ -1678,6 +2080,9 @@ Thargoid Barnacle:
   - Thargoid Barnacle (01)
   - Thargoid Barnacle (02)
   - Thargoid Barnacle (Spikes)
+  - Thargoid_Barnacle_01
+  - Thargoid_Barnacle_02
+  - Thargoid_Barnacle_Spikes
 Torus Mollusc:
   - Small_Org_Moll01_V2_Bl
   - Small_Org_Moll01_V2_Gr
@@ -1700,6 +2105,7 @@ Tubus:
   - Tubus Cavas (D)
   - Tubus Cavas (F)
   - Tubus Cavas (G)
+  - Tubus Cavas (H)
   - Tubus Cavas (K)
   - Tubus Cavas (L)
   - Tubus Cavas (M)
@@ -1709,12 +2115,15 @@ Tubus:
   - Tubus Compagibus (A)
   - Tubus Compagibus (B)
   - Tubus Compagibus (D)
+  - Tubus Compagibus (DC)
   - Tubus Compagibus (F)
   - Tubus Compagibus (G)
+  - Tubus Compagibus (H)
   - Tubus Compagibus (K)
   - Tubus Compagibus (L)
   - Tubus Compagibus (M)
   - Tubus Compagibus (N)
+  - Tubus Compagibus (S)
   - Tubus Compagibus (T)
   - Tubus Compagibus (TTS)
   - Tubus Compagibus (W)
@@ -1723,6 +2132,7 @@ Tubus:
   - Tubus Conifer (D)
   - Tubus Conifer (F)
   - Tubus Conifer (G)
+  - Tubus Conifer (H)
   - Tubus Conifer (K)
   - Tubus Conifer (L)
   - Tubus Conifer (M)
@@ -1743,6 +2153,7 @@ Tubus:
   - Tubus Sororibus (A)
   - Tubus Sororibus (B)
   - Tubus Sororibus (D)
+  - Tubus Sororibus (DC)
   - Tubus Sororibus (F)
   - Tubus Sororibus (G)
   - Tubus Sororibus (K)
@@ -1756,6 +2167,7 @@ Tubus:
   - Tubus_01_D
   - Tubus_01_F
   - Tubus_01_G
+  - Tubus_01_H
   - Tubus_01_K
   - Tubus_01_L
   - Tubus_01_M
@@ -1765,6 +2177,7 @@ Tubus:
   - Tubus_02_A
   - Tubus_02_B
   - Tubus_02_D
+  - Tubus_02_DC
   - Tubus_02_F
   - Tubus_02_G
   - Tubus_02_K
@@ -1778,6 +2191,7 @@ Tubus:
   - Tubus_03_D
   - Tubus_03_F
   - Tubus_03_G
+  - Tubus_03_H
   - Tubus_03_K
   - Tubus_03_L
   - Tubus_03_M
@@ -1798,12 +2212,15 @@ Tubus:
   - Tubus_05_A
   - Tubus_05_B
   - Tubus_05_D
+  - Tubus_05_DC
   - Tubus_05_F
   - Tubus_05_G
+  - Tubus_05_H
   - Tubus_05_K
   - Tubus_05_L
   - Tubus_05_M
   - Tubus_05_N
+  - Tubus_05_S
   - Tubus_05_T
   - Tubus_05_TTS
   - Tubus_05_W
@@ -1811,6 +2228,7 @@ Tussock:
   - Tussock Albata (D)
   - Tussock Albata (F)
   - Tussock Albata (G)
+  - Tussock Albata (H)
   - Tussock Albata (K)
   - Tussock Albata (L)
   - Tussock Albata (M)
@@ -1820,6 +2238,7 @@ Tussock:
   - Tussock Capillum (D)
   - Tussock Capillum (F)
   - Tussock Capillum (G)
+  - Tussock Capillum (H)
   - Tussock Capillum (K)
   - Tussock Capillum (L)
   - Tussock Capillum (M)
@@ -1828,6 +2247,7 @@ Tussock:
   - Tussock Caputus (D)
   - Tussock Caputus (F)
   - Tussock Caputus (G)
+  - Tussock Caputus (H)
   - Tussock Caputus (K)
   - Tussock Caputus (L)
   - Tussock Caputus (M)
@@ -1836,6 +2256,7 @@ Tussock:
   - Tussock Catena (D)
   - Tussock Catena (F)
   - Tussock Catena (G)
+  - Tussock Catena (H)
   - Tussock Catena (K)
   - Tussock Catena (L)
   - Tussock Catena (M)
@@ -1844,6 +2265,7 @@ Tussock:
   - Tussock Cultro (D)
   - Tussock Cultro (F)
   - Tussock Cultro (G)
+  - Tussock Cultro (H)
   - Tussock Cultro (K)
   - Tussock Cultro (L)
   - Tussock Cultro (M)
@@ -1853,6 +2275,7 @@ Tussock:
   - Tussock Divisa (D)
   - Tussock Divisa (F)
   - Tussock Divisa (G)
+  - Tussock Divisa (H)
   - Tussock Divisa (K)
   - Tussock Divisa (L)
   - Tussock Divisa (M)
@@ -1861,14 +2284,17 @@ Tussock:
   - Tussock Ignis (D)
   - Tussock Ignis (F)
   - Tussock Ignis (G)
+  - Tussock Ignis (H)
   - Tussock Ignis (K)
   - Tussock Ignis (L)
   - Tussock Ignis (M)
   - Tussock Ignis (T)
   - Tussock Ignis (W)
   - Tussock Ignis (Y)
+  - Tussock Pennata (D)
   - Tussock Pennata (F)
   - Tussock Pennata (G)
+  - Tussock Pennata (H)
   - Tussock Pennata (K)
   - Tussock Pennata (L)
   - Tussock Pennata (M)
@@ -1878,6 +2304,7 @@ Tussock:
   - Tussock Pennatis (D)
   - Tussock Pennatis (F)
   - Tussock Pennatis (G)
+  - Tussock Pennatis (H)
   - Tussock Pennatis (K)
   - Tussock Pennatis (L)
   - Tussock Pennatis (M)
@@ -1886,6 +2313,7 @@ Tussock:
   - Tussock Propagito (D)
   - Tussock Propagito (F)
   - Tussock Propagito (G)
+  - Tussock Propagito (H)
   - Tussock Propagito (K)
   - Tussock Propagito (L)
   - Tussock Propagito (M)
@@ -1894,6 +2322,7 @@ Tussock:
   - Tussock Serrati (D)
   - Tussock Serrati (F)
   - Tussock Serrati (G)
+  - Tussock Serrati (H)
   - Tussock Serrati (K)
   - Tussock Serrati (L)
   - Tussock Serrati (M)
@@ -1902,6 +2331,7 @@ Tussock:
   - Tussock Stigmasis (D)
   - Tussock Stigmasis (F)
   - Tussock Stigmasis (G)
+  - Tussock Stigmasis (H)
   - Tussock Stigmasis (K)
   - Tussock Stigmasis (L)
   - Tussock Stigmasis (M)
@@ -1910,6 +2340,7 @@ Tussock:
   - Tussock Triticum (D)
   - Tussock Triticum (F)
   - Tussock Triticum (G)
+  - Tussock Triticum (H)
   - Tussock Triticum (K)
   - Tussock Triticum (L)
   - Tussock Triticum (M)
@@ -1918,20 +2349,25 @@ Tussock:
   - Tussock Ventusa (D)
   - Tussock Ventusa (F)
   - Tussock Ventusa (G)
+  - Tussock Ventusa (H)
   - Tussock Ventusa (K)
   - Tussock Ventusa (L)
   - Tussock Ventusa (M)
   - Tussock Ventusa (T)
   - Tussock Ventusa (W)
   - Tussock Ventusa (Y)
+  - Tussock Virgam (D)
   - Tussock Virgam (F)
   - Tussock Virgam (G)
+  - Tussock Virgam (H)
   - Tussock Virgam (K)
   - Tussock Virgam (L)
   - Tussock Virgam (M)
   - Tussock Virgam (T)
+  - Tussock_01_D
   - Tussock_01_F
   - Tussock_01_G
+  - Tussock_01_H
   - Tussock_01_K
   - Tussock_01_L
   - Tussock_01_M
@@ -1941,6 +2377,7 @@ Tussock:
   - Tussock_02_D
   - Tussock_02_F
   - Tussock_02_G
+  - Tussock_02_H
   - Tussock_02_K
   - Tussock_02_L
   - Tussock_02_M
@@ -1950,6 +2387,7 @@ Tussock:
   - Tussock_03_D
   - Tussock_03_F
   - Tussock_03_G
+  - Tussock_03_H
   - Tussock_03_K
   - Tussock_03_L
   - Tussock_03_M
@@ -1959,6 +2397,7 @@ Tussock:
   - Tussock_04_D
   - Tussock_04_F
   - Tussock_04_G
+  - Tussock_04_H
   - Tussock_04_K
   - Tussock_04_L
   - Tussock_04_M
@@ -1968,6 +2407,7 @@ Tussock:
   - Tussock_05_D
   - Tussock_05_F
   - Tussock_05_G
+  - Tussock_05_H
   - Tussock_05_K
   - Tussock_05_L
   - Tussock_05_M
@@ -1976,6 +2416,7 @@ Tussock:
   - Tussock_06_D
   - Tussock_06_F
   - Tussock_06_G
+  - Tussock_06_H
   - Tussock_06_K
   - Tussock_06_L
   - Tussock_06_M
@@ -1984,6 +2425,7 @@ Tussock:
   - Tussock_07_D
   - Tussock_07_F
   - Tussock_07_G
+  - Tussock_07_H
   - Tussock_07_K
   - Tussock_07_L
   - Tussock_07_M
@@ -1992,6 +2434,7 @@ Tussock:
   - Tussock_08_D
   - Tussock_08_F
   - Tussock_08_G
+  - Tussock_08_H
   - Tussock_08_K
   - Tussock_08_L
   - Tussock_08_M
@@ -2001,6 +2444,7 @@ Tussock:
   - Tussock_09_D
   - Tussock_09_F
   - Tussock_09_G
+  - Tussock_09_H
   - Tussock_09_K
   - Tussock_09_L
   - Tussock_09_M
@@ -2009,6 +2453,7 @@ Tussock:
   - Tussock_10_D
   - Tussock_10_F
   - Tussock_10_G
+  - Tussock_10_H
   - Tussock_10_K
   - Tussock_10_L
   - Tussock_10_M
@@ -2017,6 +2462,7 @@ Tussock:
   - Tussock_11_D
   - Tussock_11_F
   - Tussock_11_G
+  - Tussock_11_H
   - Tussock_11_K
   - Tussock_11_L
   - Tussock_11_M
@@ -2025,6 +2471,7 @@ Tussock:
   - Tussock_12_D
   - Tussock_12_F
   - Tussock_12_G
+  - Tussock_12_H
   - Tussock_12_K
   - Tussock_12_L
   - Tussock_12_M
@@ -2033,13 +2480,16 @@ Tussock:
   - Tussock_13_D
   - Tussock_13_F
   - Tussock_13_G
+  - Tussock_13_H
   - Tussock_13_K
   - Tussock_13_L
   - Tussock_13_M
   - Tussock_13_T
   - Tussock_13_Y
+  - Tussock_14_D
   - Tussock_14_F
   - Tussock_14_G
+  - Tussock_14_H
   - Tussock_14_K
   - Tussock_14_L
   - Tussock_14_M
@@ -2047,14 +2497,17 @@ Tussock:
   - Tussock_15_D
   - Tussock_15_F
   - Tussock_15_G
+  - Tussock_15_H
   - Tussock_15_K
   - Tussock_15_L
   - Tussock_15_M
   - Tussock_15_T
   - Tussock_15_Y
   - Tussocks
+  - Tussocks_01_D
   - Tussocks_01_F
   - Tussocks_01_G
+  - Tussocks_01_H
   - Tussocks_01_K
   - Tussocks_01_L
   - Tussocks_01_M
@@ -2064,6 +2517,7 @@ Tussock:
   - Tussocks_02_D
   - Tussocks_02_F
   - Tussocks_02_G
+  - Tussocks_02_H
   - Tussocks_02_K
   - Tussocks_02_L
   - Tussocks_02_M
@@ -2073,6 +2527,7 @@ Tussock:
   - Tussocks_03_D
   - Tussocks_03_F
   - Tussocks_03_G
+  - Tussocks_03_H
   - Tussocks_03_K
   - Tussocks_03_L
   - Tussocks_03_M
@@ -2082,6 +2537,7 @@ Tussock:
   - Tussocks_04_D
   - Tussocks_04_F
   - Tussocks_04_G
+  - Tussocks_04_H
   - Tussocks_04_K
   - Tussocks_04_L
   - Tussocks_04_M
@@ -2091,6 +2547,7 @@ Tussock:
   - Tussocks_05_D
   - Tussocks_05_F
   - Tussocks_05_G
+  - Tussocks_05_H
   - Tussocks_05_K
   - Tussocks_05_L
   - Tussocks_05_M
@@ -2099,6 +2556,7 @@ Tussock:
   - Tussocks_06_D
   - Tussocks_06_F
   - Tussocks_06_G
+  - Tussocks_06_H
   - Tussocks_06_K
   - Tussocks_06_L
   - Tussocks_06_M
@@ -2107,6 +2565,7 @@ Tussock:
   - Tussocks_07_D
   - Tussocks_07_F
   - Tussocks_07_G
+  - Tussocks_07_H
   - Tussocks_07_K
   - Tussocks_07_L
   - Tussocks_07_M
@@ -2115,6 +2574,7 @@ Tussock:
   - Tussocks_08_D
   - Tussocks_08_F
   - Tussocks_08_G
+  - Tussocks_08_H
   - Tussocks_08_K
   - Tussocks_08_L
   - Tussocks_08_M
@@ -2124,6 +2584,7 @@ Tussock:
   - Tussocks_09_D
   - Tussocks_09_F
   - Tussocks_09_G
+  - Tussocks_09_H
   - Tussocks_09_K
   - Tussocks_09_L
   - Tussocks_09_M
@@ -2132,6 +2593,7 @@ Tussock:
   - Tussocks_10_D
   - Tussocks_10_F
   - Tussocks_10_G
+  - Tussocks_10_H
   - Tussocks_10_K
   - Tussocks_10_L
   - Tussocks_10_M
@@ -2140,6 +2602,7 @@ Tussock:
   - Tussocks_11_D
   - Tussocks_11_F
   - Tussocks_11_G
+  - Tussocks_11_H
   - Tussocks_11_K
   - Tussocks_11_L
   - Tussocks_11_M
@@ -2148,6 +2611,7 @@ Tussock:
   - Tussocks_12_D
   - Tussocks_12_F
   - Tussocks_12_G
+  - Tussocks_12_H
   - Tussocks_12_K
   - Tussocks_12_L
   - Tussocks_12_M
@@ -2156,13 +2620,16 @@ Tussock:
   - Tussocks_13_D
   - Tussocks_13_F
   - Tussocks_13_G
+  - Tussocks_13_H
   - Tussocks_13_K
   - Tussocks_13_L
   - Tussocks_13_M
   - Tussocks_13_T
   - Tussocks_13_Y
+  - Tussocks_14_D
   - Tussocks_14_F
   - Tussocks_14_G
+  - Tussocks_14_H
   - Tussocks_14_K
   - Tussocks_14_L
   - Tussocks_14_M
@@ -2170,6 +2637,7 @@ Tussock:
   - Tussocks_15_D
   - Tussocks_15_F
   - Tussocks_15_G
+  - Tussocks_15_H
   - Tussocks_15_K
   - Tussocks_15_L
   - Tussocks_15_M
@@ -2182,8 +2650,6 @@ Umbrella Mollusc:
   - Umbrella Mollusc (Dark)
   - Umbrella Mollusc (Def)
   - Umbrella Mollusc (Earth)
-Vitreus:
-  []
 Void Heart:
   - Chryseum Void Heart (V1)
   - SPOI_SeedWeed01_V1

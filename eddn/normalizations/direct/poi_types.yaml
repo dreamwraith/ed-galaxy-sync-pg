@@ -49,6 +49,8 @@ Guardian:
   - Ancient_Medium_005
   - Ancient_Medium_006
   - Ancient_Ruin
+  - Ancient_Ruins
+  - Ancient Ruins
   - Ancient_Small_001
   - Ancient_Small_002
   - Ancient_Small_003
@@ -96,5 +98,8 @@ Thargoid:
   - Thargoid_Structures
   - Thargoid_Barnacles
   - Thargoid_Spire_Sites
+  - Settlement_Unflattened_Unknown
+  - Settlement_Unflattened_TGMegaBarnacle
+  - Settlement_Unflattened_WreckedUnknown
   - Barnacle
   - Spire Site
