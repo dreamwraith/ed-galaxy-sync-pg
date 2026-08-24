@@ -1,6 +1,6 @@
 # Elite Dangerous Galaxy Sync — CLI & Usage Guide
 
-Comprehensive operational manual, CLI reference, and diagnostic runbook for `galaxy_sync`, `apply_schema`, and supporting verification tools.
+Comprehensive operational manual, CLI reference, and diagnostic runbook for `galaxy_sync`, `db_setup`, and supporting verification tools.
 
 For architectural overview, system capabilities, database schemas, and license information, see [README.md](readme.md) and [Database Architecture & Runbook](db_setup/readme.md).
 
@@ -16,7 +16,7 @@ For architectural overview, system capabilities, database schemas, and license i
    * [3. `split` — Massive JSON Dump Splitter](#3-split--massive-json-dump-splitter)
 4. [Specialized & Diagnostic Tools](#specialized--diagnostic-tools)
    * [4. `probe-cmdr` & Debug Audit Logging](#4-probe-cmdr-alias-probe--debug-audit-logging)
-   * [5. `apply_schema` — Modular Database Orchestrator](#5-apply_schema--modular-database-orchestrator)
+   * [5. `db_setup` — Modular Database Orchestrator](#5-db_setup--modular-database-orchestrator)
    * [6. `misc/query_examples.py` — 3D Spatial & Search Verification CLI](#6-miscquery_examplespy--3d-spatial--search-verification-cli)
 5. [Data Normalization & Stored Procedures](#data-normalization--stored-procedures)
    * [Regenerating Stored Procedures](#regenerating-stored-procedures)
@@ -33,7 +33,7 @@ For architectural overview, system capabilities, database schemas, and license i
 | `galaxy_sync ingest` | Batch Ingest / Admin | Vectorized DuckDB bulk loader for `.ndjson` dump chunks |
 | `galaxy_sync split` | Data Prep / Admin | Fast streaming splitter for monolithic 500GB+ JSON dumps |
 | `galaxy_sync probe-cmdr` | Diagnostic / Debug | Live stream sniffer to discover ephemeral commander session hashes |
-| `apply_schema` | Migration / DBA | Deterministic orchestrator for extensions, tables, indexes & procedures |
+| `db_setup` | Migration / DBA | Deterministic orchestrator for extensions, tables, indexes & procedures |
 | `misc/query_examples.py` | Analytics / Verification | Standalone CLI demonstrating 3D spatial queries & database lookups |
 
 *Run any command with `--help` for built-in contextual flag descriptions.*
@@ -151,13 +151,13 @@ For a massive initial load into an empty database, drop secondary indexes to max
 1. **Deploy base tables:**
 
    ```powershell
-   uv run apply_schema --action tables
+   uv run db_setup --action tables
    ```
 
 2. **Drop secondary indexes:**
 
    ```powershell
-   uv run apply_schema --action drop-indexes
+   uv run db_setup --action drop-indexes
    ```
 
 3. **Execute bulk ingest:**
@@ -169,13 +169,13 @@ For a massive initial load into an empty database, drop secondary indexes to max
 4. **Rebuild all secondary & search indexes:**
 
    ```powershell
-   uv run apply_schema --action rebuild-indexes
+   uv run db_setup --action rebuild-indexes
    ```
 
 5. **Deploy stored procedures:**
 
    ```powershell
-   uv run apply_schema --action procedures
+   uv run db_setup --action procedures
    ```
 
 ---
@@ -347,33 +347,45 @@ sequenceDiagram
 
 ---
 
-### 5. `apply_schema` — Modular Database Orchestrator
+### 5. `db_setup` — Modular Database Orchestrator
 
 Executes modular SQL scripts in deterministic order to manage database schema lifecycle.
 
 ```powershell
-uv run apply_schema [OPTIONS]
+uv run db_setup [OPTIONS]
 ```
 
 #### Action Reference
 
 | Action | Description |
 |---|---|
-| `--action all` | Execute full schema deployment (extensions, roles, tables, indexes, constraints, functions, procedures) |
+| `--action all` | Execute fresh full schema deployment (extensions, roles, domain tables with inline primary keys/constraints, helper functions, secondary/search indexes, stored procedures). Note: Do not run for post-bulk recovery. |
 | `--action init` | Deploy initial extensions (`cube`, `pg_trgm`) and user roles (`galaxy_searcher`, `galaxy_updater`) |
-| `--action tables` | Create all 16 domain and checkpoint tables |
+| `--action tables` | Create all 16 domain and checkpoint tables (with inline primary key constraints) |
 | `--action indexes` / `--action rebuild-indexes` | Recreate all secondary and search indexes after bulk ingestion |
 | `--action drop-indexes` | Drop secondary and search indexes prior to bulk ingestion |
-| `--action constraints` / `--action rebuild-constraints` | Add primary key and foreign key constraints |
-| `--action drop-constraints` | Drop constraints prior to bulk ingestion |
+| `--action constraints` / `--action rebuild-constraints` | Rebuild primary key and foreign key constraints after bulk ingestion (standalone `add_constraints.sql` is strictly for post-bulk recovery; do not run after normal `--action all`) |
+| `--action drop-constraints` | Drop primary key constraints prior to bulk ingestion to maximize throughput |
 | `--action functions` | Deploy analytic helper functions (`system_distance_3d`) |
 | `--action procedures` | Deploy stored procedures (`sp_normalize_galaxy_data`, `sp_process_eddn_dlq`) |
 | `--action run-normalize` / `--action normalize` | Execute `sp_normalize_galaxy_data` stored procedure directly |
 | `--action run-dlq` / `--action dlq` | Execute `sp_process_eddn_dlq` stored procedure directly |
 | `--action duckdb` / `--action pg-duckdb` | Deploy `pg_duckdb` extension and `duckdb_users` role |
+| `--action seed` | Seed static reference datasets from `db_setup/data/*.yaml` (all by default, or filtered with `--datasets <name...>`) |
+
+> [!NOTE]
+> **Post-Bulk Ingest Recovery**: After intentionally dropping indexes and constraints for bulk loading, recover the schema by running:
+>
+> ```powershell
+> uv run db_setup --action rebuild-constraints
+> uv run db_setup --action rebuild-indexes
+> ```
+>
+> Do not run `--action all` as a recovery command.
 
 #### Common Flags
 
+* `--datasets`: Space-separated dataset names to seed with `--action seed` (e.g. `--datasets engineers`). If omitted, seeds all discovered datasets.
 * `--batch-size`: Batch size for stored procedure execution (default: `250000`)
 * `--dry-run`: Print the ordered SQL script deployment plan without modifying the database
 * `--host`, `--port`, `--user`, `--password`, `--dbname`: PostgreSQL connection parameters
@@ -421,7 +433,7 @@ uv run python db_setup/generate_cleanup_sp.py
 uv run python db_setup/generate_dlq_sp.py
 
 # Deploy procedures to database
-uv run apply_schema --action procedures
+uv run db_setup --action procedures
 ```
 
 ### Executing Stored Procedures in SQL

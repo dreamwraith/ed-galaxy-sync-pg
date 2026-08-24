@@ -23,7 +23,10 @@ load_dotenv()
 if str(Path(__file__).resolve().parent.parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-logger = logging.getLogger("apply_schema")
+from db_setup.seed_data import DataSeeder
+
+
+logger = logging.getLogger("db_setup")
 
 
 def get_base_dir() -> Path:
@@ -100,7 +103,7 @@ def collect_sql_files(action: str) -> list[Path]:
         case "procedures":
             files.extend(sorted((base_dir / "05_procedures").glob("*.sql")))
 
-        case "run-normalize" | "normalize" | "run-dlq" | "dlq":
+        case "run-normalize" | "normalize" | "run-dlq" | "dlq" | "seed":
             return []
 
         case "all":
@@ -132,23 +135,24 @@ def resolve_role_password(
     env_var_name: str,
     interactive: bool = True,
 ) -> str:
-    """Resolves role password from CLI argument, environment variable, interactive prompt, or secure generation.
+    """Resolves role password from environment variable, CLI parameter, interactive prompt, or generation.
 
-    Args:
-        role_name: Name of the role (e.g. 'galaxy_searcher' or 'galaxy_updater').
-        cli_arg: Value passed via CLI argument, if any.
-        env_var_name: Name of the environment variable to check.
-        interactive: If True and running in a TTY, prompt the user.
-
-    Returns:
-        str: Resolved password string.
+    Priority:
+        1. Environment variable (env_var_name) -> Use directly, do not prompt.
+        2. CLI parameter (cli_arg) -> Use directly, do not prompt.
+        3. Interactive prompt (if running in a TTY and not disabled).
+        4. Auto-generated secure token.
     """
-    if cli_arg:
-        return cli_arg
+    # Priority 1: Environment variable
     env_val = os.environ.get(env_var_name)
     if env_val:
         return env_val
 
+    # Priority 2: CLI argument
+    if cli_arg:
+        return cli_arg
+
+    # Priority 3: Interactive prompt
     if interactive and sys.stdin.isatty():
         try:
             prompt_msg = f"🔑 Enter password for database role '{role_name}' [press Enter to auto-generate]: "
@@ -159,6 +163,7 @@ def resolve_role_password(
             print("\nOperation cancelled by user.", file=sys.stderr)
             sys.exit(1)
 
+    # Priority 4: Auto-generated fallback
     generated = secrets.token_urlsafe(16)
     if interactive and sys.stdin.isatty():
         print(f"\n🔑 Generated one-time password for '{role_name}': {generated}", file=sys.stderr)
@@ -194,7 +199,7 @@ def apply_scripts(
     logger.info("==================================================")
 
     if dry_run:
-        logger.info("⚡ [DRY-RUN] Verification complete. No database modifications were made.")
+        logger.info("Dry run mode active: skipping actual database execution.")
         return
 
     try:
@@ -223,6 +228,64 @@ def apply_scripts(
     logger.info("==================================================")
     logger.info("🎉 All requested SQL scripts applied successfully!")
     logger.info("==================================================")
+
+
+def resolve_admin_uri(arguments: argparse.Namespace) -> str:
+    """Builds or resolves the target PostgreSQL admin connection URI.
+
+    Priority:
+        1. Environment variables:
+           - Direct URI: PG_ADMIN_URI, PG_CONN_STRING, DATABASE_URL
+           - Discrete vars: PGPASSWORD, PGUSER, PGHOST, PGPORT, PGDATABASE
+        2. CLI parameters (--password, --user, --host, --port, --dbname)
+        3. Interactive prompt (only if neither env vars nor CLI params provide the password)
+    """
+    # Priority 1A: Direct full connection URI in environment
+    env_uri = os.environ.get("PG_ADMIN_URI") or os.environ.get("PG_CONN_STRING") or os.environ.get("DATABASE_URL")
+    if (
+        env_uri
+        and not getattr(arguments, "password", None)
+        and not getattr(arguments, "user", None)
+        and not getattr(arguments, "host", None)
+    ):
+        return env_uri
+
+    # Resolve components with priority: Environment Variable -> CLI Parameter -> Fallback Default
+    user = os.environ.get("PGUSER") or getattr(arguments, "user", None) or "postgres"
+    host = os.environ.get("PGHOST") or getattr(arguments, "host", None) or "localhost"
+    port_val = os.environ.get("PGPORT") or getattr(arguments, "port", None) or 5432
+    port = int(port_val)
+    dbname = os.environ.get("PGDATABASE") or getattr(arguments, "dbname", None) or "galaxy_sync"
+
+    # Password Priority: Env Var -> CLI Param -> Prompt
+    password = os.environ.get("PGPASSWORD")
+    if not password and getattr(arguments, "password", None):
+        password = arguments.password
+
+    # If password is still missing, and running interactively, prompt
+    if (
+        not password
+        and not getattr(arguments, "no_prompt", False)
+        and not getattr(arguments, "dry_run", False)
+        and sys.stdin.isatty()
+    ):
+        try:
+            prompt_msg = f"🔑 Enter PostgreSQL password for user '{user}' [{host}:{port}/{dbname}] [press Enter for none/trust]: "
+            entered = getpass.getpass(prompt_msg).strip()
+            if entered:
+                password = entered
+        except KeyboardInterrupt, EOFError:
+            print("\nOperation cancelled by user.", file=sys.stderr)
+            sys.exit(1)
+
+    if password:
+        encoded_password = urllib.parse.quote_plus(password)
+        return f"postgresql://{user}:{encoded_password}@{host}:{port}/{dbname}"
+
+    if env_uri and not getattr(arguments, "password", None):
+        return env_uri
+
+    return f"postgresql://{user}@{host}:{port}/{dbname}"
 
 
 def main() -> None:
@@ -257,9 +320,18 @@ def main() -> None:
             "dlq",
             "duckdb",
             "pg-duckdb",
+            "seed",
         ],
         default="all",
         help="Target action or subsystem to deploy (default: all)",
+    )
+    parser.add_argument(
+        "--datasets",
+        "--dataset",
+        nargs="*",
+        default=None,
+        dest="datasets",
+        help="Optional specific dataset name(s) to seed when using --action seed (e.g. --datasets engineers). If omitted, seeds all datasets.",
     )
     parser.add_argument(
         "--batch-size",
@@ -278,13 +350,11 @@ def main() -> None:
         action="store_true",
         help="Simulate execution and print the ordered SQL script deployment plan without modifying the database.",
     )
-    parser.add_argument("--host", default=os.environ.get("PGHOST", "localhost"), help="PostgreSQL host (env: PGHOST)")
-    parser.add_argument("--port", type=int, default=int(os.environ.get("PGPORT", "5432")), help="PostgreSQL port (env: PGPORT)")
-    parser.add_argument("--user", default=os.environ.get("PGUSER", "postgres"), help="PostgreSQL user (env: PGUSER)")
-    parser.add_argument("--password", default=os.environ.get("PGPASSWORD"), help="PostgreSQL password (env: PGPASSWORD)")
-    parser.add_argument(
-        "--dbname", default=os.environ.get("PGDATABASE", "galaxy_sync"), help="PostgreSQL database name (env: PGDATABASE)"
-    )
+    parser.add_argument("--host", default=None, help="PostgreSQL host (env: PGHOST, default: localhost)")
+    parser.add_argument("--port", type=int, default=None, help="PostgreSQL port (env: PGPORT, default: 5432)")
+    parser.add_argument("--user", default=None, help="PostgreSQL user (env: PGUSER, default: postgres)")
+    parser.add_argument("--password", default=None, help="PostgreSQL password (env: PGPASSWORD)")
+    parser.add_argument("--dbname", default=None, help="PostgreSQL database name (env: PGDATABASE, default: galaxy_sync)")
     parser.add_argument(
         "--searcher-password",
         default=None,
@@ -302,12 +372,7 @@ def main() -> None:
     )
 
     arguments = parser.parse_args()
-
-    if arguments.password:
-        encoded_password = urllib.parse.quote_plus(arguments.password)
-        postgres_uri = f"postgresql://{arguments.user}:{encoded_password}@{arguments.host}:{arguments.port}/{arguments.dbname}"
-    else:
-        postgres_uri = f"postgresql://{arguments.user}@{arguments.host}:{arguments.port}/{arguments.dbname}"
+    postgres_uri = resolve_admin_uri(arguments)
 
     if arguments.action in ("run-normalize", "normalize"):
         logger.info(f"Executing sp_normalize_galaxy_data(batch_size={arguments.batch_size}) via autocommit session...")
@@ -335,6 +400,19 @@ def main() -> None:
             logger.info("🎉 sp_process_eddn_dlq completed successfully!")
         except Exception as error:
             logger.error(f"Error running sp_process_eddn_dlq: {error}")
+            sys.exit(1)
+        return
+
+    if arguments.action == "seed":
+        logger.info("Executing reference data seeding from db_setup/data/...")
+        try:
+            seeder = DataSeeder(connection_string=postgres_uri)
+            results = seeder.seed_all(targets=arguments.datasets)
+            total_count = sum(results.values())
+            summary = ", ".join(f"{k}: {v}" for k, v in results.items())
+            logger.info(f"🎉 Successfully seeded {total_count} reference records ({summary}) into database!")
+        except Exception as error:
+            logger.error(f"Error seeding reference data: {error}")
             sys.exit(1)
         return
 

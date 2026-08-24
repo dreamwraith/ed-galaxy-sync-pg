@@ -119,7 +119,7 @@ Requires **Python 3.14+**, **PostgreSQL 16/17+**, and [**Astral `uv`**](https://
 
 #### Option A: Local Development / Workspace Setup (Recommended)
 
-Sync dependencies and register local console entrypoints (`galaxy_sync`, `apply_schema`) into `.venv`:
+Sync dependencies and register local console entrypoints (`galaxy_sync`, `db_setup`) into `.venv`:
 
 ```bash
 # 1. Clone repository
@@ -130,7 +130,7 @@ cd ed-galaxy-sync-pg
 uv sync
 ```
 
-*Run commands with `uv run galaxy_sync ...` or activate the virtualenv (`source .venv/bin/activate` or `.venv\Scripts\Activate.ps1`).*
+*Allows invoking `galaxy_sync` and `db_setup` from any shell directory without prefixing `uv run`.*
 
 #### Option B: Global CLI Tool Installation
 
@@ -140,7 +140,7 @@ Install directly into your user system PATH as a standalone command line utility
 uv tool install . --force
 ```
 
-*Allows invoking `galaxy_sync` and `apply_schema` from any shell directory without prefixing `uv run`.*
+*Allows invoking `galaxy_sync` and `db_setup` from any shell directory without prefixing `uv run`.*
 
 #### Option C: Production Distribution Wheel
 
@@ -167,7 +167,7 @@ $env:PGUSER = "postgres"
 $env:PGPASSWORD = "YOUR_POSTGRES_PASSWORD"
 
 # Deploy schema without exposing inline passwords
-uv run apply_schema --action all
+uv run db_setup --action all
 ```
 
 ---
@@ -184,7 +184,7 @@ All operational workflows, command options, step-by-step procedures, and diagnos
 | **Bulk Vectorized Ingestion** | `galaxy_sync ingest` | [DuckDB High-Speed Bulk Ingestion](usage.md#2-ingest--duckdb-high-speed-bulk-ingestion) |
 | **Monolithic Dump Splitting** | `galaxy_sync split` | [Massive JSON Dump Splitter](usage.md#3-split--massive-json-dump-splitter) |
 | **Live Stream Debug Sniffer** | `galaxy_sync probe-cmdr` | [probe-cmdr & Debug Audit Logging](usage.md#4-probe-cmdr-alias-probe--debug-audit-logging) |
-| **Schema & Procedure Manager** | `apply_schema` | [Modular Database Orchestrator](usage.md#5-apply_schema--modular-database-orchestrator) |
+| **Schema & Procedure Manager** | `db_setup` | [Modular Database Orchestrator](usage.md#5-db_setup--modular-database-orchestrator) |
 | **3D Radial & Spatial Queries** | `misc/query_examples.py` | [3D Spatial & Search Verification CLI](usage.md#6-miscquery_examplespy--3d-spatial--search-verification-cli) |
 | **Data Normalization & Procedures** | Stored Procedures | [Data Normalization & Stored Procedures](usage.md#data-normalization--stored-procedures) |
 | **Quality Assurance** | `pytest` & `ruff` | [Testing & Quality Assurance](usage.md#testing--quality-assurance) |
