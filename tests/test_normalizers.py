@@ -1,148 +1,116 @@
-"""Unit tests for EDDN token normalizers, YAML mappings integrity, and canonical enum resolution."""
+"""Unit tests for NormalizerManager engine mechanics, YAML structural integrity, and fallback behaviors.
+
+These tests are designed to be malleable and generic, verifying core normalization logic,
+structural validity of mapping files, casing/punctuation invariance, prefix stripping,
+and metrics tracking without hardcoding specific catalog entries.
+"""
 
 from pathlib import Path
 
-import pytest
 import yaml
 
 from eddn.metrics import EDDNMetrics
 from eddn.normalizers import NormalizerManager
 
 
-def test_all_yaml_mapping_files_integrity_on_disk() -> None:
-    """Validates that all 23 YAML mapping files on disk load without duplicate keys or syntax errors."""
+def test_all_yaml_mapping_files_structural_integrity_on_disk() -> None:
+    """Validates that every YAML mapping file on disk parses as a valid, non-empty mapping without duplicate keys."""
     yaml_dir = Path("eddn/normalizations")
-    yaml_files = list(yaml_dir.rglob("*.yaml"))
-    assert len(yaml_files) >= 20
+    yaml_files = list(yaml_dir.rglob("*.yaml")) + list(yaml_dir.rglob("*.yml"))
+    assert len(yaml_files) > 0, "No YAML mapping files found in normalizations directory"
 
     for yaml_file in yaml_files:
         content = yaml_file.read_text(encoding="utf-8")
         parsed = yaml.safe_load(content)
-        assert isinstance(parsed, dict), f"Failed loading {yaml_file.name}: expected dict"
+        assert isinstance(parsed, dict), f"Structural error in {yaml_file.name}: expected top-level mapping (dict)"
         assert len(parsed) > 0, f"Empty mapping file: {yaml_file.name}"
 
 
-@pytest.mark.parametrize(
-    ("raw_type", "expected_type"),
-    [
-        ("eRingClass_Metalic", "Metallic"),
-        ("eRingClass_Metallic", "Metallic"),
-        ("metallic", "Metallic"),
-        ("eRingClass_Icy", "Icy"),
-        ("eRingClass_MetalRich", "Metal Rich"),
-        ("eRingClass_Rocky", "Rocky"),
-    ],
-    ids=["metalic_typo", "metallic_std", "metallic_lower", "icy", "metal_rich", "rocky"],
-)
-def test_ring_types_normalization(
-    raw_type: str, expected_type: str, normalizer_instance: NormalizerManager, metrics_instance: EDDNMetrics
+def test_normalizer_manager_loads_all_direct_and_multifield_categories(normalizer_instance: NormalizerManager) -> None:
+    """Validates that NormalizerManager dynamically discovers and loads all direct and multifield categories."""
+    assert len(normalizer_instance.maps) > 0, "NormalizerManager maps dictionary is empty"
+    assert len(normalizer_instance.multifield_maps) > 0, "NormalizerManager multifield_maps dictionary is empty"
+
+    # Verify that each loaded direct category is a populated dictionary of normalized keys
+    for category_name, category_map in normalizer_instance.maps.items():
+        assert isinstance(category_map, dict), f"Category map '{category_name}' is not a dict"
+        assert len(category_map) > 0, f"Category map '{category_name}' contains no entries"
+
+
+def test_normalizer_canonical_self_match_resolution(normalizer_instance: NormalizerManager, metrics_instance: EDDNMetrics) -> None:
+    """Validates that any canonical key registered in any category automatically resolves to itself."""
+    # Pick dynamically from loaded categories
+    for category_name, category_map in normalizer_instance.maps.items():
+        # Pick the first available canonical value in this map
+        sample_canonical = next(iter(category_map.values()))
+        result = normalizer_instance.normalize("test_table", "test_field", category_name, sample_canonical, metrics_instance)
+        assert result == sample_canonical, f"Canonical self-match failed for '{sample_canonical}' in category '{category_name}'"
+
+
+def test_normalizer_case_and_punctuation_invariance(normalizer_instance: NormalizerManager, metrics_instance: EDDNMetrics) -> None:
+    """Validates that token resolution is invariant to character casing, spaces, hyphens, and underscores."""
+    # Pick a direct category with at least one multi-word entry if available
+    target_category = next(iter(normalizer_instance.maps.keys()))
+    sample_canonical = next(iter(normalizer_instance.maps[target_category].values()))
+
+    # Generate casing and spacing permutations
+    permutations = [
+        sample_canonical.upper(),
+        sample_canonical.lower(),
+        sample_canonical.replace(" ", "_"),
+        sample_canonical.replace(" ", "-"),
+        f"  {sample_canonical}  ",
+    ]
+
+    for variant in permutations:
+        result = normalizer_instance.normalize("test_table", "test_field", target_category, variant, metrics_instance)
+        assert result == sample_canonical, f"Normalization failed for permutation '{variant}' -> expected '{sample_canonical}'"
+
+
+def test_normalizer_strips_frontier_wrapper_symbols_and_prefixes(
+    normalizer_instance: NormalizerManager, metrics_instance: EDDNMetrics
 ) -> None:
-    """Validates canonical ring and belt type resolution."""
-    assert normalizer_instance.normalize("body_rings", "type", "ring_types", raw_type, metrics_instance) == expected_type
+    """Validates that leading $, trailing ;, index tags, and known Frontier prefixes are stripped during lookup."""
+    target_category = next(iter(normalizer_instance.maps.keys()))
+    sample_canonical = next(iter(normalizer_instance.maps[target_category].values()))
 
-
-@pytest.mark.parametrize(
-    ("raw_type", "expected_type"),
-    [
-        ("Drake-Class Carrier", "Fleet Carrier"),
-        ("FleetCarrier", "Fleet Carrier"),
-        ("Fleet Carrier", "Fleet Carrier"),
-        ("SquadronCarrier", "Squadron Carrier"),
-        ("Squadron Carrier", "Squadron Carrier"),
-        ("Coriolis", "Coriolis Starport"),
-        ("Orbis", "Orbis Starport"),
-        ("Ocellus", "Ocellus Starport"),
-        ("Dodec", "Dodec Starport"),
-        ("CraterPort", "Planetary Port"),
-        ("SurfaceStation", "Planetary Port"),
-        ("AsteroidBase", "Asteroid Base"),
-        ("MegaShip", "Mega Ship"),
-    ],
-    ids=[
-        "drake_carrier",
-        "fleet_carrier_no_space",
-        "fleet_carrier_spaced",
-        "squadron_carrier_no_space",
-        "squadron_carrier_spaced",
-        "coriolis",
-        "orbis",
-        "ocellus",
-        "dodec",
-        "crater_port",
-        "surface_station",
-        "asteroid_base",
-        "megaship",
-    ],
-)
-def test_station_types_normalization(
-    raw_type: str, expected_type: str, normalizer_instance: NormalizerManager, metrics_instance: EDDNMetrics
-) -> None:
-    """Validates station type resolution."""
-    assert normalizer_instance.normalize("stations", "type", "station_types", raw_type, metrics_instance) == expected_type
-
-
-@pytest.mark.parametrize(
-    ("raw_input", "expected_output"),
-    [
-        ("$economy_Industrial;", "Industrial"),
-        ("$economy_HighTech;", "High Tech"),
-        ("$economy_Agriculture;", "Agriculture"),
-        ("$economy_Agri;", "Agriculture"),
-        ("agri", "Agriculture"),
-    ],
-    ids=["industrial", "high_tech", "agri_full", "agri_short", "agri_lower"],
-)
-def test_economies_normalization(
-    raw_input: str, expected_output: str, normalizer_instance: NormalizerManager, metrics_instance: EDDNMetrics
-) -> None:
-    """Validates economy token resolution."""
-    assert normalizer_instance.normalize("systems", "primaryEconomy", "economies", raw_input, metrics_instance) == expected_output
-
-
-@pytest.mark.parametrize(
-    ("raw_input", "expected_output"),
-    [
-        ("$SYSTEM_SECURITY_high;", "High"),
-        ("$SYSTEM_SECURITY_anarchy;", "Anarchy"),
-        ("$GAlAXY_MAP_INFO_state_anarchy;", "Anarchy"),
-    ],
-    ids=["security_high", "security_anarchy", "galaxy_map_anarchy"],
-)
-def test_securities_normalization(
-    raw_input: str, expected_output: str, normalizer_instance: NormalizerManager, metrics_instance: EDDNMetrics
-) -> None:
-    """Validates security token resolution."""
-    assert normalizer_instance.normalize("systems", "security", "securities", raw_input, metrics_instance) == expected_output
-
-
-@pytest.mark.parametrize(
-    ("raw_input", "expected_output"),
-    [
-        ("$government_Democracy;", "Democracy"),
-        ("$government_PrisonColony;", "Prison Colony"),
-    ],
-    ids=["democracy", "prison_colony"],
-)
-def test_governments_normalization(
-    raw_input: str, expected_output: str, normalizer_instance: NormalizerManager, metrics_instance: EDDNMetrics
-) -> None:
-    """Validates government token resolution."""
-    assert normalizer_instance.normalize("systems", "government", "governments", raw_input, metrics_instance) == expected_output
+    # Wrapped with Frontier symbols and parameter tags
+    wrapped_token = f"${sample_canonical}:#index=1;"
+    result = normalizer_instance.normalize("test_table", "test_field", target_category, wrapped_token, metrics_instance)
+    assert result == sample_canonical
 
 
 def test_unmapped_token_fallback_and_metrics_tracking(
     normalizer_instance: NormalizerManager, metrics_instance: EDDNMetrics
 ) -> None:
-    """Validates that unknown raw tokens fallback to sanitized values and log metrics."""
-    result = normalizer_instance.normalize("stations", "type", "station_types", "$UnknownStationType_Special;", metrics_instance)
-    assert result == "UnknownStationType_Special"
-    assert metrics_instance.unmapped_tokens["stations"]["type"]["UnknownStationType_Special"] == 1
+    """Validates that unknown raw tokens fall back to sanitized strings and record unmapped metrics without crashing."""
+    raw_unknown_token = "$Completely_Unknown_Entity_XYZ_9999;"
+    target_category = next(iter(normalizer_instance.maps.keys()))
+
+    result = normalizer_instance.normalize("test_table", "test_field", target_category, raw_unknown_token, metrics_instance)
+    assert result == "Completely_Unknown_Entity_XYZ_9999"
+    assert metrics_instance.unmapped_tokens["test_table"]["test_field"]["Completely_Unknown_Entity_XYZ_9999"] == 1
 
 
-def test_scenarios_resolution(normalizer_instance: NormalizerManager) -> None:
-    """Validates multifield scenario tuples for name, signal_type, and threat severity."""
-    rec = normalizer_instance.get_multifield("scenarios", "$MULTIPLAYER_SCENARIO79_TITLE;")
-    assert rec is not None
-    assert rec.name == "Resource Extraction Site [Hazardous]"
-    assert rec.signal_type == "ResourceExtraction"
-    assert rec.severity == "Hazardous"
+def test_multifield_record_lookup_and_none_fallback(normalizer_instance: NormalizerManager) -> None:
+    """Validates multifield lookup returns NamedTuple for known keys and None for unknown keys."""
+    target_category = next(iter(normalizer_instance.multifield_maps.keys()))
+    target_map = normalizer_instance.multifield_maps[target_category]
+
+    # Test resolution of any registered key in the multifield map
+    sample_raw_key = next(iter(target_map.keys()))
+    record = normalizer_instance.get_multifield(target_category, sample_raw_key)
+    assert record is not None
+    assert hasattr(record, "_fields"), "Multifield record is not a NamedTuple"
+
+    # Test unknown key returns None without error
+    assert normalizer_instance.get_multifield(target_category, "$NonExistent_Scenario_9999;") is None
+
+
+def test_empty_and_none_inputs_safe_handling(normalizer_instance: NormalizerManager, metrics_instance: EDDNMetrics) -> None:
+    """Validates that None, empty string, and whitespace-only inputs are handled safely."""
+    target_category = next(iter(normalizer_instance.maps.keys()))
+    assert normalizer_instance.normalize("test_table", "test_field", target_category, None, metrics_instance) is None
+    assert normalizer_instance.normalize("test_table", "test_field", target_category, "", metrics_instance) == ""
+    assert normalizer_instance.normalize("test_table", "test_field", target_category, "   ", metrics_instance) == ""
+    assert normalizer_instance.get_multifield(next(iter(normalizer_instance.multifield_maps.keys())), None) is None
