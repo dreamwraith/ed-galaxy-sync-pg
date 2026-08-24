@@ -1,0 +1,768 @@
+# ==============================================================================
+# Static Reference Data: Elite Dangerous Engineers (Horizons & Odyssey)
+# ==============================================================================
+# TODO: Verify additional engineer data manually, this is mostly sourced from game journals or EDDI
+target_table: engineers
+upsert_sql: |
+  INSERT INTO engineers (
+      system_id64,
+      body_id64,
+      market_id,
+      engineer_id,
+      name,
+      engineer_type,
+      specialties,
+      permit_required,
+      referral_from,
+      unlock_requirement,
+      max_grade,
+      region,
+      update_dtm
+  ) VALUES (
+      %(system_id64)s,
+      %(body_id64)s,
+      %(market_id)s,
+      %(engineer_id)s,
+      %(name)s,
+      %(engineer_type)s,
+      %(specialties)s,
+      %(permit_required)s,
+      %(referral_from)s,
+      %(unlock_requirement)s,
+      %(max_grade)s,
+      %(region)s,
+      (now() AT TIME ZONE 'utc')
+  )
+  ON CONFLICT (engineer_id) DO UPDATE SET
+      system_id64 = EXCLUDED.system_id64,
+      body_id64 = EXCLUDED.body_id64,
+      market_id = EXCLUDED.market_id,
+      name = EXCLUDED.name,
+      engineer_type = EXCLUDED.engineer_type,
+      specialties = EXCLUDED.specialties,
+      permit_required = EXCLUDED.permit_required,
+      referral_from = EXCLUDED.referral_from,
+      unlock_requirement = EXCLUDED.unlock_requirement,
+      max_grade = EXCLUDED.max_grade,
+      region = EXCLUDED.region,
+      update_dtm = (now() AT TIME ZONE 'utc');
+records:
+- system_id64: 3932277478114
+  body_id64: 2013326068794377
+  market_id: 128673927
+  engineer_id: 300000
+  name: Didi Vatermann
+  engineer_type: Ship
+  specialties:
+    major:
+      shield_booster: 5
+    minor:
+      shield_generator: 3
+  permit_required: null
+  referral_from: Selene Jean
+  unlock_requirement: 50 units of Lavian Brandy
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 1109989017963
+  body_id64: 568314377197113
+  market_id: 128674183
+  engineer_id: 300010
+  name: Bill Turner
+  engineer_type: Ship
+  specialties:
+    major:
+      plasma_accelerator: 5
+      sensors: 5
+      detailed_surface_scanner: 5
+    minor:
+      life_support: 3
+      refinery: 3
+      auto_field_maintenance_unit: 3
+      fuel_scoop: 3
+  permit_required: Alioth
+  referral_from: Selene Jean
+  unlock_requirement: 50 units of Bromellite
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 4481966019282
+  body_id64: 2294766601872397
+  market_id: 128674695
+  engineer_id: 300030
+  name: Broo Tarquin
+  engineer_type: Ship
+  specialties:
+    major:
+      burst_laser: 5
+      beam_laser: 5
+      pulse_laser: 5
+    minor: {}
+  permit_required: null
+  referral_from: Hera Tani
+  unlock_requirement: 50 units of Fujin Tea
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 2827992680811
+  body_id64: 1447932252575248
+  market_id: 128674951
+  engineer_id: 300040
+  name: The Sarge
+  engineer_type: Ship
+  specialties:
+    major:
+      cannon: 5
+      collector_limpet_controller: 5
+      fuel_transfer_limpet_controller: 5
+      hatch_breaker_limpet_controller: 5
+      prospector_limpet_controller: 5
+    minor:
+      railgun: 3
+  permit_required: null
+  referral_from: Juri Ishmaak
+  unlock_requirement: 50 units of Aberrant Shield Analyses
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 6131367744226
+  body_id64: 3139260285043721
+  market_id: 128675207
+  engineer_id: 300050
+  name: Zacariah Nemo
+  engineer_type: Ship
+  specialties:
+    major:
+      fragment_cannon: 5
+    minor:
+      multi_cannon: 3
+      plasma_accelerator: 3
+  permit_required: null
+  referral_from: Elvira Martuuk
+  unlock_requirement: 25 units of Xihe Biomorphic Companions
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 1458309141194
+  body_id64: 746654280291334
+  market_id: 128675975
+  engineer_id: 300080
+  name: Liz Ryder
+  engineer_type: Ship
+  specialties:
+    major:
+      missile_rack: 5
+      torpedo_pylon: 5
+    minor:
+      mine_launcher: 3
+      hull_reinforcement_package: 1
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 200 units of Landmines
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 1733321102034
+  body_id64: 887460404241423
+  market_id: 128676231
+  engineer_id: 300090
+  name: Hera Tani
+  engineer_type: Ship
+  specialties:
+    major:
+      power_plant: 5
+      detailed_surface_scanner: 5
+    minor:
+      sensors: 3
+      power_distributor: 3
+  permit_required: null
+  referral_from: Liz Ryder
+  unlock_requirement: 50 units of Kamitra Cigars
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 6681123623626
+  body_id64: 3420735295296537
+  market_id: 128676487
+  engineer_id: 300100
+  name: Felicity Farseer
+  engineer_type: Ship
+  specialties:
+    major:
+      frame_shift_drive: 5
+    minor:
+      thrusters: 3
+      sensors: 3
+      detailed_surface_scanner: 3
+      power_plant: 1
+      shield_booster: 1
+      frame_shift_drive_interdictor: 1
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 1x Meta-Alloy
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 3790082132323
+  body_id64: 1940522051749392
+  market_id: 128676743
+  engineer_id: 300110
+  name: Ram Tah
+  engineer_type: Ship
+  specialties:
+    major:
+      point_defence: 5
+      electronic_countermeasure: 5
+      chaff_launcher: 5
+      heat_sink_launcher: 5
+    minor:
+      collector_limpet_controller: 5
+      fuel_transfer_limpet_controller: 5
+      hatch_breaker_limpet_controller: 5
+      prospector_limpet_controller: 5
+      frame_shift_drive_wake_scanner: 5
+      kill_warrant_scanner: 5
+      manifest_scanner: 5
+  permit_required: null
+  referral_from: Lei Cheung
+  unlock_requirement: 50 units of Classified Scan Databanks
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 4305444669811
+  body_id64: 2204387670943237
+  market_id: 128676999
+  engineer_id: 300120
+  name: Lei Cheung
+  engineer_type: Ship
+  specialties:
+    major:
+      shield_generator: 5
+      sensors: 5
+      detailed_surface_scanner: 5
+    minor:
+      shield_booster: 3
+  permit_required: null
+  referral_from: The Dweller
+  unlock_requirement: 200 units of Gold
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 12274907287851
+  body_id64: 6284752531379736
+  market_id: 128677255
+  engineer_id: 300130
+  name: Petra Olmanova
+  engineer_type: Ship
+  specialties:
+    major:
+      hull_reinforcement_package: 5
+      armour: 5
+      missile_rack: 5
+      point_defence: 5
+      chaff_launcher: 5
+      heat_sink_launcher: 5
+    minor:
+      torpedo_pylon: 3
+      mine_launcher: 3
+      electronic_countermeasure: 3
+      auto_field_maintenance_unit: 3
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 200 units of Progenitor Cells
+  max_grade: 5
+  region: Colonia
+- system_id64: 10477373803
+  body_id64: 5364415387156
+  market_id: 128677511
+  engineer_id: 300140
+  name: Colonel Bris Dekker
+  engineer_type: Ship
+  specialties:
+    major: {}
+    minor:
+      frame_shift_drive_interdictor: 4
+      frame_shift_drive: 3
+  permit_required: Sol
+  referral_from: Juri Ishmaak
+  unlock_requirement: 10,000,000 Credits of Federal Combat Bonds
+  max_grade: 4
+  region: Core Bubble
+- system_id64: 48996147307082
+  body_id64: 25086027421225988
+  market_id: 128677767
+  engineer_id: 300150
+  name: Marsha Hicks
+  engineer_type: Ship
+  specialties:
+    major:
+      cannon: 5
+      fragment_cannon: 5
+      multi_cannon: 5
+      fuel_scoop: 5
+      refinery: 5
+      collector_limpet_controller: 5
+      fuel_transfer_limpet_controller: 5
+      hatch_breaker_limpet_controller: 5
+      prospector_limpet_controller: 5
+    minor: {}
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 10 units of Osmium
+  max_grade: 5
+  region: Colonia
+- system_id64: 3107241104074
+  body_id64: 1590907445285901
+  market_id: 128678023
+  engineer_id: 300160
+  name: Elvira Martuuk
+  engineer_type: Ship
+  specialties:
+    major:
+      frame_shift_drive: 5
+    minor:
+      shield_generator: 3
+      thrusters: 3
+      shield_cell_bank: 1
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 3x Soontill Relics
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 5031654888146
+  body_id64: 2576207302730762
+  market_id: 128678535
+  engineer_id: 300180
+  name: The Dweller
+  engineer_type: Ship
+  specialties:
+    major:
+      power_distributor: 5
+    minor:
+      pulse_laser: 4
+      burst_laser: 3
+      beam_laser: 3
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 500,000 Credits
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 121569805492
+  body_id64: 62243740411908
+  market_id: 128679047
+  engineer_id: 300200
+  name: Marco Qwent
+  engineer_type: Ship
+  specialties:
+    major:
+      power_plant: 4
+    minor:
+      power_distributor: 3
+  permit_required: Sirius
+  referral_from: Elvira Martuuk
+  unlock_requirement: 25x Modular Terminals
+  max_grade: 4
+  region: Core Bubble
+- system_id64: 24859942069665
+  body_id64: 12728290339668492
+  market_id: 128679303
+  engineer_id: 300210
+  name: Selene Jean
+  engineer_type: Ship
+  specialties:
+    major:
+      hull_reinforcement_package: 5
+      armour: 5
+    minor: {}
+  permit_required: null
+  referral_from: Tod 'The Blaster' McQuinn
+  unlock_requirement: 10 units of Painite
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 113573366131
+  body_id64: 58149563459100
+  market_id: 128679559
+  engineer_id: 300220
+  name: Professor Palin
+  engineer_type: Ship
+  specialties:
+    major:
+      thrusters: 5
+    minor:
+      frame_shift_drive: 3
+  permit_required: null
+  referral_from: Marco Qwent
+  unlock_requirement: 25x Sensor Fragments
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 3932277478106
+  body_id64: 2013326068790283
+  market_id: 128679815
+  engineer_id: 300230
+  name: Lori Jameson
+  engineer_type: Ship
+  specialties:
+    major:
+      sensors: 5
+      detailed_surface_scanner: 5
+    minor:
+      life_support: 5
+      refinery: 5
+      auto_field_maintenance_unit: 5
+      fuel_scoop: 5
+      frame_shift_drive_wake_scanner: 5
+      kill_warrant_scanner: 5
+      manifest_scanner: 5
+      shield_cell_bank: 3
+  permit_required: Shinrarta Dezhra
+  referral_from: Marco Qwent
+  unlock_requirement: 25 units of Kongga Ale
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 4481899074282
+  body_id64: 2294732326032387
+  market_id: 128680327
+  engineer_id: 300250
+  name: Juri Ishmaak
+  engineer_type: Ship
+  specialties:
+    major:
+      mine_launcher: 5
+      sensors: 5
+      detailed_surface_scanner: 5
+    minor:
+      torpedo_pylon: 3
+      missile_rack: 3
+      frame_shift_drive_wake_scanner: 3
+      kill_warrant_scanner: 3
+      manifest_scanner: 3
+  permit_required: null
+  referral_from: Felicity Farseer
+  unlock_requirement: 1,000,000 Credits of Combat Bonds
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 3107576681170
+  body_id64: 1591079260759047
+  market_id: 128680583
+  engineer_id: 300260
+  name: Tod 'The Blaster' McQuinn
+  engineer_type: Ship
+  specialties:
+    major:
+      multi_cannon: 5
+      railgun: 5
+    minor:
+      cannon: 3
+      fragment_cannon: 3
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 100,000 Credits of Alliance Bounty Vouchers
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 164098653
+  body_id64: 84018510341
+  market_id: 128680839
+  engineer_id: 300270
+  name: Tiana Fortune
+  engineer_type: Ship
+  specialties:
+    major:
+      frame_shift_drive_wake_scanner: 5
+      kill_warrant_scanner: 5
+      manifest_scanner: 5
+      sensors: 5
+      collector_limpet_controller: 5
+      fuel_transfer_limpet_controller: 5
+      hatch_breaker_limpet_controller: 5
+      prospector_limpet_controller: 5
+    minor:
+      detailed_surface_scanner: 3
+      frame_shift_drive_interdictor: 2
+  permit_required: null
+  referral_from: Hera Tani
+  unlock_requirement: 50 units of Decoded Emission Data
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 66038577537618
+  body_id64: 33811751699260430
+  market_id: 128681095
+  engineer_id: 300280
+  name: Mel Brandon
+  engineer_type: Ship
+  specialties:
+    major:
+      frame_shift_drive: 5
+      thrusters: 5
+      shield_generator: 5
+      shield_booster: 5
+      burst_laser: 5
+      beam_laser: 5
+      pulse_laser: 5
+      frame_shift_drive_interdictor: 5
+    minor:
+      shield_cell_bank: 3
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 100,000 Credits of Colonia Bounty Vouchers
+  max_grade: 5
+  region: Colonia
+- system_id64: 11887629902418
+  body_id64: 6086466510038035
+  market_id: 128681351
+  engineer_id: 300290
+  name: Etienne Dorn
+  engineer_type: Ship
+  specialties:
+    major:
+      power_plant: 5
+      power_distributor: 5
+      sensors: 5
+      detailed_surface_scanner: 5
+      plasma_accelerator: 5
+      railgun: 5
+      life_support: 5
+    minor:
+      frame_shift_drive_wake_scanner: 3
+      kill_warrant_scanner: 3
+      manifest_scanner: 3
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 25 units of Occupied Escape Pods
+  max_grade: 5
+  region: Colonia
+- system_id64: 594676730147
+  body_id64: 304474485835279
+  market_id: 128954244
+  engineer_id: 300300
+  name: Chloe Sedesi
+  engineer_type: Ship
+  specialties:
+    major:
+      thrusters: 5
+    minor:
+      frame_shift_drive: 3
+  permit_required: null
+  referral_from: Marco Qwent
+  unlock_requirement: 25x Sensor Fragments
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 7268024067513
+  body_id64: 3721228322566668
+  market_id: 128972903
+  engineer_id: 400001
+  name: Jude Navarro
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      weapon_handling: 5
+      magazine_size: 5
+      reload_speed: 5
+    minor: {}
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 10x Genetic Data
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 5068464399785
+  body_id64: 2595053772689928
+  market_id: 128973159
+  engineer_id: 400002
+  name: Domino Green
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      backpack_capacity: 5
+      reduced_tool_battery_consumption: 5
+      improved_battery_capacity: 5
+    minor: {}
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 5x Push
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 7269634614689
+  body_id64: 3722052922720808
+  market_id: 128973415
+  engineer_id: 400003
+  name: Hero Ferrari
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      combat_movement_speed: 5
+      damage_resistance: 5
+      shield_regen: 5
+    minor: {}
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: Settle 10 Conflict Zones
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 2827975936355
+  body_id64: 1447923679413766
+  market_id: 128973671
+  engineer_id: 400004
+  name: Kit Fowler
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      quieter_footsteps: 5
+      improved_jump_assist: 5
+      enhanced_tracking: 5
+    minor: {}
+  permit_required: null
+  referral_from: Domino Green
+  unlock_requirement: 40x Opinion Polls
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 2832832893634
+  body_id64: 1450410441540628
+  market_id: 128973927
+  engineer_id: 400005
+  name: Wellington Beck
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      added_melee_damage: 5
+      damage_resistance: 5
+      faster_shield_regen: 5
+    minor: {}
+  permit_required: null
+  referral_from: Hero Ferrari
+  unlock_requirement: 25x Insight Data
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 3721329101171
+  body_id64: 1905320499799554
+  market_id: 128974183
+  engineer_id: 400006
+  name: Terra Velasquez
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      night_vision: 5
+      extra_ammo_capacity: 5
+      greater_range: 5
+    minor: {}
+  permit_required: null
+  referral_from: Jude Navarro
+  unlock_requirement: 6 Covert Heist / Theft Missions
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 16065190962585
+  body_id64: 8225377772843525
+  market_id: 128974439
+  engineer_id: 400007
+  name: Uma Laszlo
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      stowed_reloading: 5
+      scope: 5
+      headshot_damage: 5
+    minor: {}
+  permit_required: null
+  referral_from: Wellington Beck
+  unlock_requirement: 1,000,000 Credits
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 8879744226018
+  body_id64: 4546429043721239
+  market_id: 128974695
+  engineer_id: 400008
+  name: Oden Geiger
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      audio_masking: 5
+      noise_suppressor: 5
+      stability: 5
+    minor: {}
+  permit_required: null
+  referral_from: Terra Velasquez
+  unlock_requirement: 20x Manufacturing Instructions
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 670686455169
+  body_id64: 343391465046551
+  market_id: 128974951
+  engineer_id: 400009
+  name: Yarden Bond
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      improved_hip_fire_accuracy: 5
+      faster_handling: 5
+    minor: {}
+  permit_required: null
+  referral_from: Kit Fowler
+  unlock_requirement: 8x Smear Campaign Plans
+  max_grade: 5
+  region: Core Bubble
+- system_id64: 71536135676490
+  body_id64: 36626501466362916
+  market_id: 128986843
+  engineer_id: 400010
+  name: Baltanos
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      improved_battery_capacity: 5
+      backpack_capacity: 5
+      reduced_tool_battery_consumption: 5
+    minor: {}
+  permit_required: null
+  referral_from: Public
+  unlock_requirement: 10x Faction Data
+  max_grade: 5
+  region: Colonia
+- system_id64: 38001031029322
+  body_id64: 19456527887012873
+  market_id: 128987099
+  engineer_id: 400011
+  name: Eleanor Bresa
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      faster_shield_regen: 5
+      damage_resistance: 5
+    minor: {}
+  permit_required: null
+  referral_from: Baltanos
+  unlock_requirement: 10x Settlement Defence Plans
+  max_grade: 5
+  region: Colonia
+- system_id64: 59166629864010
+  body_id64: 30293314490373151
+  market_id: 128986587
+  engineer_id: 400012
+  name: Rosa Dayette
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      quieter_footsteps: 5
+      improved_jump_assist: 5
+    minor: {}
+  permit_required: null
+  referral_from: Eleanor Bresa
+  unlock_requirement: 10x Culinary Recipes
+  max_grade: 5
+  region: Colonia
+- system_id64: 13736779007129
+  body_id64: 7033230851650060
+  market_id: 128987355
+  engineer_id: 400013
+  name: Yi Shen
+  engineer_type: OnFoot
+  specialties:
+    major:
+      suit_upgrades: 5
+      night_vision: 5
+      extra_ammo_capacity: 5
+    minor: {}
+  permit_required: null
+  referral_from: Rosa Dayette
+  unlock_requirement: 10x Surveillance Equipment
+  max_grade: 5
+  region: Colonia

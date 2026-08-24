@@ -49,8 +49,8 @@ dev = [
 galaxy-sync = "galaxy_sync:main"
 galaxy_sync = "galaxy_sync:main"
 ed-galaxy-sync-pg = "galaxy_sync:main"
-apply-schema = "db_setup.apply_schema:main"
-apply_schema = "db_setup.apply_schema:main"
+db-setup = "db_setup.db_setup:main"
+db_setup = "db_setup.db_setup:main"
 
 [build-system]
 requires = ["hatchling"]
