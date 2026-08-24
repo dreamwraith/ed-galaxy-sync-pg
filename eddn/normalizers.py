@@ -269,7 +269,11 @@ class NormalizerManager:
         if is_station:
             return (display_name, raw_type or "Station", None)
 
-        # 5. Fallback: only record unmapped metric for Frontier game tokens (starting with $)
+        # 5. Dynamic Planetary Surface POI Scenes (procedural client-side surface POI spawns)
+        if sanitized_signal_name.startswith("POIScene_"):
+            return (localised_name.strip() if localised_name else "Surface Point of Interest", "GenericPOI", None)
+
+        # 6. Fallback: only record unmapped metric for Frontier game tokens (starting with $)
         if raw_signal_token.startswith("$") and metrics and hasattr(metrics, "record_unmapped"):
             metrics.record_unmapped("system_signals", "raw_name", sanitized_signal_name)
 
