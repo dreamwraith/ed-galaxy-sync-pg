@@ -1,0 +1,82 @@
+# Canonical normalization mappings for Flight and On-Foot Crime Types
+# Source: FDevIDs/crimes.csv
+Assault:
+  - assault
+Collided At Speed In No Fire Zone:
+  - collidedAtSpeedInNoFireZone
+Collided At Speed In No Fire Zone (Hull Damage):
+  - collidedAtSpeedInNoFireZone_hulldamage
+Disobey Police:
+  - disobeyPolice
+Docking Major Blocking Airlock:
+  - dockingMajorBlockingAirlock
+Docking Major Blocking Landing Pad:
+  - dockingMajorBlockingLandingPad
+Docking Major Tresspass:
+  - dockingMajorTresspass
+Docking Minor Blocking Airlock:
+  - dockingMinorBlockingAirlock
+Docking Minor Blocking Landing Pad:
+  - dockingMinorBlockingLandingPad
+Docking Minor Tresspass:
+  - dockingMinorTresspass
+Dumping Dangerous:
+  - dumpingDangerous
+Dumping Near Station:
+  - dumpingNearStation
+Fire In No Fire Zone:
+  - fireInNoFireZone
+Fire In Station:
+  - fireInStation
+Illegal Cargo:
+  - illegalCargo
+Interdiction:
+  - interdiction
+Murder:
+  - murder
+On-Foot Arc Cutter Use:
+  - onFoot_arcCutterUse
+On-Foot Breaking And Entering:
+  - onFoot_breakingAndEntering
+On-Foot Carrying Illegal Data:
+  - onFoot_carryingIllegalData
+On-Foot Carrying Illegal Goods:
+  - onFoot_carryingIllegalGoods
+On-Foot Carrying Stolen Goods:
+  - onFoot_carryingStolenGoods
+On-Foot Damaging Defences:
+  - onFoot_damagingDefences
+On-Foot Data Transfer:
+  - onFoot_dataTransfer
+On-Foot Detection Of Weapon:
+  - onFoot_detectionOfWeapon
+On-Foot E Breach Use:
+  - onFoot_eBreachUse
+On-Foot Failure To Submit To Police:
+  - onFoot_failureToSubmitToPolice
+On-Foot Identity Theft:
+  - onFoot_identityTheft
+On-Foot Murder:
+  - onFoot_murder
+On-Foot Overcharge Intent:
+  - onFoot_overchargeIntent
+Onfoot_Overcharged Port:
+  - onfoot_overchargedPort
+On-Foot Profile Cloning Intent:
+  - onFoot_profileCloningIntent
+On-Foot Property Theft:
+  - onFoot_propertyTheft
+On-Foot Reckless Endangerment:
+  - onFoot_recklessEndangerment
+On-Foot Theft:
+  - onFoot_theft
+On-Foot Trespass:
+  - onFoot_trespass
+Passenger Wanted:
+  - passengerWanted
+Piracy:
+  - piracy
+Reckless Weapons Discharge:
+  - recklessWeaponsDischarge
+Shuttle Destruction:
+  - shuttleDestruction
