@@ -1,0 +1,30 @@
+# Canonical normalization mappings for Trade Ranks
+# Source: FDevIDs/TradeRank.csv
+Penniless:
+  - "0"
+Mostly Penniless:
+  - "1"
+Peddler:
+  - "2"
+Dealer:
+  - "3"
+Merchant:
+  - "4"
+Broker:
+  - "5"
+Entrepreneur:
+  - "6"
+Tycoon:
+  - "7"
+Elite:
+  - "8"
+Elite I:
+  - "9"
+Elite II:
+  - "10"
+Elite III:
+  - "11"
+Elite IV:
+  - "12"
+Elite V:
+  - "13"

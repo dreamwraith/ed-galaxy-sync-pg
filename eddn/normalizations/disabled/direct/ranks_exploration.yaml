@@ -1,0 +1,30 @@
+# Canonical normalization mappings for Exploration Ranks
+# Source: FDevIDs/ExplorationRank.csv
+Aimless:
+  - "0"
+Mostly Aimless:
+  - "1"
+Scout:
+  - "2"
+Surveyor:
+  - "3"
+Explorer:
+  - "4"
+Pathfinder:
+  - "5"
+Ranger:
+  - "6"
+Pioneer:
+  - "7"
+Elite:
+  - "8"
+Elite I:
+  - "9"
+Elite II:
+  - "10"
+Elite III:
+  - "11"
+Elite IV:
+  - "12"
+Elite V:
+  - "13"

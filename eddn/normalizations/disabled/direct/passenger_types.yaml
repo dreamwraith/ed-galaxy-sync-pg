@@ -1,0 +1,36 @@
+# Canonical normalization mappings for Passenger Cabin VIP & Demographics
+# Source: FDevIDs/passengers.csv
+Business:
+  - Business
+Criminal:
+  - Criminal
+Explorer:
+  - Explorer
+Head Of State:
+  - HeadOfState
+Medical:
+  - Medical
+Minor Celebrity:
+  - MinorCelebrity
+Political Prisoner:
+  - PoliticalPrisoner
+Politician:
+  - Politician
+Prisoner of War:
+  - POW
+Protester:
+  - Protester
+Refugee:
+  - Refugee
+Scientist:
+  - Scientist
+Security:
+  - Security
+Soldier:
+  - Soldier
+Terrorist:
+  - Terrorist
+Tourist:
+  - Tourist
+Aid Worker:
+  - AidWorker

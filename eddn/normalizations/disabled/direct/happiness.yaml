@@ -1,0 +1,12 @@
+# Canonical normalization mappings for Faction Happiness bands
+# Reference mapping for future schema expansions and journal events
+Elated:
+  - HappinessBand1
+Happy:
+  - HappinessBand2
+Discontented:
+  - HappinessBand3
+Unhappy:
+  - HappinessBand4
+Despondent:
+  - HappinessBand5
