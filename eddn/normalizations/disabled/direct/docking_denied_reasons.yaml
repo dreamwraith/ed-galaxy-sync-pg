@@ -1,0 +1,16 @@
+# Canonical normalization mappings for Station Docking Rejection Reasons
+# Source: FDevIDs/dockingdeniedreasons.csv
+Active Fighter:
+  - ActiveFighter
+Distance:
+  - Distance
+Hostile:
+  - Hostile
+No Space:
+  - NoSpace
+Offences:
+  - Offences
+Too Large:
+  - TooLarge
+Restricted Access:
+  - RestrictedAccess

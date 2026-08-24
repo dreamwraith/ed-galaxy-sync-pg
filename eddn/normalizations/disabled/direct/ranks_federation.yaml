@@ -1,0 +1,32 @@
+# Canonical normalization mappings for Federation Naval Ranks
+# Source: FDevIDs/FederationRank.csv
+None:
+  - "0"
+Recruit:
+  - "1"
+Cadet:
+  - "2"
+Midshipman:
+  - "3"
+Petty Officer:
+  - "4"
+Chief Petty Officer:
+  - "5"
+Warrant Officer:
+  - "6"
+Ensign:
+  - "7"
+Lieutenant:
+  - "8"
+Lt Commander:
+  - "9"
+Post Commander:
+  - "10"
+Post Captain:
+  - "11"
+Rear Admiral:
+  - "12"
+Vice Admiral:
+  - "13"
+Admiral:
+  - "14"
