@@ -52,8 +52,8 @@ COMMENT ON COLUMN stations.system_id64 IS
   'Foreign reference to systems.id64 — the system the station is located in.';
 
 COMMENT ON COLUMN stations.body_source_id64 IS
-  'For planet-based stations, the id64 of the body the station is on or orbiting. '
-  'NULL for space stations. Not a strict FK to bodies — the body may not always be ingested yet.';
+  'For planetary surface ports, outposts, and settlements: the body ID or index of the parent body. '
+  'Resolves to bodies.id64 (or bodies.bodyId) for celestial linkage. NULL for orbital space stations.';
 
 COMMENT ON COLUMN stations.market_id IS
   'Frontier''s numeric market/station identifier. Globally unique. Primary key. '

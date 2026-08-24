@@ -60,11 +60,13 @@ COMMENT ON COLUMN bodies.system_id64 IS
   'Foreign reference to systems.id64 — the system this body belongs to.';
 
 COMMENT ON COLUMN bodies.id64 IS
-  'Globally unique Galactic ID64 of the body. Primary key. Source field: bodies[].id64.';
+  'Globally unique 64-bit Galactic Celestial ID of the body. Primary key. '
+  'Deterministically computed as (system_id64 << 9) | (bodyId & 0x1FF), congruent with Spansh and EDSM canonical standards. '
+  'Source field: bodies[].id64.';
 
 COMMENT ON COLUMN bodies.bodyId IS
-  'Numeric ID of the body within its system (not globally unique). '
-  'Used to resolve parent references. Source field: bodies[].bodyId.';
+  'Frontier system-local integer index of the body within its system (0-511). '
+  'Used to resolve parent references and composite body ID64 calculations. Source field: bodies[].bodyId.';
 
 COMMENT ON COLUMN bodies.name IS
   'Name of the celestial body (e.g. "Sol A", "Earth", "Sol 5 a"). Source field: bodies[].name.';

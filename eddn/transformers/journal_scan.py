@@ -60,8 +60,7 @@ class JournalScanTransformer(BaseTransformer):
         except ValueError, TypeError:
             body_id = None
 
-        raw_id64 = message.get("id64")
-        body_id64 = raw_id64 if raw_id64 is not None else EDDNUtils.compute_body_id64(system_id64, body_id_raw)
+        body_id64 = EDDNUtils.compute_body_id64(system_id64, body_id_raw)
 
         match event:
             case "Scan":
