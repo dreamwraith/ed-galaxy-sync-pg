@@ -29,7 +29,8 @@ db_setup/
 │   ├── 13_body_pois.sql          # Planetary surface points of interest (ruins, settlements)
 │   ├── 14__ingested_tables.sql   # Ingest pipeline chunk checkpoint table
 │   ├── 15_eddn_unhandled_events.sql # Dead-Letter Queue (DLQ) catch-all staging table
-│   └── 16__raw_debug_log.sql     # Debug audit log capturing raw EDDN payloads matching filter rules
+│   ├── 16__raw_debug_log.sql     # Debug audit log capturing raw EDDN payloads matching filter rules
+│   └── 17_engineers.sql          # Engineers reference table (Horizons & Odyssey workshops)
 ├── 02_indexes/
 │   ├── create_all_indexes.sql    # Secondary, spatial GiST, trigram & GIN indexes
 │   └── drop_all_indexes.sql      # Drop secondary indexes for high-speed bulk ingestion
@@ -41,10 +42,14 @@ db_setup/
 ├── 05_procedures/
 │   ├── sp_normalize_galaxy_data.sql # Stored procedure for canonical data cleanup
 │   └── sp_process_eddn_dlq.sql   # Stored procedure for processing/backfilling DLQ events
+├── data/
+│   └── engineers.yaml            # Static reference data for engineers (SCD batch deployments)
+├── seed_data.py                  # Idempotent seeder for static reference data (engineers, etc.)
 ├── generate_cleanup_sp.py        # Generates sp_normalize_galaxy_data.sql from YAML configs
 ├── generate_dlq_sp.py            # Generates sp_process_eddn_dlq.sql from YAML + whitelist
-├── apply_schema.py               # Deterministic CLI orchestrator for schema management
+├── db_setup.py                   # Deterministic CLI orchestrator for schema management
 └── readme.md                     # Schema reference & operational runbook (this file)
+
 ```
 
 ---
@@ -122,11 +127,11 @@ duckdb.memory_limit = '16GB'              # Set to ~50% of available system RAM;
 
 ### Role Password Management & Interactive Prompts
 
-When executing actions that initialize database roles (`--action init` or `--action all`), `apply_schema` resolves credentials using the following fallback priority:
+When executing actions that initialize database roles (`--action init` or `--action all`), `db_setup` resolves credentials using the following fallback priority:
 
 1. **Explicit CLI Flags**: `--searcher-password <pwd>` and `--updater-password <pwd>`
 2. **Environment Variables**: `GALAXY_SEARCHER_PASSWORD` and `GALAXY_UPDATER_PASSWORD` (auto-loaded from `.env`)
-3. **Interactive Terminal Prompt**: If running in an active terminal session, `apply_schema` securely prompts the user:
+3. **Interactive Terminal Prompt**: If running in an active terminal session, `db_setup` securely prompts the user:
 
    ```text
    🔑 Enter password for database role 'galaxy_searcher' [press Enter to auto-generate]: 
@@ -136,13 +141,13 @@ When executing actions that initialize database roles (`--action init` or `--act
 4. **Secure Auto-Generation**: If the user presses **Enter** (blank input) or passes `--no-prompt` (e.g. in automated CI/CD pipelines), cryptographically secure 16-character random tokens are generated automatically and displayed in the output.
 
 > [!NOTE]
-> `apply_schema` safely escapes and templates passwords into `00_init/02_users_roles.sql` in memory without modifying the SQL file on disk. If the roles already exist in the database, `apply_schema` executes `ALTER ROLE ... WITH PASSWORD` to update their credentials.
+> `db_setup` safely escapes and templates passwords into `00_init/02_users_roles.sql` in memory without modifying the SQL file on disk. If the roles already exist in the database, `db_setup` executes `ALTER ROLE ... WITH PASSWORD` to update their credentials.
 
 ---
 
-## Schema Orchestration CLI (`apply_schema.py`)
+## Database Setup & Schema Orchestration CLI (`db_setup.py`)
 
-The `apply_schema.py` script replaces monolithic schema files by executing modular scripts in deterministic order. It can be invoked via `uv run apply_schema` or directly when the virtual environment is active.
+The `db_setup.py` script replaces monolithic schema files by executing modular scripts in deterministic order. It can be invoked via `uv run db_setup` or directly when the virtual environment is active.
 
 > [!WARNING]
 > **Credential Security**: Inline CLI connection flags (`--host`, `--port`, `--user`, `--password`, `--dbname`) and local `.env` files are supported strictly for local development, testing, and initial setup convenience. **Never store plaintext credentials in `.env` files or pass credentials via command-line arguments in production environments.**
@@ -152,12 +157,13 @@ The `apply_schema.py` script replaces monolithic schema files by executing modul
 ### Usage Options
 
 ```powershell
-uv run apply_schema [OPTIONS]
+uv run db_setup [OPTIONS]
 ```
 
 | Flag | Description | Default |
 |---|---|---|
-| `--action` | Subsystem to apply (`all`, `init`, `tables`, `indexes`, `drop-indexes`, `rebuild-indexes`, `constraints`, `drop-constraints`, `rebuild-constraints`, `functions`, `procedures`, `run-normalize`, `normalize`, `run-dlq`, `dlq`, `duckdb`, `pg-duckdb`) | `all` |
+| `--action` | Subsystem to apply (`all`, `init`, `tables`, `indexes`, `drop-indexes`, `rebuild-indexes`, `constraints`, `drop-constraints`, `rebuild-constraints`, `functions`, `procedures`, `seed`, `run-normalize`, `normalize`, `run-dlq`, `dlq`, `duckdb`, `pg-duckdb`) | `all` |
+| `--datasets` | Optional specific dataset name(s) to seed when using `--action seed` (e.g. `--datasets engineers`) | *(all discovered)* |
 | `--batch-size` | Batch size for stored procedure execution (`run-normalize`, `run-dlq`) | `250000` |
 | `--dry-run` | Print the ordered execution plan without making any database changes | `False` |
 | `--host` | PostgreSQL server hostname / IP (or env `PGHOST`) | `localhost` |
@@ -169,12 +175,22 @@ uv run apply_schema [OPTIONS]
 | `--updater-password` | Password for `galaxy_updater` role (or env `GALAXY_UPDATER_PASSWORD`) | *(prompt / auto-generated)* |
 | `--no-prompt` | Disable interactive password prompts and auto-generate credentials if not provided | `False` |
 
+> [!IMPORTANT]
+> **Constraint Deployment vs. Bulk Load Recovery**:
+>
+> * `--action all` creates a **fresh schema**, including all primary keys and constraints defined **inline** within each table's DDL (`01_tables/*.sql`).
+> * **Do not run `add_constraints.sql` or `--action constraints` after a normal `all` deployment** — constraints already exist from table creation.
+> * `--action all` is **not** the post-bulk recovery command (running it on populated tables will fail on existing table creation).
+> * The standalone constraint scripts (`03_constraints/add_constraints.sql` and `03_constraints/drop_constraints.sql`) exist **strictly for bulk-load recovery**.
+
 ### Common Operational Workflows
 
-#### 1. Full Database Schema Deployment (Interactive)
+#### 1. Full Fresh Database Schema Deployment (Interactive)
+
+Deploys extensions, roles, domain tables with inline primary keys, functions, secondary/search indexes, and stored procedures:
 
 ```powershell
-uv run apply_schema --action all
+uv run db_setup --action all
 ```
 
 #### 2. Non-Interactive / Scripted Deployment with Custom Passwords
@@ -186,29 +202,31 @@ $env:PGPASSWORD = "YOUR_SUPERUSER_PASSWORD"
 $env:GALAXY_SEARCHER_PASSWORD = "SearcherSecurePassword123!"
 $env:GALAXY_UPDATER_PASSWORD = "UpdaterSecurePassword123!"
 
-uv run apply_schema --action all --no-prompt
+uv run db_setup --action all --no-prompt
 
 # Option B: Via CLI Flags
-uv run apply_schema --action all --searcher-password "SearcherPass!" --updater-password "UpdaterPass!" --no-prompt
+uv run db_setup --action all --searcher-password "SearcherPass!" --updater-password "UpdaterPass!" --no-prompt
 ```
 
 #### 3. Dry-Run Verification (Inspect Plan)
 
 ```powershell
-uv run apply_schema --action all --dry-run
+uv run db_setup --action all --dry-run
 ```
 
-#### 4. Initial Bulk Data Load (Drop & Rebuild Indexes)
+#### 4. Initial Bulk Data Load & Post-Bulk Recovery Workflow
 
 ```powershell
-# Step 1: Drop secondary indexes to maximize write throughput (10x-20x speedup)
-uv run apply_schema --action drop-indexes
+# Step 1: Drop secondary indexes and constraints to maximize write throughput (10x-20x speedup)
+uv run db_setup --action drop-indexes
+uv run db_setup --action drop-constraints
 
 # Step 2: Run bulk ingest pipeline
 uv run galaxy_sync ingest --json "D:\galaxy_parts\*.ndjson" --mode bulk --threads 8 --batch-size 4
 
-# Step 3: Rebuild all secondary indexes and analyze
-uv run apply_schema --action rebuild-indexes
+# Step 3: Post-bulk recovery (rebuild constraints first, then indexes)
+uv run db_setup --action rebuild-constraints
+uv run db_setup --action rebuild-indexes
 ```
 
 #### 5. Regenerate & Deploy Stored Procedures
@@ -219,7 +237,7 @@ uv run python db_setup/generate_cleanup_sp.py
 uv run python db_setup/generate_dlq_sp.py
 
 # Apply procedures to database
-uv run apply_schema --action procedures
+uv run db_setup --action procedures
 ```
 
 ---
@@ -271,7 +289,7 @@ One row per Elite Dangerous star system. Uniquely identified by Galactic `id64`.
 | `security` | `TEXT` | Security rating (`High`, `Medium`, `Low`, `Anarchy`). |
 | `population` | `BIGINT` | Total human population. `0` for uninhabited systems. |
 | `bodyCount` | `INTEGER` | Total number of surveyed celestial bodies. |
-| `controllingPower` | `TEXT` | Controlling Powerplay power. |
+| `controllingPower` | `TEXT` | Controlling Powerplay power. Partial index (`idx_systems_controlling_power`). |
 | `powerState` | `TEXT` | Powerplay state (`Exploited`, `Fortified`, `Stronghold`, `Unoccupied`). |
 | `powers` | `JSONB` | Array of power names exerting influence. GIN indexed (`idx_systems_powers`). |
 | `controllingFaction` | `JSONB` | Snapshot of the controlling minor faction. |
@@ -316,19 +334,19 @@ Celestial bodies (stars, planets, moons, barycentres). `id64` is globally unique
 | `surfaceTemperature` | `DOUBLE PRECISION` | Surface temperature in Kelvin (K). |
 | `radius` | `DOUBLE PRECISION` | Planets only: Equatorial radius in km. |
 | `isLandable` | `BOOLEAN` | Planets only: `TRUE` if landable. |
-| `gravity` | `DOUBLE PRECISION` | Planets only: Surface gravity in G (1.0 = 9.81 m/s²). |
+| `gravity` | `DOUBLE PRECISION` | Planets only: Surface gravity in G (1.0 = 9.81 m/s²). Partial index (`idx_bodies_gravity`). |
 | `earthMasses` | `DOUBLE PRECISION` | Planets only: Mass in Earth masses. |
 | `surfacePressure` | `DOUBLE PRECISION` | Planets only: Surface atmospheric pressure in atm. |
 | `atmosphereType` | `TEXT` | Dominant atmospheric composition label. |
 | `terraformingState` | `TEXT` | Terraforming status (`Terraformable`, `Not terraformable`, `Terraformed`). |
-| `reserveLevel` | `TEXT` | Mining reserve level (`Pristine`, `Major`, `Common`, `Low`, `Depleted`). B-Tree indexed. |
+| `reserveLevel` | `TEXT` | Mining reserve level (`Pristine`, `Major`, `Common`, `Low`, `Depleted`). B-Tree indexed (`idx_bodies_reserveLevel`). |
 | `mainStar` | `BOOLEAN` | Stars only: `TRUE` if primary arrival star. |
 | `spectralClass` | `TEXT` | Stars only: MKK spectral classification code. |
 | `solarMasses` | `DOUBLE PRECISION` | Stars only: Mass in Sol masses. |
 | `solarRadius` | `DOUBLE PRECISION` | Stars only: Radius in Sol radii. |
-| `atmosphereComposition` | `JSONB` | GIN-indexed elemental breakdown. |
-| `solidComposition` | `JSONB` | GIN-indexed solid material breakdown. |
-| `materials` | `JSONB` | GIN-indexed surface mineable elements. |
+| `atmosphereComposition` | `JSONB` | GIN-indexed elemental breakdown (`idx_bodies_atmosphereComposition`). |
+| `solidComposition` | `JSONB` | GIN-indexed solid material breakdown (`idx_bodies_solidComposition`). |
+| `materials` | `JSONB` | GIN-indexed surface mineable elements (`idx_bodies_materials`). |
 | `parents` | `JSONB` | Orbital hierarchy parent references. |
 | `update_dtm` | `TIMESTAMP` | UTC timestamp of last update. |
 
@@ -336,7 +354,15 @@ Celestial bodies (stars, planets, moons, barycentres). `id64` is globally unique
 
 Planetary/stellar rings and asteroid belts. Composite PK: `(body_id64, name)`.
 
-* `body_rings.signals`: GIN indexed on `(signals -> 'signals')` for mining hotspot searches (e.g. Platinum, Painite, Void Opals).
+* `body_rings.type`: B-Tree indexed (`idx_body_rings_type`) and composite type + density indexed (`idx_body_rings_type_density`).
+* `body_rings.signals`: GIN indexed (`idx_body_rings_signals`) for mining hotspot searches (e.g. Platinum, Painite, Void Opal).
+
+### `body_signals`
+
+Planetary surface biological, geological, and exobiology signals. Primary key: `body_id64`.
+
+* `system_id64`: B-Tree indexed (`idx_body_signals_system`) for system-level bio/geo joins.
+* `genuses`: GIN indexed (`idx_body_signals_genuses`) for exobiology genus array searches (e.g. `Stratum`, `Tubeworms`, `Fonticulua`).
 
 ### `stations`
 
@@ -345,10 +371,10 @@ All dockable space stations, surface ports, outposts, settlements, and Drake-Cla
 | Column | Type | Description |
 |---|---|---|
 | `market_id` | `BIGINT` PK | Frontier market identifier. Globally unique. |
-| `system_id64` | `BIGINT` | FK → `systems.id64`. |
-| `body_source_id64` | `BIGINT` | Parent body identifier / index for planetary surface ports & settlements. |
-| `name` | `TEXT` | Station name. |
-| `type` | `TEXT` | Physical type (`Coriolis Starport`, `Orbis Starport`, `Outpost`, `Planetary Port`, `Drake-Class Carrier`, `Settlement`). |
+| `system_id64` | `BIGINT` | FK → `systems.id64`. B-Tree indexed (`idx_stations_system`). |
+| `body_source_id64` | `BIGINT` | Parent body identifier / index for planetary surface ports & settlements. Partial index (`idx_stations_body_source`). |
+| `name` | `TEXT` | Station name. B-Tree & Trigram indexed (`idx_stations_name`, `idx_stations_name_trgm`). |
+| `type` | `TEXT` | Physical type (`Coriolis Starport`, `Orbis Starport`, `Outpost`, `Planetary Port`, `Drake-Class Carrier`, `Settlement`). B-Tree indexed (`idx_stations_type`). |
 | `state` | `TEXT` | Operational state (`Construction`, `Damaged`, `UnderRepairs`, `UnderAttack`). |
 | `distanceToArrival` | `DOUBLE PRECISION` | Arrival distance in light-seconds (ls). |
 | `latitude` / `longitude` | `DOUBLE PRECISION` | Surface coordinates for planetary ports/settlements. |
@@ -356,20 +382,28 @@ All dockable space stations, surface ports, outposts, settlements, and Drake-Cla
 | `primaryEconomy` / `secondaryEconomy` | `TEXT` | Station economies. |
 | `economies` | `JSONB` | Detailed economy breakdown. |
 | `pad_large`, `pad_medium`, `pad_small` | `INTEGER` | Landing pad counts. |
-| `services_arr` | `TEXT[]` | Supported services array (`Market`, `Shipyard`, `Outfitting`, `Restock`, `Refuel`, `Repair`, `Bartender`, `Vista Genomics`, etc.). |
+| `services_arr` | `TEXT[]` | Supported services array (`Market`, `Shipyard`, `Outfitting`, `Restock`, `Refuel`, `Repair`, `Bartender`, `Vista Genomics`, etc.). GIN indexed (`idx_stations_services`). |
 | `update_dtm` | `TIMESTAMP` | UTC timestamp of last update. |
 
 ### `station_commodities`, `station_ships`, `station_modules`, `station_materials`
 
-* `station_commodities`: `(market_id, commodityId)` PK. Market prices, buy/sell values, supply/demand.
-* `station_ships`: `(market_id, shipId)` PK. Shipyard inventory.
-* `station_modules`: `(market_id, moduleId)` PK. Outfitting module stock, class, rating.
-* `station_materials`: `(market_id, material_id)` PK. Fleet carrier Odyssey bartender inventory and material trade pricing.
+* `station_commodities`: `(market_id, commodityId)` PK. Market prices, buy/sell values, supply/demand. B-Tree indexed on `name` (`idx_station_commodities_name`).
+* `station_ships`: `(market_id, shipId)` PK. Shipyard inventory. B-Tree indexed on `name` (`idx_station_ships_name`).
+* `station_modules`: `(market_id, moduleId)` PK. Outfitting module stock, class, rating. Composite B-Tree indexed on `(name, class, rating)` (`idx_station_modules_name_class_rating`).
+* `station_materials`: `(market_id, material_id)` PK. Fleet carrier Odyssey bartender inventory and material trade pricing. Indexed on `name`, `symbol`, and `carrier_id`.
 
 ### `system_signals` & `body_pois`
 
 * `system_signals`: `(system_id64, raw_name)` PK. Persistent FSS signals, Resource Extraction Sites, Nav Beacons, Conflict Zones, Megaships.
 * `body_pois`: `(body_id64, raw_name)` PK. Planetary surface POIs (Guardian ruins, Thargoid structures, Crash sites, Surface settlements) with latitude/longitude.
+
+### `engineers`
+
+Reference dataset for Horizons ship engineers and Odyssey on-foot engineers. Primary key: `engineer_id`.
+
+* **Source**: Populated from static dimensional reference data (`db_setup/data/engineers.yaml`).
+* **Deployment & Lifecycle**: Managed via `uv run db_setup --action seed` (or `uv run db_setup --action seed --datasets engineers`) for initial deployments and slowly changing update maintenance (SCD).
+* **Coverage**: Complete metadata for all 38 engineers across the galaxy (25 Horizons `Ship` and 13 Odyssey `OnFoot` workshops) including system ID64, body ID64, market ID, engineer type, `specialties` JSONB grade mappings, `permit_required`, `referral_from`, `unlock_requirement`, max grades, and galactic region. System, body, and base names are dynamically resolved via foreign keys (`systems.name`, `bodies.name`, `stations.name`).
 
 ### `eddn_unhandled_events` (DLQ) & `_raw_debug_log`
 
