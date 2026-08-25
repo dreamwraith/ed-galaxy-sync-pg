@@ -2,12 +2,20 @@ name: CI & Security Audit
 
 on:
   push:
-    branches: ["master", "main"]
+    branches: ["master", "main", "release/**"]
+    tags: ["v*"]
   pull_request:
-    branches: ["master", "main"]
+    branches: ["master", "main", "release/**"]
   schedule:
     # Run weekly dependency audit scan
     - cron: "0 6 * * 1"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ACTIONS_RUNNER_FORCE_ACTIONS_NODE_VERSION: "node24"
 
 jobs:
   test-and-lint:
@@ -31,14 +39,26 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-extras --dev
 
+      - name: Verify License Immutability
+        run: |
+          EXPECTED="95d18ddcc7039a8ce5279b373ebb8199d43347b074eccdad7cc61f0e7a8cd0d4"
+          ACTUAL=$(tr -d '\r' < license.md | sha256sum | awk '{print $1}')
+          if [ "$ACTUAL" != "$EXPECTED" ]; then
+            echo "::error::license.md has been modified! License terms are immutable and cannot be altered."
+            exit 1
+          fi
+
       - name: Lint Python with Ruff
         run: uv run ruff check .
 
       - name: Check code formatting with Ruff
         run: uv run ruff format --check .
 
+      - name: Lint Markdown with rumdl
+        run: uv run rumdl check
+
       - name: Lint YAML configurations
-        run: uv run yamllint config.yaml eddn/normalizations/direct eddn/normalizations/multifield
+        run: uv run yamllint config.yaml eddn/normalizations db_setup/data
 
       - name: Run security & dependency audit
         run: uv run pip-audit
