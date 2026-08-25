@@ -234,92 +234,90 @@ class JournalScanTransformer(BaseTransformer):
             case "SAASignalsFound" | "FSSBodySignals":
                 # Exobiology signals and hotspots from DSS surface scan or FSS body zoom
                 body_name = message.get("BodyName") or message.get("Body") or ""
-                raw_signals = message.get("Signals")
-                genuses = message.get("Genuses")
-                genus_list: list[str] | None = None
+                raw_signals = message.get("Signals") if isinstance(message.get("Signals"), list) else []
 
-                if isinstance(genuses, list):
-                    extracted = [
-                        (genus_entry.get("Genus_Localised") if isinstance(genus_entry, dict) else None)
-                        or self.normalizer.normalize(
-                            "body_signals",
-                            "genuses",
-                            "genuses",
-                            genus_entry.get("Genus", "") if isinstance(genus_entry, dict) else genus_entry,
-                            metrics=self.metrics,
-                        )
-                        for genus_entry in genuses
-                        if genus_entry
-                    ]
-                    genus_list = [genus_item for genus_item in extracted if genus_item]
+                # 1. Ring Hotspots (DSS scan on a ring, e.g. "Sol 3 A Ring")
+                if event == "SAASignalsFound" and body_name.endswith(" Ring") and body_id64:
+                    signals_dict: dict[str, int] = {}
 
-                signals_dict: dict[str, Any] = {}
-                if isinstance(raw_signals, list):
-                    for signal_entry in raw_signals:
-                        if isinstance(signal_entry, dict):
-                            raw_signal_type = signal_entry.get("Type", "")
-                            signal_count = signal_entry.get("Count", 1)
-                            scenario_record = self.normalizer.get_multifield("scenarios", raw_signal_type)
-                            if scenario_record and getattr(scenario_record, "name", None):
-                                normalized_signal_type = scenario_record.name
-                            else:
-                                normalized_signal_type = EDDNUtils.sanitize_edname(raw_signal_type)
-                                if self.metrics and hasattr(self.metrics, "record_unmapped"):
-                                    self.metrics.record_unmapped("body_signals", "type", normalized_signal_type)
-                            signals_dict[normalized_signal_type] = signal_count
+                    for s in raw_signals:
+                        if not isinstance(s, dict):
+                            continue
+                        raw_type = s.get("Type", "")
+                        count = s.get("Count", 1)
 
-                # Check if this is a ring/belt hotspot discovery
-                if (" Ring" in body_name or " Belt" in body_name) and body_id64:
-                    is_belt = " Belt" in body_name and " Ring" not in body_name
-                    target_table_name = "body_belts" if is_belt else "body_rings"
-                    ring_signals_object = (
-                        {
-                            "signals": signals_dict,
-                            "updateTime": timestamp,
-                        }
-                        if signals_dict
-                        else None
-                    )
+                        # Normalize commodity hotspot name
+                        name = self.normalizer.normalize("body_rings", "signals", "commodities", raw_type, metrics=self.metrics)
+                        if not name or name == EDDNUtils.sanitize_edname(raw_type):
+                            scenario = self.normalizer.get_multifield("scenarios", raw_type)
+                            if scenario and getattr(scenario, "name", None):
+                                name = scenario.name
+                        if not name:
+                            name = EDDNUtils.sanitize_edname(raw_type)
+                            if self.metrics and hasattr(self.metrics, "record_unmapped"):
+                                self.metrics.record_unmapped("body_rings", "signals", name)
+
+                        signals_dict[name] = count
 
                     ring_data = {
                         "body_id64": body_id64,
+                        "id64": None,
                         "name": body_name,
                         "type": "Unknown",
                         "mass": 0.0,
                         "innerRadius": 0.0,
                         "outerRadius": 0.0,
                         "density": None,
+                        "signals": json.dumps(signals_dict) if signals_dict else None,
                         "update_dtm": timestamp,
                     }
-                    if not is_belt:
-                        ring_data["id64"] = None
-                        ring_data["signals"] = json.dumps(ring_signals_object) if ring_signals_object else None
 
                     records.append(
                         TransformedRecord(
-                            table_name=target_table_name,
+                            table_name="body_rings",
                             data=ring_data,
                             key_fields=("body_id64", "name"),
                             timestamp_field="update_dtm",
                         )
                     )
-                else:
-                    signal_record_data = {
-                        "system_id64": system_id64,
-                        "body_id64": body_id64,
-                        "signals": json.dumps(signals_dict) if signals_dict else None,
-                        "genuses": genus_list if genus_list else None,
-                        "update_dtm": timestamp,
-                    }
+                    return records
 
-                    records.append(
-                        TransformedRecord(
-                            table_name="body_signals",
-                            data=signal_record_data,
-                            key_fields=("body_id64",),
-                            timestamp_field="update_dtm",
+                # 2. Planetary Surface Signals (FSS zoom or DSS surface scan on planets/moons)
+                genuses = message.get("Genuses")
+                genus_list: list[str] = []
+                if isinstance(genuses, list):
+                    for g in genuses:
+                        raw_g = g.get("Genus", "") if isinstance(g, dict) else g
+                        local_g = g.get("Genus_Localised") if isinstance(g, dict) else None
+                        norm_g = local_g or self.normalizer.normalize(
+                            "body_signals", "genuses", "genuses", raw_g, metrics=self.metrics
                         )
+                        if norm_g:
+                            genus_list.append(norm_g)
+
+                signals_dict = {}
+                for s in raw_signals:
+                    if isinstance(s, dict):
+                        raw_type = s.get("Type", "")
+                        count = s.get("Count", 1)
+                        clean_type = EDDNUtils.sanitize_edname(raw_type)
+                        signals_dict[clean_type] = count
+
+                signal_record_data = {
+                    "system_id64": system_id64,
+                    "body_id64": body_id64,
+                    "signals": json.dumps(signals_dict) if signals_dict else None,
+                    "genuses": genus_list if genus_list else None,
+                    "update_dtm": timestamp,
+                }
+                records.append(
+                    TransformedRecord(
+                        table_name="body_signals",
+                        data=signal_record_data,
+                        key_fields=("body_id64",),
+                        timestamp_field="update_dtm",
                     )
+                )
 
             case "ScanOrganic":
                 # Odyssey on-foot exobiology sampling

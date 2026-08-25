@@ -106,13 +106,103 @@ def test_scan_fss_body_signals_normalizes_genuses() -> None:
         "SystemAddress": 10477373803,
         "BodyName": "Sol 3 a",
         "BodyID": 4,
-        "Signals": [{"Type": "$Codex_Ent_Aleoida_01_A_Name;", "Count": 2}],
+        "Signals": [
+            {"Type": "$SAA_SignalType_Biological;", "Count": 1},
+            {"Type": "$SAA_SignalType_Geological;", "Count": 3},
+            {"Type": "$Codex_Ent_Aleoida_01_A_Name;", "Count": 2},
+        ],
     }
     records = transformer.transform(schema_ref, header, message)
     assert len(records) == 1
     assert records[0].table_name == "body_signals"
     signals_dict = json.loads(records[0].data["signals"])
+    assert signals_dict["Biological"] == 1
+    assert signals_dict["Geological"] == 3
     assert signals_dict["Aleoida_01_A"] == 2
+
+
+def test_scan_saa_signals_found_ring_hotspots() -> None:
+    """Validates SAASignalsFound on rings normalizes hotspot commodity tokens."""
+    transformer = JournalScanTransformer()
+    schema_ref = "https://eddn.edcd.io/schemas/journal/1"
+    header = {"uploaderID": "Cmdr"}
+    message = {
+        "event": "SAASignalsFound",
+        "timestamp": "2026-08-18T10:00:00Z",
+        "SystemAddress": 10477373803,
+        "BodyName": "Sol 3 A Ring",
+        "BodyID": 4,
+        "Signals": [
+            {"Type": "$Opal_Name;", "Count": 1},
+            {"Type": "Platinum", "Count": 3},
+        ],
+    }
+    records = transformer.transform(schema_ref, header, message)
+    assert len(records) == 1
+    assert records[0].table_name == "body_rings"
+    signals_dict = json.loads(records[0].data["signals"])
+    assert signals_dict["Void Opal"] == 1
+    assert signals_dict["Platinum"] == 3
+
+
+def test_scan_signals_sector_name_with_ring_does_not_misclassify() -> None:
+    """Validates bodies in sectors with 'Ring' or 'Belt' in sector name route to body_signals."""
+    transformer = JournalScanTransformer()
+    schema_ref = "https://eddn.edcd.io/schemas/journal/1"
+    header = {"uploaderID": "Cmdr"}
+
+    # 1. FSSBodySignals in Fine Ring Sector
+    fss_message = {
+        "event": "FSSBodySignals",
+        "timestamp": "2026-08-25T02:59:11Z",
+        "SystemAddress": 16070559803121,
+        "BodyName": "Fine Ring Sector GR-V b2-7 5 a",
+        "BodyID": 22,
+        "Signals": [
+            {"Type": "$SAA_SignalType_Geological;", "Count": 2},
+            {"Type": "$SAA_SignalType_Biological;", "Count": 1},
+        ],
+    }
+    fss_records = transformer.transform(schema_ref, header, fss_message)
+    assert len(fss_records) == 1
+    assert fss_records[0].table_name == "body_signals"
+    fss_signals = json.loads(fss_records[0].data["signals"])
+    assert fss_signals["Geological"] == 2
+    assert fss_signals["Biological"] == 1
+
+    # 2. SAASignalsFound in Fine Ring Sector on a planet
+    saa_message = {
+        "event": "SAASignalsFound",
+        "timestamp": "2026-08-25T02:59:13Z",
+        "SystemAddress": 16070559803121,
+        "BodyName": "Fine Ring Sector GR-V b2-7 5 b",
+        "BodyID": 23,
+        "Signals": [
+            {"Type": "$SAA_SignalType_Biological;", "Count": 3},
+        ],
+    }
+    saa_records = transformer.transform(schema_ref, header, saa_message)
+    assert len(saa_records) == 1
+    assert saa_records[0].table_name == "body_signals"
+    saa_signals = json.loads(saa_records[0].data["signals"])
+    assert saa_signals["Biological"] == 3
+
+    # 3. SAASignalsFound in Fine Ring Sector on an actual ring
+    ring_message = {
+        "event": "SAASignalsFound",
+        "timestamp": "2026-08-25T03:00:00Z",
+        "SystemAddress": 16070559803121,
+        "BodyName": "Fine Ring Sector GR-V b2-7 5 A Ring",
+        "BodyID": 24,
+        "Signals": [
+            {"Type": "Platinum", "Count": 2},
+        ],
+    }
+    ring_records = transformer.transform(schema_ref, header, ring_message)
+    assert len(ring_records) == 1
+    assert ring_records[0].table_name == "body_rings"
+    ring_signals = json.loads(ring_records[0].data["signals"])
+    assert ring_signals["Platinum"] == 2
 
 
 def test_scan_organic_sampling_normalizes_genus() -> None:
