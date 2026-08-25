@@ -1,0 +1,59 @@
+name: Release & Publish Packages
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+env:
+  ACTIONS_RUNNER_FORCE_ACTIONS_NODE_VERSION: "node24"
+
+jobs:
+  build-and-release:
+    name: Build Distributions & Create GitHub Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run test suite
+        run: uv run pytest -v
+
+      - name: Build wheel and source distributions
+        run: uv build
+
+      - name: Resolve Release Notes File
+        id: notes
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          if [ -f "releasenotes/${VERSION}.md" ]; then
+            echo "path=releasenotes/${VERSION}.md" >> "$GITHUB_OUTPUT"
+          else
+            echo "path=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish GitHub Release with Distribution Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          body_path: ${{ steps.notes.outputs.path }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false
