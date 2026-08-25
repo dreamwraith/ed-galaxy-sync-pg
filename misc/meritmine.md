@@ -27,27 +27,27 @@ In the database, fleet and squadron carriers as well as construction depots appe
 
 ```sql
 (
-    stations.type NOT ILIKE '%carrier%' 
+    stations.type NOT ILIKE '%carrier%'
     AND stations.type NOT ILIKE '%depot%'
-    AND stations.carrierName IS NULL 
+    AND stations.carrierName IS NULL
     AND stations.carrierDockingAccess IS NULL
 )
 ```
 
 ### Ring Types (`body_rings.type`)
 
-The database contains canonical display labels (from `NormalizerManager`) as well as raw Frontier tokens:
+Normalized to exact canonical values as defined in [`ring_types.yaml`](file:///c:/Users/slugw/source/ed-galaxy-sync-pg/eddn/normalizations/direct/ring_types.yaml):
 
-* **Metallic**: `'Metallic'`, `'eRingClass_Metalic'`
-* **Metal Rich**: `'Metal Rich'`, `'eRingClass_MetalRich'`
-* **Icy**: `'Icy'`, `'eRingClass_Icy'`
-* **Rocky**: `'Rocky'`, `'eRingClass_Rocky'`
+* **Metallic**: `'Metallic'`
+* **Metal Rich**: `'Metal Rich'`
+* **Icy**: `'Icy'`
+* **Rocky**: `'Rocky'`
 
-**Ring Type Match Filter:**
+**Exact Ring Type Match Filter:**
 
 ```sql
 -- For Metallic rings:
-(body_rings.type IN ('Metallic', 'eRingClass_Metalic') OR body_rings.type ILIKE '%metallic%')
+body_rings.type = 'Metallic'
 ```
 
 ### Mining Commodities & Signals
@@ -85,8 +85,8 @@ Adjust the parameters in the `params` CTE at the top:
 
 ```sql
 WITH params AS (
-    SELECT 
-        'Sol'::text             AS ref_system,       -- Reference system origin
+    SELECT
+        'Cubeo'::text           AS ref_system,       -- Reference system origin
         250.0::double precision AS max_dist_from_ref,-- Max distance from reference (ly)
         'Aisling Duval'::text   AS my_power,         -- Your pledged power
         'Reinforce'::text       AS goal,             -- 'Reinforce', 'Undermine', or 'Acquire'
@@ -102,15 +102,32 @@ WITH params AS (
         30::int                 AS result_limit      -- Results limit
 ),
 origin AS (
-    SELECT coords FROM systems WHERE LOWER(name) = LOWER((SELECT ref_system FROM params)) LIMIT 1
+    SELECT coords FROM systems WHERE name = (SELECT ref_system FROM params) LIMIT 1
 ),
-candidate_markets AS (
-    SELECT 
-        systems.id64 AS system_id64,
-        systems.name AS system_name,
+nearby_systems AS (
+    -- 1. Narrow down systems via 3D GiST index scan first
+    SELECT
+        systems.id64,
+        systems.name,
         systems.coords,
         systems.controllingPower,
+        systems.powers,
         systems.powerState,
+        systems.powerConflictProgress,
+        ROUND((systems.coords <-> origin.coords)::numeric, 1) AS dist_from_ref_ly
+    FROM systems
+    CROSS JOIN origin
+    CROSS JOIN params
+    WHERE systems.coords <@ cube_enlarge(origin.coords, params.max_dist_from_ref, 3)
+      AND (systems.coords <-> origin.coords) <= params.max_dist_from_ref
+),
+candidate_markets AS (
+    SELECT
+        nearby.id64 AS system_id64,
+        nearby.name AS system_name,
+        nearby.coords,
+        nearby.controllingPower,
+        nearby.powerState,
         stations.name AS station_name,
         stations.type AS station_type,
         stations.pad_large,
@@ -119,18 +136,18 @@ candidate_markets AS (
         station_commodities.sellPrice AS station_buys_price,
         station_commodities.demand AS station_demand,
         stations.market_updated_at
-    FROM systems
+    FROM nearby_systems nearby
     CROSS JOIN params
-    JOIN stations ON stations.system_id64 = systems.id64
-    JOIN station_commodities ON station_commodities.market_id = stations.market_id
-    WHERE 
+    INNER JOIN stations ON stations.system_id64 = nearby.id64
+    INNER JOIN station_commodities ON station_commodities.market_id = stations.market_id
+    WHERE
         LOWER(station_commodities.name) = LOWER(params.mineral)
         AND station_commodities.demand BETWEEN params.min_demand AND params.max_demand
         AND station_commodities.sellPrice > 0
         -- Bulletproof Fleet & Squadron Carrier / Depot Exclusion
-        AND stations.type NOT ILIKE '%carrier%' 
+        AND stations.type NOT ILIKE '%carrier%'
         AND stations.type NOT ILIKE '%depot%'
-        AND stations.carrierName IS NULL 
+        AND stations.carrierName IS NULL
         AND stations.carrierDockingAccess IS NULL
         -- Landing pad filter
         AND (
@@ -140,69 +157,66 @@ candidate_markets AS (
         )
         -- Market freshness filter
         AND (
-            params.max_age_hours <= 0 
+            params.max_age_hours <= 0
             OR stations.market_updated_at >= (NOW() AT TIME ZONE 'utc' - (params.max_age_hours || ' hours')::interval)
         )
         -- POWERPLAY GOAL LOGIC
         AND (
-            CASE 
+            CASE
                 -- 1. REINFORCE: Stations in your Power's space
-                WHEN params.goal = 'Reinforce' THEN 
-                    (systems.controllingPower = params.my_power OR systems.powers @> jsonb_build_array(params.my_power))
-                
+                WHEN params.goal = 'Reinforce' THEN
+                    (nearby.controllingPower = params.my_power OR nearby.powers @> jsonb_build_array(params.my_power))
+
                 -- 2. UNDERMINE: Stations in rival Power's space
-                WHEN params.goal = 'Undermine' THEN 
-                    (systems.controllingPower IS NOT NULL AND systems.controllingPower != params.my_power)
-                    AND (params.opposing_power = 'Any' OR systems.controllingPower = params.opposing_power OR systems.powers @> jsonb_build_array(params.opposing_power))
-                
+                WHEN params.goal = 'Undermine' THEN
+                    (nearby.controllingPower IS NOT NULL AND nearby.controllingPower != params.my_power)
+                    AND (params.opposing_power = 'Any' OR nearby.controllingPower = params.opposing_power OR nearby.powers @> jsonb_build_array(params.opposing_power))
+
                 -- 3. ACQUIRE: Uncontrolled, Unoccupied, or Contested space
-                WHEN params.goal = 'Acquire' THEN 
-                    (systems.controllingPower IS NULL OR systems.powerState = 'Unoccupied' OR systems.powerConflictProgress IS NOT NULL)
-                
+                WHEN params.goal = 'Acquire' THEN
+                    (nearby.controllingPower IS NULL OR nearby.powerState = 'Unoccupied' OR nearby.powerConflictProgress IS NOT NULL)
+
                 ELSE TRUE
             END
         )
 ),
 candidate_rings AS (
-    SELECT 
-        systems.id64 AS system_id64,
-        systems.name AS system_name,
-        systems.coords,
+    SELECT
+        nearby.id64 AS system_id64,
+        nearby.name AS system_name,
+        nearby.coords,
+        nearby.dist_from_ref_ly,
         bodies.name AS body_name,
         body_rings.name AS ring_name,
         body_rings.type AS ring_type,
         bodies.reserveLevel,
         ROUND(bodies.distanceToArrival::numeric, 0) AS ring_arrival_ls,
-        COALESCE(
-            (body_rings.signals->'signals'->>(SELECT mineral FROM params))::int,
-            (body_rings.signals->>(SELECT mineral FROM params))::int,
-            0
-        ) AS mineral_hotspots,
+        COALESCE((body_rings.signals->>(SELECT mineral FROM params))::int, 0) AS mineral_hotspots,
         body_rings.signals AS all_hotspots
-    FROM systems
+    FROM nearby_systems nearby
     CROSS JOIN params
-    JOIN bodies ON bodies.system_id64 = systems.id64
-    JOIN body_rings ON body_rings.body_id64 = bodies.id64
-    WHERE 
+    INNER JOIN bodies ON bodies.system_id64 = nearby.id64
+    INNER JOIN body_rings ON body_rings.body_id64 = bodies.id64
+    WHERE
         -- Reserve level filter
         (
-            params.reserve_filter = 'All' 
+            params.reserve_filter = 'All'
             OR bodies.reserveLevel = params.reserve_filter
             OR (params.reserve_filter = 'Pristine' AND bodies.reserveLevel IN ('Pristine', 'Major'))
         )
-        -- Ring type / Hotspot filter with frontier token support
+        -- Ring type / Hotspot filter with exact canonical token support
         AND (
             params.ring_filter = 'All'
-            OR (params.ring_filter = 'Hotspots' AND (body_rings.signals ? params.mineral OR body_rings.signals->'signals' ? params.mineral))
-            OR (params.ring_filter = 'Metallic' AND (body_rings.type IN ('Metallic', 'eRingClass_Metalic') OR body_rings.type ILIKE '%metallic%'))
-            OR (params.ring_filter = 'Metal Rich' AND (body_rings.type IN ('Metal Rich', 'eRingClass_MetalRich') OR body_rings.type ILIKE '%metalrich%'))
-            OR (params.ring_filter = 'Icy' AND (body_rings.type IN ('Icy', 'eRingClass_Icy') OR body_rings.type ILIKE '%icy%'))
-            OR (params.ring_filter = 'Rocky' AND (body_rings.type IN ('Rocky', 'eRingClass_Rocky') OR body_rings.type ILIKE '%rocky%'))
+            OR (params.ring_filter = 'Hotspots' AND body_rings.signals ? params.mineral)
+            OR (params.ring_filter = 'Metallic' AND body_rings.type = 'Metallic')
+            OR (params.ring_filter = 'Metal Rich' AND body_rings.type = 'Metal Rich')
+            OR (params.ring_filter = 'Icy' AND body_rings.type = 'Icy')
+            OR (params.ring_filter = 'Rocky' AND body_rings.type = 'Rocky')
         )
         -- Supercruise arrival distance limit
         AND bodies.distanceToArrival <= 4000
 )
-SELECT 
+SELECT
     candidate_rings.system_name AS mining_system,
     candidate_rings.body_name,
     candidate_rings.ring_name,
@@ -220,16 +234,11 @@ SELECT
     candidate_markets.station_buys_price AS sell_price_cr,
     candidate_markets.station_demand AS demand,
     ROUND((candidate_rings.coords <-> candidate_markets.coords)::numeric, 2) AS jump_distance_ly,
-    ROUND((candidate_rings.coords <-> origin.coords)::numeric, 1) AS dist_from_ref_ly
+    candidate_rings.dist_from_ref_ly
 FROM candidate_rings
-CROSS JOIN origin
-JOIN candidate_markets 
-    -- Maximum jump distance between ring and market
+INNER JOIN candidate_markets
     ON (candidate_rings.coords <-> candidate_markets.coords) <= (SELECT max_jump_ly FROM params)
-WHERE 
-    -- Maximum distance from reference system
-    (candidate_rings.coords <-> origin.coords) <= (SELECT max_dist_from_ref FROM params)
-ORDER BY 
+ORDER BY
     candidate_rings.mineral_hotspots DESC,
     jump_distance_ly ASC,
     candidate_markets.station_buys_price DESC
@@ -242,51 +251,55 @@ LIMIT (SELECT result_limit FROM params);
 
 ### Goal A: 🛡️ REINFORCE (Fortify Aisling Duval Territory)
 
-*Target: Pristine Metallic/Rocky rings near high-paying Aisling Duval Fortified/Stronghold stations.*
+*Target: Pristine Metallic/Rocky rings near high-paying Aisling Duval Fortified/Stronghold stations within 200 ly of Cubeo.*
 
 ```sql
-SELECT 
-    mining_sys.name AS mining_system,
+WITH nearby_systems AS (
+    SELECT
+        systems.id64,
+        systems.name,
+        systems.coords,
+        systems.controllingPower,
+        systems.powers,
+        systems.powerState,
+        ROUND((systems.coords <-> (SELECT coords FROM systems WHERE name = 'Cubeo' LIMIT 1))::numeric, 1) AS dist_from_ref_ly
+    FROM systems
+    WHERE systems.coords <@ (SELECT cube_enlarge(coords, 200.0, 3) FROM systems WHERE name = 'Cubeo' LIMIT 1)
+      AND (systems.coords <-> (SELECT coords FROM systems WHERE name = 'Cubeo' LIMIT 1)) <= 200.0
+)
+SELECT
+    mining_systems.name AS mining_system,
     bodies.name AS body_name,
     body_rings.name AS ring_name,
     body_rings.type AS ring_type,
-    COALESCE(
-        (body_rings.signals->'signals'->>'Platinum')::int,
-        (body_rings.signals->>'Platinum')::int,
-        0
-    ) AS platinum_hotspots,
+    COALESCE((body_rings.signals->>'Platinum')::int, 0) AS platinum_hotspots,
     ROUND(bodies.distanceToArrival::numeric, 0) AS ring_arrival_ls,
-    sell_sys.name AS aisling_sell_system,
-    sell_sys.powerState,
+    sell_systems.name AS aisling_sell_system,
+    sell_systems.powerState,
     stations.name AS station_name,
     stations.type AS station_type,
     stations.pad_large,
     ROUND(stations.distanceToArrival::numeric, 0) AS station_arrival_ls,
     station_commodities.sellPrice AS price_cr,
     station_commodities.demand,
-    ROUND((mining_sys.coords <-> sell_sys.coords)::numeric, 2) AS jump_distance_ly
-FROM systems mining_sys
-JOIN bodies ON bodies.system_id64 = mining_sys.id64
-JOIN body_rings ON body_rings.body_id64 = bodies.id64
-JOIN systems sell_sys ON (mining_sys.coords <-> sell_sys.coords) <= 15.0 -- <= 1 Jump
-JOIN stations ON stations.system_id64 = sell_sys.id64
-JOIN station_commodities ON station_commodities.market_id = stations.market_id
-WHERE 
-    -- Selling station must be in Aisling Duval space
-    (sell_sys.controllingPower = 'Aisling Duval' OR sell_sys.powers @> '["Aisling Duval"]'::jsonb)
-    -- Mining site criteria
-    AND bodies.reserveLevel = 'Pristine'
-    AND (body_rings.type IN ('Metallic', 'eRingClass_Metalic') OR body_rings.type ILIKE '%metallic%')
-    -- Market criteria
-    AND LOWER(station_commodities.name) = 'platinum'
-    AND station_commodities.sellPrice > 200000
-    AND stations.pad_large > 0
-    -- Carrier & Depot exclusion
-    AND stations.type NOT ILIKE '%carrier%' 
-    AND stations.type NOT ILIKE '%depot%'
-    AND stations.carrierName IS NULL 
-    AND stations.carrierDockingAccess IS NULL
-ORDER BY 
+    ROUND((mining_systems.coords <-> sell_systems.coords)::numeric, 2) AS jump_distance_ly
+FROM nearby_systems mining_systems
+INNER JOIN bodies ON bodies.system_id64 = mining_systems.id64
+      AND bodies.reserveLevel = 'Pristine'
+INNER JOIN body_rings ON body_rings.body_id64 = bodies.id64
+      AND body_rings.type = 'Metallic'
+INNER JOIN nearby_systems sell_systems ON (mining_systems.coords <-> sell_systems.coords) <= 15.0
+      AND (sell_systems.controllingPower = 'Aisling Duval' OR sell_systems.powers @> '["Aisling Duval"]'::jsonb)
+INNER JOIN stations ON stations.system_id64 = sell_systems.id64
+      AND stations.pad_large > 0
+      AND stations.type NOT ILIKE '%carrier%'
+      AND stations.type NOT ILIKE '%depot%'
+      AND stations.carrierName IS NULL
+      AND stations.carrierDockingAccess IS NULL
+INNER JOIN station_commodities ON station_commodities.market_id = stations.market_id
+      AND LOWER(station_commodities.name) = 'platinum'
+      AND station_commodities.sellPrice > 200000
+ORDER BY
     platinum_hotspots DESC,
     jump_distance_ly ASC,
     station_commodities.sellPrice DESC
@@ -297,52 +310,53 @@ LIMIT 30;
 
 ### Goal B: ⚔️ UNDERMINE (Attack a Rival Power)
 
-*Target: Mine in or near systems controlled by an opposing power (e.g. Felicia Winters) and sell at their stations to undermine their influence.*
+*Target: Mine in or near systems controlled by an opposing power (e.g. Felicia Winters) and sell at their stations within 200 ly of Rhea.*
 
 ```sql
-SELECT 
-    mining_sys.name AS mining_system,
+WITH nearby_systems AS (
+    SELECT
+        systems.id64,
+        systems.name,
+        systems.coords,
+        systems.controllingPower,
+        systems.powers,
+        systems.powerState,
+        ROUND((systems.coords <-> (SELECT coords FROM systems WHERE name = 'Rhea' LIMIT 1))::numeric, 1) AS dist_from_ref_ly
+    FROM systems
+    WHERE systems.coords <@ (SELECT cube_enlarge(coords, 200.0, 3) FROM systems WHERE name = 'Rhea' LIMIT 1)
+      AND (systems.coords <-> (SELECT coords FROM systems WHERE name = 'Rhea' LIMIT 1)) <= 200.0
+)
+SELECT
+    mining_systems.name AS mining_system,
     bodies.name AS body_name,
     body_rings.name AS ring_name,
-    COALESCE(
-        (body_rings.signals->'signals'->>'Monazite')::int,
-        (body_rings.signals->>'Monazite')::int,
-        0
-    ) AS monazite_hotspots,
+    COALESCE((body_rings.signals->>'Monazite')::int, 0) AS monazite_hotspots,
     ROUND(bodies.distanceToArrival::numeric, 0) AS ring_arrival_ls,
-    sell_sys.name AS rival_sell_system,
-    sell_sys.controllingPower AS opposing_power,
-    sell_sys.powerState,
+    sell_systems.name AS rival_sell_system,
+    sell_systems.controllingPower AS opposing_power,
+    sell_systems.powerState,
     stations.name AS rival_station,
     stations.pad_large,
     station_commodities.sellPrice AS price_cr,
     station_commodities.demand,
-    ROUND((mining_sys.coords <-> sell_sys.coords)::numeric, 2) AS jump_distance_ly
-FROM systems mining_sys
-JOIN bodies ON bodies.system_id64 = mining_sys.id64
-JOIN body_rings ON body_rings.body_id64 = bodies.id64
-JOIN systems sell_sys ON (mining_sys.coords <-> sell_sys.coords) <= 20.0
-JOIN stations ON stations.system_id64 = sell_sys.id64
-JOIN station_commodities ON station_commodities.market_id = stations.market_id
-WHERE 
-    -- Target rival power systems (e.g. Felicia Winters, or ANY rival power)
-    sell_sys.controllingPower IS NOT NULL
-    AND sell_sys.controllingPower != 'Aisling Duval'
-    -- To target a specific rival, uncomment:
-    -- AND sell_sys.controllingPower = 'Felicia Winters'
-    
-    -- Mining site criteria
-    AND bodies.reserveLevel IN ('Pristine', 'Major')
-    -- Market criteria
-    AND LOWER(station_commodities.name) = 'monazite'
-    AND station_commodities.sellPrice > 500000
-    AND stations.pad_large > 0
-    -- Carrier & Depot exclusion
-    AND stations.type NOT ILIKE '%carrier%' 
-    AND stations.type NOT ILIKE '%depot%'
-    AND stations.carrierName IS NULL 
-    AND stations.carrierDockingAccess IS NULL
-ORDER BY 
+    ROUND((mining_systems.coords <-> sell_systems.coords)::numeric, 2) AS jump_distance_ly
+FROM nearby_systems mining_systems
+INNER JOIN bodies ON bodies.system_id64 = mining_systems.id64
+      AND bodies.reserveLevel IN ('Pristine', 'Major')
+INNER JOIN body_rings ON body_rings.body_id64 = bodies.id64
+INNER JOIN nearby_systems sell_systems ON (mining_systems.coords <-> sell_systems.coords) <= 20.0
+      AND sell_systems.controllingPower IS NOT NULL
+      AND sell_systems.controllingPower != 'Aisling Duval'
+INNER JOIN stations ON stations.system_id64 = sell_systems.id64
+      AND stations.pad_large > 0
+      AND stations.type NOT ILIKE '%carrier%'
+      AND stations.type NOT ILIKE '%depot%'
+      AND stations.carrierName IS NULL
+      AND stations.carrierDockingAccess IS NULL
+INNER JOIN station_commodities ON station_commodities.market_id = stations.market_id
+      AND LOWER(station_commodities.name) = 'monazite'
+      AND station_commodities.sellPrice > 500000
+ORDER BY
     monazite_hotspots DESC,
     jump_distance_ly ASC,
     station_commodities.sellPrice DESC
@@ -353,49 +367,53 @@ LIMIT 30;
 
 ### Goal C: 🚩 ACQUIRE (Expand into Unoccupied / Contested Systems)
 
-*Target: Deliver mined commodities to unaligned/unoccupied systems to build acquisition progress.*
+*Target: Deliver mined commodities to unaligned/unoccupied systems to build acquisition progress within 200 ly of Sol.*
 
 ```sql
-SELECT 
-    mining_sys.name AS mining_system,
+WITH nearby_systems AS (
+    SELECT
+        systems.id64,
+        systems.name,
+        systems.coords,
+        systems.controllingPower,
+        systems.powers,
+        systems.powerState,
+        systems.powerConflictProgress,
+        ROUND((systems.coords <-> (SELECT coords FROM systems WHERE name = 'Sol' LIMIT 1))::numeric, 1) AS dist_from_ref_ly
+    FROM systems
+    WHERE systems.coords <@ (SELECT cube_enlarge(coords, 200.0, 3) FROM systems WHERE name = 'Sol' LIMIT 1)
+      AND (systems.coords <-> (SELECT coords FROM systems WHERE name = 'Sol' LIMIT 1)) <= 200.0
+)
+SELECT
+    mining_systems.name AS mining_system,
     bodies.name AS body_name,
     body_rings.name AS ring_name,
-    COALESCE(
-        (body_rings.signals->'signals'->>'Platinum')::int,
-        (body_rings.signals->>'Platinum')::int,
-        0
-    ) AS platinum_hotspots,
+    COALESCE((body_rings.signals->>'Platinum')::int, 0) AS platinum_hotspots,
     ROUND(bodies.distanceToArrival::numeric, 0) AS ring_arrival_ls,
-    sell_sys.name AS expansion_system,
-    sell_sys.powerState,
+    sell_systems.name AS expansion_system,
+    sell_systems.powerState,
     stations.name AS expansion_station,
     stations.pad_large,
     station_commodities.sellPrice AS price_cr,
     station_commodities.demand,
-    ROUND((mining_sys.coords <-> sell_sys.coords)::numeric, 2) AS jump_distance_ly
-FROM systems mining_sys
-JOIN bodies ON bodies.system_id64 = mining_sys.id64
-JOIN body_rings ON body_rings.body_id64 = bodies.id64
-JOIN systems sell_sys ON (mining_sys.coords <-> sell_sys.coords) <= 20.0
-JOIN stations ON stations.system_id64 = sell_sys.id64
-JOIN station_commodities ON station_commodities.market_id = stations.market_id
-WHERE 
-    -- Systems currently Unoccupied, Uncontrolled, or undergoing active Power Conflict
-    (sell_sys.controllingPower IS NULL OR sell_sys.powerState = 'Unoccupied' OR sell_sys.powerConflictProgress IS NOT NULL)
-    
-    -- Mining site criteria
-    AND bodies.reserveLevel = 'Pristine'
-    AND (body_rings.type IN ('Metallic', 'eRingClass_Metalic') OR body_rings.type ILIKE '%metallic%')
-    -- Market criteria
-    AND LOWER(station_commodities.name) = 'platinum'
-    AND station_commodities.sellPrice > 0
-    AND stations.pad_large > 0
-    -- Carrier & Depot exclusion
-    AND stations.type NOT ILIKE '%carrier%' 
-    AND stations.type NOT ILIKE '%depot%'
-    AND stations.carrierName IS NULL 
-    AND stations.carrierDockingAccess IS NULL
-ORDER BY 
+    ROUND((mining_systems.coords <-> sell_systems.coords)::numeric, 2) AS jump_distance_ly
+FROM nearby_systems mining_systems
+INNER JOIN bodies ON bodies.system_id64 = mining_systems.id64
+      AND bodies.reserveLevel = 'Pristine'
+INNER JOIN body_rings ON body_rings.body_id64 = bodies.id64
+      AND body_rings.type = 'Metallic'
+INNER JOIN nearby_systems sell_systems ON (mining_systems.coords <-> sell_systems.coords) <= 20.0
+      AND (sell_systems.controllingPower IS NULL OR sell_systems.powerState = 'Unoccupied' OR sell_systems.powerConflictProgress IS NOT NULL)
+INNER JOIN stations ON stations.system_id64 = sell_systems.id64
+      AND stations.pad_large > 0
+      AND stations.type NOT ILIKE '%carrier%'
+      AND stations.type NOT ILIKE '%depot%'
+      AND stations.carrierName IS NULL
+      AND stations.carrierDockingAccess IS NULL
+INNER JOIN station_commodities ON station_commodities.market_id = stations.market_id
+      AND LOWER(station_commodities.name) = 'platinum'
+      AND station_commodities.sellPrice > 0
+ORDER BY
     platinum_hotspots DESC,
     jump_distance_ly ASC,
     station_commodities.sellPrice DESC

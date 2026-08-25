@@ -17,20 +17,24 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  SELECT 
+  SELECT
       systems.name AS system_name,
-      bodies.name AS body_name,
-      bodies.subType,
-      ROUND(bodies.gravity::numeric, 2) AS gravity_g,
-      bodies.earthMasses,
-      ROUND(bodies.radius::numeric, 0) AS radius_km,
-      ROUND(bodies.distanceToArrival::numeric, 1) AS distance_ls
-  FROM bodies
-  JOIN systems ON systems.id64 = bodies.system_id64
-  WHERE bodies.isLandable = TRUE 
-    AND bodies.gravity > 4.0
-  ORDER BY bodies.gravity DESC
-  LIMIT 15;
+      top_bodies.name AS body_name,
+      top_bodies.subType,
+      ROUND(top_bodies.gravity::numeric, 2) AS gravity_g,
+      top_bodies.earthMasses,
+      ROUND(top_bodies.radius::numeric, 0) AS radius_km,
+      ROUND(top_bodies.distanceToArrival::numeric, 1) AS distance_ls
+  FROM (
+      -- Uses idx_bodies_gravity to scan from top gravity downward, stopping after 15 landable worlds
+      SELECT *
+      FROM bodies
+      WHERE isLandable = TRUE
+        AND gravity > 4.0
+      ORDER BY gravity DESC
+      LIMIT 15
+  ) top_bodies
+  INNER JOIN systems ON systems.id64 = top_bodies.system_id64;
   ```
 
 ---
@@ -42,22 +46,34 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  SELECT 
+  WITH ultra_fast_orbits AS (
+      -- Pre-sort top 20 fastest orbits first, avoiding an expensive self-join across all bodies
+      SELECT
+          system_id64,
+          name,
+          subType,
+          orbitalPeriod,
+          semiMajorAxis,
+          orbitalEccentricity,
+          (parents->0->>'Star')::bigint AS parent_star_id
+      FROM bodies
+      WHERE orbitalPeriod > 0
+        AND orbitalPeriod < 0.2  -- Under ~4.8 hours
+      ORDER BY orbitalPeriod ASC
+      LIMIT 20
+  )
+  SELECT
       systems.name AS system_name,
-      bodies.name AS body_name,
-      bodies.subType,
-      ROUND((bodies.orbitalPeriod * 24 * 60)::numeric, 1) AS orbital_period_minutes,
-      ROUND(bodies.semiMajorAxis::numeric, 0) AS semi_major_axis_km,
-      bodies.orbitalEccentricity,
+      orbit.name AS body_name,
+      orbit.subType,
+      ROUND((orbit.orbitalPeriod * 24 * 60)::numeric, 1) AS orbital_period_minutes,
+      ROUND(orbit.semiMajorAxis::numeric, 0) AS semi_major_axis_km,
+      orbit.orbitalEccentricity,
       parent_body.subType AS parent_subType
-  FROM bodies
-  JOIN systems ON systems.id64 = bodies.system_id64
-  LEFT JOIN bodies parent_body ON parent_body.system_id64 = bodies.system_id64 
-       AND (bodies.parents->0->>'Star')::bigint = parent_body.bodyId
-  WHERE bodies.orbitalPeriod > 0 
-    AND bodies.orbitalPeriod < 0.2  -- Under ~4.8 hours
-  ORDER BY bodies.orbitalPeriod ASC
-  LIMIT 20;
+  FROM ultra_fast_orbits orbit
+  INNER JOIN systems ON systems.id64 = orbit.system_id64
+  LEFT JOIN bodies parent_body ON parent_body.system_id64 = orbit.system_id64
+       AND parent_body.bodyId = orbit.parent_star_id;
   ```
 
 ---
@@ -69,19 +85,23 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  SELECT 
+  SELECT
       systems.name AS system_name,
       bodies.name AS body_name,
-      body_rings.name AS ring_name,
-      body_rings.type AS ring_type,
-      ROUND((body_rings.outerRadius - body_rings.innerRadius)::numeric, 0) AS ring_span_km,
-      ROUND((body_rings.outerRadius / 149597870.7)::numeric, 3) AS outer_radius_au,
-      body_rings.mass AS mass_megatonnes
-  FROM body_rings
-  JOIN bodies ON bodies.id64 = body_rings.body_id64
-  JOIN systems ON systems.id64 = bodies.system_id64
-  ORDER BY (body_rings.outerRadius - body_rings.innerRadius) DESC
-  LIMIT 15;
+      top_rings.name AS ring_name,
+      top_rings.type AS ring_type,
+      ROUND((top_rings.outerRadius - top_rings.innerRadius)::numeric, 0) AS ring_span_km,
+      ROUND((top_rings.outerRadius / 149597870.7)::numeric, 3) AS outer_radius_au,
+      top_rings.mass AS mass_megatonnes
+  FROM (
+      -- Pre-sort top 15 rings first to avoid joining 1.1M bodies/systems rows
+      SELECT *
+      FROM body_rings
+      ORDER BY (outerRadius - innerRadius) DESC
+      LIMIT 15
+  ) top_rings
+  INNER JOIN bodies ON bodies.id64 = top_rings.body_id64
+  INNER JOIN systems ON systems.id64 = bodies.system_id64;
   ```
 
 ---
@@ -97,7 +117,7 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  SELECT 
+  SELECT
       systems.name AS system_name,
       bodies.name AS planet_name,
       bodies.atmosphereType,
@@ -106,8 +126,8 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
       cardinality(body_signals.genuses) AS genus_count,
       body_signals.genuses
   FROM body_signals
-  JOIN bodies ON bodies.id64 = body_signals.body_id64
-  JOIN systems ON systems.id64 = body_signals.system_id64
+  INNER JOIN bodies ON bodies.id64 = body_signals.body_id64
+  INNER JOIN systems ON systems.id64 = body_signals.system_id64
   WHERE cardinality(body_signals.genuses) >= 6
   ORDER BY genus_count DESC, bodies.gravity DESC
   LIMIT 20;
@@ -121,7 +141,7 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  SELECT 
+  SELECT
       systems.name AS system_name,
       bodies.name AS body_name,
       bodies.subType,
@@ -129,11 +149,12 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
       bodies.atmosphereType,
       body_signals.genuses
   FROM body_signals
-  JOIN bodies ON bodies.id64 = body_signals.body_id64
-  JOIN systems ON systems.id64 = body_signals.system_id64
+  INNER JOIN bodies ON bodies.id64 = body_signals.body_id64
+  INNER JOIN systems ON systems.id64 = body_signals.system_id64
   WHERE (bodies.surfaceTemperature > 500 OR bodies.surfaceTemperature < 50)
     AND cardinality(body_signals.genuses) > 0
-  ORDER BY bodies.surfaceTemperature DESC;
+  ORDER BY bodies.surfaceTemperature DESC
+  LIMIT 25;
   ```
 
 ---
@@ -148,19 +169,37 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  SELECT 
+  WITH candidate_bodies AS (
+      -- Filter to only relevant planet types first, avoiding a 150M row full join
+      SELECT
+          system_id64,
+          subType,
+          terraformingState
+      FROM bodies
+      WHERE subType = 'Earth-like World'
+         OR terraformingState IN ('Terraformable', 'Terraforming', 'Terraformed')
+  ),
+  aggregated_systems AS (
+      SELECT
+          system_id64,
+          COUNT(*) FILTER (WHERE subType = 'Earth-like World') AS elw_count,
+          COUNT(*) FILTER (WHERE terraformingState IN ('Terraformable', 'Terraforming', 'Terraformed')) AS terraformable_count
+      FROM candidate_bodies
+      GROUP BY system_id64
+      HAVING COUNT(*) FILTER (WHERE subType = 'Earth-like World') >= 2
+          OR COUNT(*) FILTER (WHERE terraformingState IN ('Terraformable', 'Terraforming', 'Terraformed')) >= 4
+  )
+  SELECT
       systems.name AS system_name,
       systems.population,
       systems.allegiance,
-      COUNT(*) FILTER (WHERE bodies.subType = 'Earth-like World') AS elw_count,
-      COUNT(*) FILTER (WHERE bodies.terraformingState IN ('Terraformable', 'Terraforming', 'Terraformed')) AS terraformable_count,
+      agg.elw_count,
+      agg.terraformable_count,
       ROUND((systems.coords <-> cube(ARRAY[0,0,0]::double precision[]))::numeric, 1) AS distance_from_sol_ly
-  FROM systems
-  JOIN bodies ON bodies.system_id64 = systems.id64
-  GROUP BY systems.id64, systems.name, systems.population, systems.allegiance, systems.coords
-  HAVING COUNT(*) FILTER (WHERE bodies.subType = 'Earth-like World') >= 2
-      OR COUNT(*) FILTER (WHERE bodies.terraformingState = 'Terraformable') >= 4
-  ORDER BY elw_count DESC, terraformable_count DESC;
+  FROM aggregated_systems agg
+  INNER JOIN systems ON systems.id64 = agg.system_id64
+  ORDER BY agg.elw_count DESC, agg.terraformable_count DESC
+  LIMIT 25;
   ```
 
 ---
@@ -172,22 +211,35 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  SELECT 
+  WITH tight_moons AS (
+      -- Pre-filter rare tight landable moons first to eliminate 150M row scan
+      SELECT
+          id64,
+          system_id64,
+          name AS moon_name,
+          semiMajorAxis,
+          gravity,
+          (parents->0->>'Planet')::bigint AS parent_body_id
+      FROM bodies
+      WHERE isLandable = TRUE
+        AND semiMajorAxis > 0
+        AND semiMajorAxis < 100000 -- Under 100,000 km
+        AND parents->0 ? 'Planet'
+  )
+  SELECT
       systems.name AS system_name,
-      moon_body.name AS moon_name,
+      moon.moon_name,
       parent_giant.name AS parent_giant_name,
       parent_giant.subType AS giant_type,
-      ROUND(moon_body.semiMajorAxis::numeric, 0) AS moon_orbit_radius_km,
-      ROUND(moon_body.gravity::numeric, 2) AS moon_gravity,
+      ROUND(moon.semiMajorAxis::numeric, 0) AS moon_orbit_radius_km,
+      ROUND(moon.gravity::numeric, 2) AS moon_gravity,
       EXISTS(SELECT 1 FROM body_rings WHERE body_rings.body_id64 = parent_giant.id64) AS parent_has_rings
-  FROM bodies moon_body
-  JOIN bodies parent_giant ON parent_giant.system_id64 = moon_body.system_id64 
-       AND (moon_body.parents->0->>'Planet')::bigint = parent_giant.bodyId
-  JOIN systems ON systems.id64 = moon_body.system_id64
-  WHERE moon_body.isLandable = TRUE
-    AND parent_giant.subType ILIKE '%gas giant%'
-    AND moon_body.semiMajorAxis < 100000 -- Under 100,000 km
-  ORDER BY moon_body.semiMajorAxis ASC
+  FROM tight_moons moon
+  INNER JOIN bodies parent_giant ON parent_giant.system_id64 = moon.system_id64
+        AND parent_giant.bodyId = moon.parent_body_id
+        AND parent_giant.subType ILIKE '%gas giant%'
+  INNER JOIN systems ON systems.id64 = moon.system_id64
+  ORDER BY moon.semiMajorAxis ASC
   LIMIT 25;
   ```
 
@@ -204,20 +256,23 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  WITH inhabited AS (
-      SELECT id64, name, coords, population 
-      FROM systems 
-      WHERE population > 1000
-  )
-  SELECT 
+  SELECT
       host_sys.name AS isolated_system,
       host_sys.population,
       ROUND((host_sys.coords <-> cube(ARRAY[0,0,0]::double precision[]))::numeric, 1) AS dist_to_sol_ly,
-      ROUND(MIN(host_sys.coords <-> neighbor_sys.coords)::numeric, 1) AS nearest_neighbor_dist_ly
-  FROM inhabited host_sys
-  JOIN inhabited neighbor_sys ON host_sys.id64 != neighbor_sys.id64 AND (host_sys.coords <-> neighbor_sys.coords) < 1000
-  GROUP BY host_sys.id64, host_sys.name, host_sys.coords, host_sys.population
-  ORDER BY nearest_neighbor_dist_ly DESC
+      nearest.nearest_neighbor_dist_ly
+  FROM systems host_sys
+  -- Directly referencing systems activates idx_systems_coords_cube for GiST KNN nearest-neighbor scan
+  CROSS JOIN LATERAL (
+      SELECT ROUND((host_sys.coords <-> neighbor.coords)::numeric, 1) AS nearest_neighbor_dist_ly
+      FROM systems neighbor
+      WHERE neighbor.id64 != host_sys.id64
+        AND neighbor.population > 1000
+      ORDER BY host_sys.coords <-> neighbor.coords
+      LIMIT 1
+  ) nearest
+  WHERE host_sys.population > 1000
+  ORDER BY nearest.nearest_neighbor_dist_ly DESC
   LIMIT 15;
   ```
 
@@ -229,7 +284,7 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  SELECT 
+  SELECT
       systems.name AS system_name,
       stations.name AS station_name,
       stations.type AS station_type,
@@ -238,11 +293,10 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
       stations.pad_large,
       ROUND(stations.distanceToArrival::numeric, 1) AS distance_ls
   FROM stations
-  JOIN systems ON systems.id64 = stations.system_id64
+  INNER JOIN systems ON systems.id64 = stations.system_id64
   WHERE systems.government = 'Anarchy'
     AND systems.security = 'Anarchy'
-    AND 'Black Market' = ANY(stations.services_arr)
-    AND 'Shipyard' = ANY(stations.services_arr)
+    AND stations.services_arr @> ARRAY['Black Market', 'Shipyard']::varchar[]  -- Uses GIN index (idx_stations_services)
     AND stations.pad_large > 0
     AND cardinality(stations.prohibited_commodities) = 0
   ORDER BY systems.population DESC
@@ -257,7 +311,7 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  SELECT 
+  SELECT
       systems.name AS system_name,
       stations.name AS station_name,
       stations.state AS station_state,
@@ -266,10 +320,11 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
       systems.thargoidWar->>'portsRemaining' AS ports_left,
       ROUND((systems.coords <-> cube(ARRAY[0,0,0]::double precision[]))::numeric, 1) AS ly_from_sol
   FROM stations
-  JOIN systems ON systems.id64 = stations.system_id64
+  INNER JOIN systems ON systems.id64 = stations.system_id64
   WHERE stations.state IN ('Damaged', 'UnderAttack', 'UnderRepairs')
      OR systems.thargoidWar IS NOT NULL
-  ORDER BY war_progress ASC, systems.population DESC;
+  ORDER BY war_progress ASC, systems.population DESC
+  LIMIT 25;
   ```
 
 ---
@@ -284,57 +339,152 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Query:**
 
   ```sql
-  SELECT 
+  WITH multi_hotspots AS (
+      -- Uses GIN index (idx_body_rings_signals) to isolate high-yield candidate rings first
+      SELECT
+          body_id64,
+          name AS ring_name,
+          COALESCE((signals->>'Platinum')::int, 0) AS platinum_hotspots,
+          COALESCE((signals->>'Tritium')::int, 0) AS tritium_hotspots
+      FROM body_rings
+      WHERE (signals ? 'Platinum' OR signals ? 'Tritium')
+        AND (
+          COALESCE((signals->>'Platinum')::int, 0) >= 2 OR
+          COALESCE((signals->>'Tritium')::int, 0) >= 2
+        )
+      ORDER BY platinum_hotspots DESC, tritium_hotspots DESC
+      LIMIT 25
+  )
+  SELECT
       systems.name AS system_name,
       bodies.name AS planet_name,
-      body_rings.name AS ring_name,
+      hotspots.ring_name,
       bodies.reserveLevel,
-      COALESCE((body_rings.signals->'signals'->>'Platinum')::int, (body_rings.signals->>'Platinum')::int, 0) AS platinum_hotspots,
-      COALESCE((body_rings.signals->'signals'->>'Tritium')::int, (body_rings.signals->>'Tritium')::int, 0) AS tritium_hotspots,
+      hotspots.platinum_hotspots,
+      hotspots.tritium_hotspots,
       ROUND(bodies.distanceToArrival::numeric, 1) AS distance_ls
-  FROM body_rings
-  JOIN bodies ON bodies.id64 = body_rings.body_id64
-  JOIN systems ON systems.id64 = bodies.system_id64
-  WHERE bodies.reserveLevel = 'Pristine'
-    AND (
-      COALESCE((body_rings.signals->'signals'->>'Platinum')::int, (body_rings.signals->>'Platinum')::int, 0) >= 2 OR 
-      COALESCE((body_rings.signals->'signals'->>'Tritium')::int, (body_rings.signals->>'Tritium')::int, 0) >= 2
-    )
-  ORDER BY platinum_hotspots DESC, tritium_hotspots DESC
-  LIMIT 25;
+  FROM multi_hotspots hotspots
+  INNER JOIN bodies ON bodies.id64 = hotspots.body_id64
+        AND bodies.reserveLevel = 'Pristine'
+  INNER JOIN systems ON systems.id64 = bodies.system_id64
+  ORDER BY hotspots.platinum_hotspots DESC, hotspots.tritium_hotspots DESC;
   ```
 
 ---
 
-### B. High-Profit Spatial Trade Run (Within 25 Light-Years)
+### B. High-Profit Spatial Trade Run (Within 40 Light-Years of Anchor)
 
-* **The Concept:** Find high-supply commodities at Station A and pair them with high-demand buy prices at Station B within a 1-to-2 jump radius (25 ly) with Large landing pad support.
+* **The Concept:** Find high-supply commodities at Station A and pair them with high-demand buy prices at Station B within a standard single-jump hauler radius (40 ly of reference system, e.g. Cubeo) with Large landing pad support.
+* **Planner Optimization (Single-Query Model):** Uses an uncorrelated scalar subquery (`InitPlan`) to resolve reference anchor coordinates once, driving a direct **3D GiST Index Scan** on `idx_systems_coords_cube` in the CTE. This filters candidate stations down to a local cluster before joining market commodities, turning a galaxy-wide Cartesian product into a sub-millisecond local search.
 * **The Query:**
 
   ```sql
-  SELECT 
-      sell_comm.name AS commodity,
-      origin_sys.name AS origin_system,
-      origin_station.name AS buy_station,
-      sell_comm.buyPrice AS purchase_cost,
-      sell_comm.supply AS available_supply,
-      dest_sys.name AS destination_system,
-      dest_station.name AS sell_station,
-      buy_comm.sellPrice AS station_payout,
-      (buy_comm.sellPrice - sell_comm.buyPrice) AS profit_per_ton,
-      ROUND((origin_sys.coords <-> dest_sys.coords)::numeric, 1) AS distance_ly
-  FROM station_commodities sell_comm
-  JOIN stations origin_station ON origin_station.market_id = sell_comm.market_id AND origin_station.pad_large > 0
-  JOIN systems origin_sys ON origin_sys.id64 = origin_station.system_id64
-  JOIN station_commodities buy_comm ON LOWER(buy_comm.name) = LOWER(sell_comm.name) AND buy_comm.demand > 1000
-  JOIN stations dest_station ON dest_station.market_id = buy_comm.market_id AND dest_station.pad_large > 0 AND dest_station.market_id != origin_station.market_id
-  JOIN systems dest_sys ON dest_sys.id64 = dest_station.system_id64
-  WHERE sell_comm.supply > 5000
-    AND sell_comm.buyPrice > 0
-    AND (buy_comm.sellPrice - sell_comm.buyPrice) > 25000  -- >25,000 credits/ton profit
-    AND (origin_sys.coords <-> dest_sys.coords) < 25.0     -- Within 25 ly
+  WITH nearby_systems AS (
+      SELECT
+          systems.id64,
+          systems.name,
+          systems.coords,
+          -- Use exact '=' for direct B-Tree lookup (idx_systems_name), or ILIKE for case-insensitive/wildcard searches (idx_systems_name_trgm)
+          ROUND((systems.coords <-> (SELECT coords FROM systems WHERE name = 'Cubeo' LIMIT 1))::numeric, 2) AS dist_from_anchor_ly
+      FROM systems
+      -- Use exact '=' for direct B-Tree lookup (idx_systems_name), or ILIKE for case-insensitive/wildcard searches (idx_systems_name_trgm)
+      WHERE
+          systems.coords <@ (SELECT cube_enlarge(coords, 40.0, 3) FROM systems WHERE name = 'Cubeo' LIMIT 1)
+          AND (systems.coords <-> (SELECT coords FROM systems WHERE name = 'Cubeo' LIMIT 1)) <= 40.0
+  )
+  SELECT
+      sell_commodities.name AS commodity,
+      origin_systems.name AS origin_system,
+      origin_stations.name AS buy_station,
+      sell_commodities.buyPrice AS purchase_cost,
+      sell_commodities.supply AS available_supply,
+      destination_systems.name AS destination_system,
+      destination_stations.name AS sell_station,
+      buy_commodities.sellPrice AS station_payout,
+      (buy_commodities.sellPrice - sell_commodities.buyPrice) AS profit_per_ton,
+      ROUND((origin_systems.coords <-> destination_systems.coords)::numeric, 1) AS distance_ly
+  FROM nearby_systems origin_systems
+  INNER JOIN stations origin_stations ON origin_stations.system_id64 = origin_systems.id64
+        AND origin_stations.pad_large > 0
+        AND origin_stations.type NOT ILIKE '%carrier%'
+        AND origin_stations.carrierName IS NULL
+  INNER JOIN station_commodities sell_commodities ON sell_commodities.market_id = origin_stations.market_id
+        AND sell_commodities.supply >= 1000
+        AND sell_commodities.buyPrice > 0
+  INNER JOIN nearby_systems destination_systems ON destination_systems.id64 != origin_systems.id64
+        AND (origin_systems.coords <-> destination_systems.coords) <= 40.0
+  INNER JOIN stations destination_stations ON destination_stations.system_id64 = destination_systems.id64
+        AND destination_stations.pad_large > 0
+        AND destination_stations.market_id != origin_stations.market_id
+        AND destination_stations.type NOT ILIKE '%carrier%'
+        AND destination_stations.carrierName IS NULL
+  INNER JOIN station_commodities buy_commodities ON buy_commodities.market_id = destination_stations.market_id
+        AND buy_commodities.commodityid = sell_commodities.commodityid
+        AND buy_commodities.demand >= 500
+        AND buy_commodities.sellPrice > sell_commodities.buyPrice
   ORDER BY profit_per_ton DESC
   LIMIT 15;
+  ```
+
+---
+
+### C. The "Dual-Yield Mining Haven" (Pristine Metallic Platinum + Icy Void Opal Hotspots)
+
+* **The Concept:** Find star systems within a radial search area (e.g. 300 ly of Cubeo) that offer both high-yield laser mining (**Pristine Metallic rings with Platinum hotspots**) and high-value deep-core mining (**Icy rings with Void Opal hotspots**) in the exact same system.
+* **Planner Optimization (Single-Query Model):** Uses uncorrelated scalar subqueries (`InitPlan`) to resolve reference origin coordinates and 3D bounding box constants once before query execution. This completely eliminates temporary table setup, prevents join inversion, and forces direct **GiST Index Scans** on `idx_systems_coords_cube` followed by top-down index nested loops.
+* **The Query:**
+
+  ```sql
+  WITH nearby_systems AS (
+      SELECT
+          systems.id64,
+          systems.name,
+          systems.coords,
+          systems.allegiance,
+          systems.security,
+          systems.population,
+          systems.controllingPower,
+          -- Use exact '=' for direct B-Tree lookup (idx_systems_name), or ILIKE for case-insensitive/wildcard searches (idx_systems_name_trgm)
+          ROUND((systems.coords <-> (SELECT coords FROM systems WHERE name = 'Cubeo' LIMIT 1))::numeric, 2) AS distance_ly
+      FROM systems
+      -- Use exact '=' for direct B-Tree lookup (idx_systems_name), or ILIKE for case-insensitive/wildcard searches (idx_systems_name_trgm)
+      WHERE
+          systems.coords <@ (SELECT cube_enlarge(coords, 300.0, 3) FROM systems WHERE name = 'Cubeo' LIMIT 1)
+          AND (systems.coords <-> (SELECT coords FROM systems WHERE name = 'Cubeo' LIMIT 1)) <= 300.0
+  )
+  SELECT
+      nearby_systems.name AS system_name,
+      nearby_systems.distance_ly AS dist_from_ref_ly,
+      nearby_systems.allegiance,
+      nearby_systems.security,
+      nearby_systems.controllingPower AS power,
+      metallic_body.name AS metallic_body,
+      metallic_ring.name AS metallic_ring,
+      metallic_body.reserveLevel AS reserves,
+      COALESCE((metallic_ring.signals->>'Platinum')::int, 0) AS platinum_hotspots,
+      TO_CHAR(metallic_ring.density * 1000000.0, 'FM999,999,990.000000') AS metallic_density_ton_km2,
+      ROUND(metallic_body.distanceToArrival::numeric, 0) AS metallic_arrival_ls,
+      icy_body.name AS icy_body,
+      icy_ring.name AS icy_ring,
+      COALESCE((icy_ring.signals->>'Void Opal')::int, 0) AS void_opal_hotspots,
+      TO_CHAR(icy_ring.density * 1000000.0, 'FM999,999,990.000000') AS icy_density_ton_km2,
+      ROUND(icy_body.distanceToArrival::numeric, 0) AS icy_arrival_ls
+  FROM nearby_systems
+  INNER JOIN bodies metallic_body ON metallic_body.system_id64 = nearby_systems.id64
+        AND (metallic_body.reserveLevel IS NULL OR metallic_body.reserveLevel IN ('Pristine', 'Major'))
+  INNER JOIN body_rings metallic_ring ON metallic_ring.body_id64 = metallic_body.id64
+        AND metallic_ring.type = 'Metallic'
+        AND COALESCE((metallic_ring.signals->>'Platinum')::int, 0) > 0
+  INNER JOIN bodies icy_body ON icy_body.system_id64 = nearby_systems.id64
+  INNER JOIN body_rings icy_ring ON icy_ring.body_id64 = icy_body.id64
+        AND icy_ring.type = 'Icy'
+        AND COALESCE((icy_ring.signals->>'Void Opal')::int, 0) > 0
+  ORDER BY
+      metallic_ring.density DESC NULLS LAST,
+      icy_ring.density DESC NULLS LAST,
+      nearby_systems.distance_ly ASC,
+      platinum_hotspots DESC,
+      void_opal_hotspots DESC;
   ```
 
 ---
@@ -350,33 +500,33 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 
   ```sql
   (
-    SELECT 'Highest Star (+Z)' AS extreme_type, name, coords, population, bodyCount 
-    FROM systems ORDER BY (coords ~> 3) DESC LIMIT 1
+      SELECT 'Highest Star (+Z)' AS extreme_type, name, coords, population, bodyCount
+      FROM systems ORDER BY (coords ~> 3) DESC LIMIT 1
   )
   UNION ALL
   (
-    SELECT 'Lowest Star (-Z)' AS extreme_type, name, coords, population, bodyCount 
-    FROM systems ORDER BY (coords ~> 3) ASC LIMIT 1
+      SELECT 'Lowest Star (-Z)' AS extreme_type, name, coords, population, bodyCount
+      FROM systems ORDER BY (coords ~> 3) ASC LIMIT 1
   )
   UNION ALL
   (
-    SELECT 'Furthest East (+X)' AS extreme_type, name, coords, population, bodyCount 
-    FROM systems ORDER BY (coords ~> 1) DESC LIMIT 1
+      SELECT 'Furthest East (+X)' AS extreme_type, name, coords, population, bodyCount
+      FROM systems ORDER BY (coords ~> 1) DESC LIMIT 1
   )
   UNION ALL
   (
-    SELECT 'Furthest West (-X)' AS extreme_type, name, coords, population, bodyCount 
-    FROM systems ORDER BY (coords ~> 1) ASC LIMIT 1
+      SELECT 'Furthest West (-X)' AS extreme_type, name, coords, population, bodyCount
+      FROM systems ORDER BY (coords ~> 1) ASC LIMIT 1
   )
   UNION ALL
   (
-    SELECT 'Furthest North (+Y)' AS extreme_type, name, coords, population, bodyCount 
-    FROM systems ORDER BY (coords ~> 2) DESC LIMIT 1
+      SELECT 'Furthest North (+Y)' AS extreme_type, name, coords, population, bodyCount
+      FROM systems ORDER BY (coords ~> 2) DESC LIMIT 1
   )
   UNION ALL
   (
-    SELECT 'Furthest South (-Y)' AS extreme_type, name, coords, population, bodyCount 
-    FROM systems ORDER BY (coords ~> 2) ASC LIMIT 1
+      SELECT 'Furthest South (-Y)' AS extreme_type, name, coords, population, bodyCount
+      FROM systems ORDER BY (coords ~> 2) ASC LIMIT 1
   );
   ```
 
@@ -385,22 +535,32 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 ### B. The "Neutron Star Highway" High-Density Hubs
 
 * **The Concept:** Find spheres of space with the highest concentration of Neutron Stars or White Dwarfs within a 40 ly radius (ideal for chain supercharging FSD jumps).
+* **Planner Optimization:** Pre-filters candidate systems with neutron/white dwarf stars in a CTE, then drives a **3D GiST Index Scan** (`idx_systems_coords_cube`) with `cube_enlarge` in a `CROSS JOIN LATERAL` block to count neighbors in milliseconds.
 * **The Query:**
 
   ```sql
-  SELECT 
-      center_sys.name AS center_system,
-      COUNT(DISTINCT neighbor_sys.id64) AS neutron_neighbors_within_40ly,
-      ROUND((center_sys.coords <-> cube(ARRAY[0,0,0]::double precision[]))::numeric, 1) AS dist_from_sol_ly
-  FROM bodies center_body
-  JOIN systems center_sys ON center_sys.id64 = center_body.system_id64
-  JOIN systems neighbor_sys ON (center_sys.coords <-> neighbor_sys.coords) <= 40.0
-  JOIN bodies neighbor_body ON neighbor_body.system_id64 = neighbor_sys.id64 
-       AND neighbor_body.subType IN ('Neutron Star', 'White Dwarf (DA) Star', 'White Dwarf (DAB) Star')
-  WHERE center_body.subType = 'Neutron Star'
-  GROUP BY center_sys.id64, center_sys.name, center_sys.coords
-  HAVING COUNT(DISTINCT neighbor_sys.id64) > 5
-  ORDER BY neutron_neighbors_within_40ly DESC
+  WITH neutron_systems AS (
+      -- Pre-filter systems containing Neutron Stars / White Dwarfs first
+      SELECT DISTINCT systems.id64, systems.name, systems.coords
+      FROM bodies
+      INNER JOIN systems ON systems.id64 = bodies.system_id64
+      WHERE bodies.subType IN ('Neutron Star', 'White Dwarf (DA) Star', 'White Dwarf (DAB) Star')
+  )
+  SELECT
+      center.name AS center_system,
+      nearby.neutron_neighbors_within_40ly,
+      ROUND((center.coords <-> cube(ARRAY[0,0,0]::double precision[]))::numeric, 1) AS dist_from_sol_ly
+  FROM neutron_systems center
+  -- Uses 3D GiST bounding box index scan on coords for fast local cluster counting
+  CROSS JOIN LATERAL (
+      SELECT COUNT(*) AS neutron_neighbors_within_40ly
+      FROM neutron_systems neighbor
+      WHERE neighbor.id64 != center.id64
+        AND neighbor.coords <@ cube_enlarge(center.coords, 40.0, 3)
+        AND (center.coords <-> neighbor.coords) <= 40.0
+  ) nearby
+  WHERE nearby.neutron_neighbors_within_40ly >= 5
+  ORDER BY nearby.neutron_neighbors_within_40ly DESC
   LIMIT 15;
   ```
 
@@ -413,16 +573,59 @@ Combining **3D spatial indexing (`cube` / GiST)**, **orbital mechanics**, **plan
 * **The Supercruise Marathon (Furthest Stations from Jump Point):**
 
   ```sql
-  SELECT 
+  SELECT
       systems.name AS system_name,
-      stations.name AS station_name,
-      stations.type AS station_type,
-      ROUND(stations.distanceToArrival::numeric, 0) AS distance_light_seconds,
-      ROUND((stations.distanceToArrival / 31557600)::numeric, 3) AS distance_light_years,
-      stations.pad_large
-  FROM stations
-  JOIN systems ON systems.id64 = stations.system_id64
-  WHERE stations.distanceToArrival > 1000000 -- > 1 million light-seconds (~0.03+ ly)
-  ORDER BY stations.distanceToArrival DESC
-  LIMIT 15;
+      far_stations.name AS station_name,
+      far_stations.type AS station_type,
+      ROUND(far_stations.distanceToArrival::numeric, 0) AS distance_light_seconds,
+      ROUND((far_stations.distanceToArrival / 31557600)::numeric, 3) AS distance_light_years,
+      far_stations.pad_large
+  FROM (
+      -- Pre-filter top 15 furthest stations first to avoid joining systems table across all stations
+      SELECT *
+      FROM stations
+      WHERE distanceToArrival > 1000000 -- > 1 million light-seconds (~0.03+ ly)
+      ORDER BY distanceToArrival DESC
+      LIMIT 15
+  ) far_stations
+  INNER JOIN systems ON systems.id64 = far_stations.system_id64;
+  ```
+
+---
+
+## 🔧 8. Engineers & Workshop Modification Locators
+
+*Find specialized Horizons and Odyssey workshops relative to your home base.*
+
+### A. Nearest Engineers by Specialty (e.g. Frame Shift Drive from Cubeo)
+
+* **The Concept:** Find all engineers specializing in a specific modification discipline (e.g. `frame_shift_drive`, `thrusters`, `shield_generator`, `plasma_accelerator`), their maximum modification grade, workshop base, unlock requirements, permit status, and exact 3D Euclidean distance in light-years from your reference location (e.g. Cubeo).
+* **Planner Optimization:** Utilizes GIN index on `specialties` (`idx_engineers_specialties`) combined with scalar `InitPlan` coordinate lookup for sub-millisecond distance calculation. Names and bases are dynamically resolved via foreign keys.
+* **The Query:**
+
+  ```sql
+  SELECT
+      engineers.name AS engineer_name,
+      engineers.engineer_type,
+      stations.name AS workshop_base,
+      systems.name AS system_name,
+      COALESCE(
+          (engineers.specialties->'major'->>'frame_shift_drive')::int,
+          (engineers.specialties->'minor'->>'frame_shift_drive')::int
+      ) AS fsd_max_grade,
+      -- Use exact '=' for direct B-Tree lookup (idx_systems_name), or ILIKE for case-insensitive searches (idx_systems_name_trgm)
+      ROUND((systems.coords <-> (SELECT coords FROM systems WHERE name = 'Cubeo' LIMIT 1))::numeric, 2) AS distance_ly,
+      engineers.permit_required,
+      engineers.referral_from,
+      engineers.unlock_requirement,
+      engineers.region,
+      engineers.specialties
+  FROM engineers
+  INNER JOIN systems ON systems.id64 = engineers.system_id64
+  LEFT JOIN stations ON stations.market_id = engineers.market_id
+  WHERE (engineers.specialties->'major' ? 'frame_shift_drive')
+     OR (engineers.specialties->'minor' ? 'frame_shift_drive')
+  ORDER BY
+      fsd_max_grade DESC,
+      distance_ly ASC;
   ```
