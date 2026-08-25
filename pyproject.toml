@@ -1,6 +1,6 @@
 [project]
 name = "ed-galaxy-sync-pg"
-version = "1.0.2"
+version = "1.1.0"
 description = "Elite Dangerous Galaxy Sync for PostgreSQL"
 authors = [
     { name = "Carl Lee Wiles II" }
@@ -34,7 +34,11 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/dreamwraith/ed-galaxy-sync-pg"
 Repository = "https://github.com/dreamwraith/ed-galaxy-sync-pg"
+Documentation = "https://github.com/dreamwraith/ed-galaxy-sync-pg/blob/main/usage.md"
+Changelog = "https://github.com/dreamwraith/ed-galaxy-sync-pg/blob/main/changelog.md"
+"Release Notes" = "https://github.com/dreamwraith/ed-galaxy-sync-pg/releases"
 Issues = "https://github.com/dreamwraith/ed-galaxy-sync-pg/issues"
+Discussions = "https://github.com/dreamwraith/ed-galaxy-sync-pg/discussions"
 
 [dependency-groups]
 dev = [
@@ -89,7 +93,8 @@ exclude = [
     "node_modules",
     "build",
     "dist",
-    "CHANGELOG.md"
+    "changelog.md",
+    "license.md",
 ]
 disable = [
     "MD033",
