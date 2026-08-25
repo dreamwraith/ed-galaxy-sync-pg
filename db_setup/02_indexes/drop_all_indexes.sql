@@ -31,7 +31,7 @@ DROP INDEX IF EXISTS idx_bodies_solidComposition;
 -- 3. body_rings indexes
 DROP INDEX IF EXISTS idx_body_rings_type;
 
-DROP INDEX IF EXISTS idx_body_rings_signals_keys;
+DROP INDEX IF EXISTS idx_body_rings_signals;
 
 -- 4. station_materials indexes
 DROP INDEX IF EXISTS idx_station_materials_name;
