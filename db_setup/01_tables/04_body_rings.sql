@@ -54,11 +54,9 @@ COMMENT ON COLUMN body_rings.density IS
   'Not present in galaxy.schema.json enum; populated when available from extended data.';
 
 COMMENT ON COLUMN body_rings.signals IS
-  'JSONB object {signals: {MaterialName: count, ...}, updateTime: "ISO8601"} '
-  'describing mineable hotspot signals detected within this ring '
-  '(e.g. {"Platinum": 3, "Painite": 1}). GIN-indexed on signals->''signals'' key for fast '
-  'hotspot material searches. NULL when no signals have been reported. '
-  'Source field: bodies[].rings[].signals.';
+  'JSONB key-value mapping of mineable hotspot materials to signal count '
+  '(e.g. {"Platinum": 3, "Void Opal": 1}). GIN-indexed for fast '
+  'hotspot material searches. NULL when no signals have been reported.';
 
 COMMENT ON COLUMN body_rings.update_dtm IS
   'UTC timestamp of when this ring record was last updated by the Spansh ingest pipeline or live EDDN stream.';

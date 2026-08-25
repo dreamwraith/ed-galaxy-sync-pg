@@ -26,7 +26,7 @@ CREATE INDEX IF NOT EXISTS idx_bodies_solidComposition ON bodies USING gin (soli
 -- 3. body_rings indexes
 CREATE INDEX IF NOT EXISTS idx_body_rings_type ON body_rings (type);
 
-CREATE INDEX IF NOT EXISTS idx_body_rings_signals_keys ON body_rings USING gin ((signals -> 'signals'));
+CREATE INDEX IF NOT EXISTS idx_body_rings_signals ON body_rings USING gin (signals);
 
 -- 4. station_materials indexes
 CREATE INDEX IF NOT EXISTS idx_station_materials_name ON station_materials (name);
