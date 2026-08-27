@@ -41,13 +41,16 @@ class JournalStationTransformer(BaseTransformer):
         """Transforms docking and settlement approach events into station or POI records."""
         records: list[TransformedRecord] = []
         system_id64_raw = message.get("SystemAddress")
-        station_name = message.get("StationName") or message.get("Name")
+        raw_station_name = message.get("StationName") or message.get("Name")
+        station_name = EDDNUtils.sanitize_station_name(raw_station_name)
 
         if not system_id64_raw or not station_name:
             return records
 
         try:
             system_id64 = int(system_id64_raw)
+            if system_id64 <= 1:
+                return records
         except ValueError, TypeError:
             return records
 
@@ -59,6 +62,8 @@ class JournalStationTransformer(BaseTransformer):
         if market_id_raw is not None:
             try:
                 market_id = int(market_id_raw)
+                if market_id <= 0:
+                    market_id = None
             except ValueError, TypeError:
                 market_id = None
 
@@ -188,9 +193,10 @@ class JournalStationTransformer(BaseTransformer):
 
         # 2. Non-market surface location / POI (Guardian ruin, Thargoid site, settlement without market) -> body_pois table
         body_id64 = EDDNUtils.compute_body_id64(system_id64, body_id_raw)
-        raw_name = (message.get("Name") or message.get("StationName") or station_name or "").strip()
+        raw_name = (message.get("Name") or message.get("StationName") or raw_station_name or "").strip()
         localised = message.get("Name_Localised") or message.get("StationName_Localised")
-        display_name = localised or raw_name or "Unknown POI"
+        clean_name = EDDNUtils.sanitize_station_name(localised or raw_name)
+        display_name = clean_name or "Unknown POI"
         raw_station_type = message.get("StationType")
         if raw_station_type:
             normalized_poi_type = self.normalizer.normalize(

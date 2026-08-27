@@ -42,6 +42,8 @@ class FCMaterialsTransformer(BaseTransformer):
 
         try:
             market_id = int(market_id_raw)
+            if market_id <= 0:
+                return records
         except ValueError, TypeError:
             return records
 

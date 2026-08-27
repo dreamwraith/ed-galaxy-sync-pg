@@ -51,6 +51,8 @@ class JournalScanTransformer(BaseTransformer):
 
         try:
             system_id64 = int(system_id64_raw)
+            if system_id64 <= 1:
+                return records
         except ValueError, TypeError:
             return records
 
@@ -303,11 +305,13 @@ class JournalScanTransformer(BaseTransformer):
                         clean_type = EDDNUtils.sanitize_edname(raw_type)
                         signals_dict[clean_type] = count
 
+                deduplicated_genuses = list(dict.fromkeys(genus_list)) if genus_list else None
+
                 signal_record_data = {
                     "system_id64": system_id64,
                     "body_id64": body_id64,
                     "signals": json.dumps(signals_dict) if signals_dict else None,
-                    "genuses": genus_list if genus_list else None,
+                    "genuses": deduplicated_genuses,
                     "update_dtm": timestamp,
                 }
                 records.append(

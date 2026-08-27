@@ -41,14 +41,16 @@ class CommodityTransformer(BaseTransformer):
 
         try:
             market_id = int(market_id_raw)
+            if market_id <= 0:
+                return records
         except ValueError, TypeError:
             return records
 
         timestamp = message.get("timestamp")
-        station_name = message.get("stationName") or message.get("StationName")
+        raw_station_name = message.get("stationName") or message.get("StationName")
+        station_display_name = EDDNUtils.sanitize_station_name(raw_station_name) or "Unknown Station"
 
         # 1. Always emit a stations update record to track market_updated_at and trigger stale cleanup
-        station_display_name = station_name or "Unknown Station"
         station_record_data = {
             "market_id": market_id,
             "system_id64": 0,
@@ -75,10 +77,16 @@ class CommodityTransformer(BaseTransformer):
                 if not commodity_name:
                     continue
 
+                raw_category = commodity_entry.get("category") or commodity_entry.get("Category") or ""
+                name_clean = commodity_name.lower().strip("$ ;")
+
+                # Filter out non-cargo restock consumables (limpets / drones / NonMarketable category)
+                if "nonmarketable" in raw_category.lower() or name_clean in ("drones", "drones_name", "limpet", "limpets"):
+                    continue
+
                 normalized_commodity_name = self.normalizer.normalize(
                     "station_commodities", "name", "commodities", commodity_name, metrics=self.metrics
                 )
-                raw_category = commodity_entry.get("category") or commodity_entry.get("Category")
 
                 normalized_category = (
                     self.normalizer.normalize(

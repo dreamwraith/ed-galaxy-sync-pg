@@ -45,6 +45,8 @@ class JournalJumpTransformer(BaseTransformer):
 
         try:
             system_id64 = int(system_id64_raw)
+            if system_id64 <= 1:
+                return records
         except ValueError, TypeError:
             return records
 
@@ -54,12 +56,20 @@ class JournalJumpTransformer(BaseTransformer):
         if event == "FSSDiscoveryScan":
             body_count = message.get("BodyCount")
             if body_count is not None:
+                star_pos = message.get("StarPos")
+                coords = None
+                if isinstance(star_pos, (list, tuple)) and len(star_pos) == 3:
+                    coords = f"({star_pos[0]}, {star_pos[1]}, {star_pos[2]})"
+
                 system_record_data = {
                     "id64": system_id64,
                     "name": message.get("SystemName") or message.get("StarSystem"),
                     "bodyCount": body_count,
                     "update_dtm": timestamp,
                 }
+                if coords:
+                    system_record_data["coords"] = coords
+
                 records.append(
                     TransformedRecord(
                         table_name="systems",

@@ -46,6 +46,8 @@ class FSSSignalTransformer(BaseTransformer):
 
         try:
             system_id64 = int(system_id64_raw)
+            if system_id64 <= 1:
+                return records
         except ValueError, TypeError:
             return records
 
@@ -66,6 +68,13 @@ class FSSSignalTransformer(BaseTransformer):
 
             raw_name = signal_entry.get("SignalName")
             if not raw_name:
+                continue
+
+            uss_signal_type = signal_entry.get("USSType") or ""
+            # Filter out ephemeral personal mission USS signals
+            if uss_signal_type == "$USS_Type_MissionTarget;" or "missiontarget" in raw_name.lower().replace("_", "").replace(
+                " ", ""
+            ):
                 continue
             raw_type = signal_entry.get("SignalType")
             localised = signal_entry.get("SignalName_Localised")
