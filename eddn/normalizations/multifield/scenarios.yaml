@@ -712,3 +712,38 @@ Toll Beacon:
   name: Toll Beacon
   signal_type: GenericPOI
   severity: null
+# ==========================================================================
+# Operations (introduced 4.4 - contested megaship scenarios, 6 total)
+# Confirmed tokens observed in the wild; placeholders for unobserved tokens.
+# ==========================================================================
+# Confirmed token -> in-game operation name mappings:
+Operations_Megaship_Massacre_Megaship_Reclaim:
+  name: Reclamation Point
+  signal_type: Operations
+  severity: null
+Operations_CounterAttack_Megaship:
+  name: Tactical Takedown
+  signal_type: Operations
+  severity: null
+# The Runner is the player-squad megaship that acts as spawn base for all operations
+Operations_Runner:
+  name: Operation Runner
+  signal_type: Operations
+  severity: null
+# Placeholder entries - raw tokens not yet observed, update keys when confirmed:
+# Operations_???:
+#   name: Biohazard Takedown
+#   signal_type: Operations
+#   severity: null
+# Operations_???:
+#   name: Firestorm Rescue
+#   signal_type: Operations
+#   severity: null
+# Operations_???:
+#   name: Rapid Response
+#   signal_type: Operations
+#   severity: null
+# Operations_???:
+#   name: Terminal Prosecution
+#   signal_type: Operations
+#   severity: null
