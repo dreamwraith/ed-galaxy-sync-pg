@@ -455,5 +455,169 @@ def test_fss_signal_scenarios_and_threat_levels() -> None:
     }
     records = transformer.transform(schema_ref, header, message)
     assert len(records) == 2
-    wz = next(r for r in records if "Warzone" in r.data["raw_name"])
-    assert wz.data["name"] == "Conflict Zone [Low]"
+    warzone_record = next(record for record in records if "Warzone" in record.data["raw_name"])
+    assert warzone_record.data["name"] == "Conflict Zone [Low]"
+
+
+def test_fss_signal_filters_mission_targets() -> None:
+    """Validates FSSSignalTransformer filters out transient personal mission USSs."""
+    transformer = FSSSignalTransformer()
+    schema_ref = "https://eddn.edcd.io/schemas/fsssignaldiscovered/1"
+    header = {"uploaderID": "Cmdr"}
+    message = {
+        "event": "FSSSignalDiscovered",
+        "timestamp": "2026-08-20T04:15:17Z",
+        "SystemAddress": 3657466647274,
+        "signals": [
+            {"SignalName": "$USS_Type_MissionTarget;", "USSType": "$USS_Type_MissionTarget;"},
+            {"SignalName": "Mission Target [Pirate Lord]", "SignalType": "MissionTarget"},
+            {"SignalName": "$Warzone_PointRace_Low:#index=1;", "SignalType": "$Warzone;"},
+        ],
+    }
+    records = transformer.transform(schema_ref, header, message)
+    # Only the non-mission signal (Warzone) should be transformed
+    assert len(records) == 1
+    assert records[0].data["name"] == "Conflict Zone [Low]"
+
+
+def test_fss_discovery_scan_captures_coords_and_body_count() -> None:
+    """Validates FSSDiscoveryScan captures StarPos coords and bodyCount."""
+    transformer = JournalJumpTransformer()
+    schema_ref = "https://eddn.edcd.io/schemas/journal/1"
+    header = {"uploaderID": "Cmdr"}
+    message = {
+        "event": "FSSDiscoveryScan",
+        "timestamp": "2026-08-17T12:20:00Z",
+        "SystemAddress": 10477373803,
+        "SystemName": "Sol",
+        "StarPos": [0.0, 0.0, 0.0],
+        "BodyCount": 42,
+    }
+    records = transformer.transform(schema_ref, header, message)
+    assert len(records) == 1
+    assert records[0].table_name == "systems"
+    assert records[0].data["bodyCount"] == 42
+    assert records[0].data["coords"] == "(0.0, 0.0, 0.0)"
+
+
+def test_station_sanitization_and_commodity_filtering() -> None:
+    """Validates CommodityTransformer strips +++ from station names, filters limpets, and keeps regular commodities."""
+    transformer = CommodityTransformer()
+    schema_ref = "https://eddn.edcd.io/schemas/commodity/3"
+    header = {"uploaderID": "Cmdr"}
+    message = {
+        "timestamp": "2026-08-20T10:00:00Z",
+        "marketId": 128000100,
+        "stationName": "Muller Extraction +++",
+        "commodities": [
+            {"name": "Gold", "buyPrice": 50000, "sellPrice": 48000, "stock": 100, "demand": 0},
+            {"name": "Narcotics", "buyPrice": 12000, "sellPrice": 11500, "stock": 50, "demand": 0},  # Preserved
+            {"name": "Drones", "category": "NonMarketable", "buyPrice": 101, "sellPrice": 101, "stock": 0, "demand": 0},  # Filtered
+            {"name": "$Drones_Name;", "buyPrice": 101, "sellPrice": 101, "stock": 0, "demand": 0},  # Filtered
+        ],
+    }
+    records = transformer.transform(schema_ref, header, message)
+    assert len(records) == 3  # 1 station + 2 valid commodities (Gold, Narcotics)
+    station_record = next(record for record in records if record.table_name == "stations")
+    assert station_record.data["name"] == "Muller Extraction"
+    assert station_record.data["realName"] == "Muller Extraction"
+
+    commodity_names = [record.data["name"] for record in records if record.table_name == "station_commodities"]
+    assert "Gold" in commodity_names
+    assert "Narcotics" in commodity_names
+    assert "Drones" not in commodity_names
+
+
+def test_journal_station_and_poi_sanitization() -> None:
+    """Validates JournalStationTransformer trims +++ from station and POI names."""
+    transformer = JournalStationTransformer()
+    schema_ref = "https://eddn.edcd.io/schemas/journal/1"
+    header = {"uploaderID": "Cmdr"}
+
+    # 1. Market station
+    docked_message = {
+        "event": "Docked",
+        "timestamp": "2026-08-20T11:00:00Z",
+        "SystemAddress": 10477373803,
+        "MarketID": 128000100,
+        "StationName": "Stevenson Research Base ++",
+    }
+    docked_records = transformer.transform(schema_ref, header, docked_message)
+    assert len(docked_records) == 1
+    assert docked_records[0].data["name"] == "Stevenson Research Base"
+
+    # 2. Surface POI
+    poi_message = {
+        "event": "ApproachSettlement",
+        "timestamp": "2026-08-20T11:05:00Z",
+        "SystemAddress": 10477373803,
+        "Name": "Planetary Site +++",
+    }
+    poi_records = transformer.transform(schema_ref, header, poi_message)
+    assert len(poi_records) == 1
+    assert poi_records[0].data["name"] == "Planetary Site"
+
+
+def test_journal_scan_deduplicates_genuses() -> None:
+    """Validates JournalScanTransformer deduplicates genus entries in body_signals."""
+    transformer = JournalScanTransformer()
+    schema_ref = "https://eddn.edcd.io/schemas/journal/1"
+    header = {"uploaderID": "Cmdr"}
+    message = {
+        "event": "SAASignalsFound",
+        "timestamp": "2026-08-20T12:00:00Z",
+        "SystemAddress": 10477373803,
+        "BodyID": 5,
+        "Signals": [{"Type": "$SAA_SignalType_Biological;", "Count": 2}],
+        "Genuses": [
+            {"Genus": "$Codex_Ent_Bacterias_Genus_Name;"},
+            {"Genus": "$Codex_Ent_Bacterias_Genus_Name;"},  # Duplicate
+            {"Genus": "$Codex_Ent_Stratum_Genus_Name;"},
+        ],
+    }
+    records = transformer.transform(schema_ref, header, message)
+    assert len(records) == 1
+    body_signal_record = records[0]
+    assert body_signal_record.table_name == "body_signals"
+    assert body_signal_record.data["genuses"] == ["Bacterium", "Stratum"]  # Deduped
+
+
+def test_transformers_guard_system_id64_le_1() -> None:
+    """Validates that transformers reject system_id64 <= 1."""
+    journal_jump_transformer = JournalJumpTransformer()
+    journal_scan_transformer = JournalScanTransformer()
+    fss_signal_transformer = FSSSignalTransformer()
+    journal_station_transformer = JournalStationTransformer()
+
+    invalid_jump_message = {
+        "event": "FSDJump",
+        "timestamp": "2026-08-20T12:00:00Z",
+        "SystemAddress": 1,
+        "StarSystem": "BuggedSystem",
+    }
+    assert journal_jump_transformer.transform("https://eddn.edcd.io/schemas/journal/1", {}, invalid_jump_message) == []
+
+    invalid_scan_message = {
+        "event": "Scan",
+        "timestamp": "2026-08-20T12:00:00Z",
+        "SystemAddress": 0,
+        "BodyName": "BuggedBody",
+    }
+    assert journal_scan_transformer.transform("https://eddn.edcd.io/schemas/journal/1", {}, invalid_scan_message) == []
+
+    invalid_signal_message = {
+        "event": "FSSSignalDiscovered",
+        "timestamp": "2026-08-20T12:00:00Z",
+        "SystemAddress": 1,
+        "signals": [{"SignalName": "Signal"}],
+    }
+    assert fss_signal_transformer.transform("https://eddn.edcd.io/schemas/fsssignaldiscovered/1", {}, invalid_signal_message) == []
+
+    invalid_station_message = {
+        "event": "Docked",
+        "timestamp": "2026-08-20T12:00:00Z",
+        "SystemAddress": 1,
+        "MarketID": 100,
+        "StationName": "Port",
+    }
+    assert journal_station_transformer.transform("https://eddn.edcd.io/schemas/journal/1", {}, invalid_station_message) == []
