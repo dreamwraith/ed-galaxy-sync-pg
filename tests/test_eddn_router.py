@@ -267,7 +267,45 @@ def test_router_dlq_unhandled_schema_and_validation_error() -> None:
         "header": {"uploaderID": "Cmdr", "softwareName": "EDMarketConnector", "gameversion": "4.0.0.1451"},
         "message": {"event": "FutureEvent", "timestamp": "2026-08-20T18:46:00Z"},
     }
-    recs = router.route(unknown_schema_payload)
-    assert len(recs) == 1
-    assert recs[0].table_name == "eddn_unhandled_events"
-    assert "unhandled_schema" in recs[0].data["dlq_reason"]
+    transformed_records = router.route(unknown_schema_payload)
+    assert len(transformed_records) == 1
+    assert transformed_records[0].table_name == "eddn_unhandled_events"
+    assert "unhandled_schema" in transformed_records[0].data["dlq_reason"]
+
+
+def test_router_invalid_system_address_routes_to_dlq() -> None:
+    """Validates that messages with SystemAddress <= 1 are routed to DLQ."""
+    router = EDDNRouter(config_data={"enable_dlq": True, "min_game_version": "4.0"})
+    payload = {
+        "$schemaRef": "https://eddn.edcd.io/schemas/journal/1",
+        "header": {"uploaderID": "Cmdr", "softwareName": "EDMarketConnector", "gameversion": "4.0.0.1451"},
+        "message": {
+            "event": "FSDJump",
+            "timestamp": "2026-08-20T18:46:00Z",
+            "SystemAddress": 1,
+            "StarSystem": "CorruptedSystem",
+        },
+    }
+    records = router.route(payload)
+    assert len(records) == 1
+    assert records[0].table_name == "eddn_unhandled_events"
+    assert records[0].data["dlq_reason"] == "invalid_system_address"
+
+
+def test_router_invalid_timestamp_routes_to_dlq() -> None:
+    """Validates that messages with future drift or prehistoric timestamps are routed to DLQ."""
+    router = EDDNRouter(config_data={"enable_dlq": True, "min_game_version": "4.0"})
+    payload_future = {
+        "$schemaRef": "https://eddn.edcd.io/schemas/journal/1",
+        "header": {"uploaderID": "Cmdr", "softwareName": "EDMarketConnector", "gameversion": "4.0.0.1451"},
+        "message": {
+            "event": "FSDJump",
+            "timestamp": "2099-01-01T00:00:00Z",
+            "SystemAddress": 10477373803,
+            "StarSystem": "Sol",
+        },
+    }
+    records = router.route(payload_future)
+    assert len(records) == 1
+    assert records[0].table_name == "eddn_unhandled_events"
+    assert records[0].data["dlq_reason"] == "invalid_timestamp"

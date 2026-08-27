@@ -226,3 +226,63 @@ def test_load_config_and_load_yaml(tmp_path: Path) -> None:
     corrupt_file = tmp_path / "corrupt.yaml"
     corrupt_file.write_text("key: [unclosed list\n", encoding="utf-8")
     assert EDDNUtils.load_config(str(corrupt_file)) == {}
+
+
+@pytest.mark.parametrize(
+    ("raw_input", "expected_output"),
+    [
+        (None, ""),
+        ("", ""),
+        ("   ", ""),
+        ("Muller Extraction +++", "Muller Extraction"),
+        ("Stevenson Research Base ++", "Stevenson Research Base"),
+        ("Planetary Port +", "Planetary Port"),
+        ("  $Station_Name;  ", "Station_Name"),
+        ("Jameson Memorial", "Jameson Memorial"),
+        ("Surface Site +++   ", "Surface Site"),
+    ],
+    ids=[
+        "none",
+        "empty",
+        "whitespace",
+        "triple_plus",
+        "double_plus",
+        "single_plus",
+        "wrapped_station",
+        "clean_station",
+        "plus_with_trailing_spaces",
+    ],
+)
+def test_sanitize_station_name(raw_input: str | None, expected_output: str) -> None:
+    """Validates stripping of settlement security pluses, dollar/semicolons, and whitespace."""
+    assert EDDNUtils.sanitize_station_name(raw_input) == expected_output
+
+
+@pytest.mark.parametrize(
+    ("timestamp_str", "expected_valid"),
+    [
+        ("2026-08-26T19:00:00Z", True),
+        ("2026-08-26T19:00:00+00:00", True),
+        ("2015-01-01T00:00:00Z", True),
+        (None, False),
+        ("", False),
+        ("invalid-date", False),
+        ("1970-01-01T00:00:00Z", False),  # Epoch before Elite release (2014)
+        ("2014-12-15T23:59:59Z", False),  # Before Elite Dangerous release date
+        ("2099-01-01T00:00:00Z", False),  # Far future date
+    ],
+    ids=[
+        "valid_utc_z",
+        "valid_utc_offset",
+        "valid_historical",
+        "none",
+        "empty",
+        "invalid_format",
+        "epoch_1970",
+        "pre_release_date",
+        "far_future",
+    ],
+)
+def test_is_valid_timestamp(timestamp_str: str | None, expected_valid: bool) -> None:
+    """Validates timestamp validation against format, pre-game dates, and future drift."""
+    assert EDDNUtils.is_valid_timestamp(timestamp_str) == expected_valid
