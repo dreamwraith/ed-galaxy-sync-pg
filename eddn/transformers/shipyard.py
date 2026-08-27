@@ -42,13 +42,14 @@ class ShipyardTransformer(BaseTransformer):
 
         try:
             market_id = int(market_id_raw)
+            if market_id <= 0:
+                return records
         except ValueError, TypeError:
             return records
 
         timestamp = message.get("timestamp")
-        station_name = message.get("stationName") or message.get("StationName")
-
-        station_display_name = station_name or "Unknown Station"
+        raw_station_name = message.get("stationName") or message.get("StationName")
+        station_display_name = EDDNUtils.sanitize_station_name(raw_station_name) or "Unknown Station"
 
         if "shipyard" in schema_ref:
             # 1. Emit stations update record to track shipyard_updated_at
