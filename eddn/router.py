@@ -217,6 +217,20 @@ class EDDNRouter:
 
                 return debug_records
 
+        # 4. Message timestamp sanity check (filter out uninitialized epoch or future drift dates)
+        message_timestamp = message.get("timestamp") or header.get("gatewayTimestamp")
+        if message_timestamp and not EDDNUtils.is_valid_timestamp(message_timestamp):
+            if self._enable_dlq:
+                return debug_records + self.dlq_transformer.transform(schema_ref, header, message, reason="invalid_timestamp")
+            return debug_records
+
+        # 4b. Guard against corrupted SystemAddress <= 1
+        system_address = message.get("SystemAddress") or message.get("systemAddress")
+        if system_address is not None and isinstance(system_address, int) and system_address <= 1:
+            if self._enable_dlq:
+                return debug_records + self.dlq_transformer.transform(schema_ref, header, message, reason="invalid_system_address")
+            return debug_records
+
         # 5. Match against core transformers
         # [TEMPORARY HACK] Audit snapshot before transformation
         unmapped_count_before = (

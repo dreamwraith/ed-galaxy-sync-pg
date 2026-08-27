@@ -12,6 +12,7 @@ import json
 import logging
 import re
 import zlib
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -100,6 +101,59 @@ class EDDNUtils:
                 break
 
         return sanitized_name
+
+    @staticmethod
+    def sanitize_station_name(raw_name: str | None) -> str:
+        """Sanitizes station, port, and settlement display names by stripping
+        Frontier dollar/semicolon symbol wrappers, trailing settlement security markers
+        ('+', '++', '+++'), and extraneous whitespace.
+
+        Examples:
+            "Muller Extraction +++" -> "Muller Extraction"
+            "Stevenson Research Base ++" -> "Stevenson Research Base"
+            "  $Station_Name;  " -> "Station_Name"
+            "Jameson Memorial" -> "Jameson Memorial"
+            None -> ""
+
+        Args:
+            raw_name: Raw station or POI name string or None.
+
+        Returns:
+            str: Cleaned station display name, or empty string on None/empty input.
+        """
+        if not raw_name:
+            return ""
+        return raw_name.strip().lstrip("$").rstrip(";+ ").strip()
+
+    @staticmethod
+    def is_valid_timestamp(
+        timestamp_str: str | None,
+        max_future_seconds: int = 86400,
+    ) -> bool:
+        """Validates that an ISO 8601 timestamp string is well-formed, not prehistoric
+        (before Elite Dangerous release on 2014-12-16), and not unreasonably in the future.
+
+        Args:
+            timestamp_str: ISO 8601 timestamp string (e.g. '2026-08-26T19:00:00Z').
+            max_future_seconds: Allowable clock drift into future in seconds (default: 86400 / 24h).
+
+        Returns:
+            bool: True if timestamp is valid and within acceptable date bounds, False otherwise.
+        """
+        if not timestamp_str:
+            return False
+        try:
+            normalized_timestamp = timestamp_str[:-1] + "+00:00" if timestamp_str.endswith(("Z", "z")) else timestamp_str
+            parsed_datetime = datetime.fromisoformat(normalized_timestamp)
+            if parsed_datetime.tzinfo is None:
+                parsed_datetime = parsed_datetime.replace(tzinfo=UTC)
+            current_utc_datetime = datetime.now(UTC)
+            return not (
+                parsed_datetime < datetime(2014, 12, 16, tzinfo=UTC)
+                or (parsed_datetime - current_utc_datetime).total_seconds() > max_future_seconds
+            )
+        except ValueError, TypeError:
+            return False
 
     @staticmethod
     def normalize_lookup_key(raw_token: Any) -> str:
