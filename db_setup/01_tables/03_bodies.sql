@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS bodies (
     surfacetemperature DOUBLE PRECISION,
     radius DOUBLE PRECISION,
     islandable BOOLEAN,
+    was_footfalled BOOLEAN,
     gravity DOUBLE PRECISION,
     earthmasses DOUBLE PRECISION,
     surfacepressure DOUBLE PRECISION,
@@ -125,6 +126,12 @@ COMMENT ON COLUMN bodies.radius IS
 
 COMMENT ON COLUMN bodies.islandable IS
   'Planets only. TRUE if the planet surface can be landed on in-game. Source field: bodies[].isLandable.';
+
+COMMENT ON COLUMN bodies.was_footfalled IS
+  'Planets only (landable bodies). TRUE if any player has performed a First Footfall on this body. '
+  'FALSE means the First Footfall claim is still available. NULL means unknown (pre-Odyssey data or '
+  'star/barycentre bodies for which the field is not emitted). '
+  'Source field: Scan.WasFootfalled (journal) / EDDN Scan schema.';
 
 COMMENT ON COLUMN bodies.gravity IS
   'Planets only. Surface gravity as a ratio of Earth''s gravity (1.0 = 9.81 m/s²). '

@@ -128,6 +128,7 @@ class JournalScanTransformer(BaseTransformer):
                     "surfaceTemperature": message.get("SurfaceTemperature"),
                     "radius": (message.get("Radius") / 1000.0) if message.get("Radius") is not None else None,
                     "isLandable": message.get("Landable"),
+                    "was_footfalled": message.get("WasFootfalled"),
                     "gravity": (message.get("SurfaceGravity") / 9.80665) if message.get("SurfaceGravity") is not None else None,
                     "earthMasses": message.get("MassEM"),
                     "surfacePressure": (message.get("SurfacePressure") / 101325.0)
