@@ -5,40 +5,40 @@
 CREATE TABLE IF NOT EXISTS bodies (
     system_id64 BIGINT,
     id64 BIGINT PRIMARY KEY,
-    bodyId BIGINT,
+    bodyid BIGINT,
     name TEXT,
     type TEXT,
-    subType TEXT,
-    distanceToArrival DOUBLE PRECISION,
-    orbitalPeriod DOUBLE PRECISION,
-    semiMajorAxis DOUBLE PRECISION,
-    orbitalEccentricity DOUBLE PRECISION,
-    orbitalInclination DOUBLE PRECISION,
-    argOfPeriapsis DOUBLE PRECISION,
-    meanAnomaly DOUBLE PRECISION,
-    ascendingNode DOUBLE PRECISION,
-    rotationalPeriod DOUBLE PRECISION,
-    rotationalPeriodTidallyLocked BOOLEAN,
-    axialTilt DOUBLE PRECISION,
-    surfaceTemperature DOUBLE PRECISION,
+    subtype TEXT,
+    distancetoarrival DOUBLE PRECISION,
+    orbitalperiod DOUBLE PRECISION,
+    semimajoraxis DOUBLE PRECISION,
+    orbitaleccentricity DOUBLE PRECISION,
+    orbitalinclination DOUBLE PRECISION,
+    argofperiapsis DOUBLE PRECISION,
+    meananomaly DOUBLE PRECISION,
+    ascendingnode DOUBLE PRECISION,
+    rotationalperiod DOUBLE PRECISION,
+    rotationalperiodtidallylock BOOLEAN,
+    axialtilt DOUBLE PRECISION,
+    surfacetemperature DOUBLE PRECISION,
     radius DOUBLE PRECISION,
-    isLandable BOOLEAN,
+    islandable BOOLEAN,
     gravity DOUBLE PRECISION,
-    earthMasses DOUBLE PRECISION,
-    surfacePressure DOUBLE PRECISION,
-    volcanismType TEXT,
-    atmosphereType TEXT,
-    terraformingState TEXT,
-    reserveLevel TEXT,
-    mainStar BOOLEAN,
+    earthmasses DOUBLE PRECISION,
+    surfacepressure DOUBLE PRECISION,
+    volcanismtype TEXT,
+    atmospheretype TEXT,
+    terraformingstate TEXT,
+    reservelevel TEXT,
+    mainstar BOOLEAN,
     age INTEGER,
-    spectralClass TEXT,
+    spectralclass TEXT,
     luminosity TEXT,
-    absoluteMagnitude DOUBLE PRECISION,
-    solarMasses DOUBLE PRECISION,
-    solarRadius DOUBLE PRECISION,
-    atmosphereComposition JSONB,
-    solidComposition JSONB,
+    absolutemagnitude DOUBLE PRECISION,
+    solarmasses DOUBLE PRECISION,
+    solarradius DOUBLE PRECISION,
+    atmospherecomposition JSONB,
+    solidcomposition JSONB,
     materials JSONB,
     parents JSONB,
     timestamps JSONB,
@@ -64,7 +64,7 @@ COMMENT ON COLUMN bodies.id64 IS
   'Deterministically computed as (system_id64 << 9) | (bodyId & 0x1FF), congruent with Spansh and EDSM canonical standards. '
   'Source field: bodies[].id64.';
 
-COMMENT ON COLUMN bodies.bodyId IS
+COMMENT ON COLUMN bodies.bodyid IS
   'Frontier system-local integer index of the body within its system (0-511). '
   'Used to resolve parent references and composite body ID64 calculations. Source field: bodies[].bodyId.';
 
@@ -80,88 +80,88 @@ COMMENT ON COLUMN bodies.subType IS
   'Star subtypes include: G (White-Yellow) Star, Neutron Star, Black Hole, White Dwarf (DA) Star, etc. '
   'Source field: bodies[].subType.';
 
-COMMENT ON COLUMN bodies.distanceToArrival IS
+COMMENT ON COLUMN bodies.distancetoarrival IS
   'Distance from the system arrival point (main star) to this body, in light-seconds (ls). '
   'Source field: bodies[].distanceToArrival.';
 
-COMMENT ON COLUMN bodies.orbitalPeriod IS
+COMMENT ON COLUMN bodies.orbitalperiod IS
   'Orbital period of the body around its parent, in days. Source field: bodies[].orbitalPeriod.';
 
-COMMENT ON COLUMN bodies.semiMajorAxis IS
+COMMENT ON COLUMN bodies.semimajoraxis IS
   'Semi-major axis of the body''s orbit, in kilometres. Source field: bodies[].semiMajorAxis.';
 
-COMMENT ON COLUMN bodies.orbitalEccentricity IS
+COMMENT ON COLUMN bodies.orbitaleccentricity IS
   'Orbital eccentricity (0.0 = circular, <1.0 = elliptical). Source field: bodies[].orbitalEccentricity.';
 
-COMMENT ON COLUMN bodies.orbitalInclination IS
+COMMENT ON COLUMN bodies.orbitalinclination IS
   'Orbital inclination relative to the reference plane, in degrees. Source field: bodies[].orbitalInclination.';
 
-COMMENT ON COLUMN bodies.argOfPeriapsis IS
+COMMENT ON COLUMN bodies.argofperiapsis IS
   'Argument of periapsis (0–360 degrees). Source field: bodies[].argOfPeriapsis.';
 
-COMMENT ON COLUMN bodies.meanAnomaly IS
+COMMENT ON COLUMN bodies.meananomaly IS
   'Mean anomaly at epoch (0–360 degrees). Source field: bodies[].meanAnomaly.';
 
-COMMENT ON COLUMN bodies.ascendingNode IS
+COMMENT ON COLUMN bodies.ascendingnode IS
   'Longitude of the ascending node (-180 to 180 degrees). Source field: bodies[].ascendingNode.';
 
-COMMENT ON COLUMN bodies.rotationalPeriod IS
+COMMENT ON COLUMN bodies.rotationalperiod IS
   'Sidereal rotational period of the body, in days. Negative values indicate retrograde rotation. '
   'Source field: bodies[].rotationalPeriod.';
 
-COMMENT ON COLUMN bodies.rotationalPeriodTidallyLocked IS
+COMMENT ON COLUMN bodies.rotationalperiodtidallylock IS
   'TRUE if the body is tidally locked to its parent (rotational period equals orbital period). '
   'Source field: bodies[].rotationalPeriodTidallyLocked.';
 
-COMMENT ON COLUMN bodies.axialTilt IS
+COMMENT ON COLUMN bodies.axialtilt IS
   'Axial tilt of the body, in radians. Source field: bodies[].axialTilt.';
 
-COMMENT ON COLUMN bodies.surfaceTemperature IS
+COMMENT ON COLUMN bodies.surfacetemperature IS
   'Surface temperature of the body in Kelvin. Applies to both stars and planets. '
   'Source field: bodies[].surfaceTemperature.';
 
 COMMENT ON COLUMN bodies.radius IS
   'Planets only. Equatorial radius of the planet in kilometres. Source field: bodies[].radius.';
 
-COMMENT ON COLUMN bodies.isLandable IS
+COMMENT ON COLUMN bodies.islandable IS
   'Planets only. TRUE if the planet surface can be landed on in-game. Source field: bodies[].isLandable.';
 
 COMMENT ON COLUMN bodies.gravity IS
   'Planets only. Surface gravity as a ratio of Earth''s gravity (1.0 = 9.81 m/s²). '
   'Source field: bodies[].gravity.';
 
-COMMENT ON COLUMN bodies.earthMasses IS
+COMMENT ON COLUMN bodies.earthmasses IS
   'Planets only. Mass of the planet as a ratio of Earth''s mass. Source field: bodies[].earthMasses.';
 
-COMMENT ON COLUMN bodies.surfacePressure IS
+COMMENT ON COLUMN bodies.surfacepressure IS
   'Planets only. Atmospheric surface pressure in Earth atmospheres (atm). '
   'Source field: bodies[].surfacePressure.';
 
-COMMENT ON COLUMN bodies.volcanismType IS
+COMMENT ON COLUMN bodies.volcanismtype IS
   'Planets only. Type of volcanism present on the planet surface. '
   'Enum: No volcanism, Rocky Magma, Water Geysers, Carbon Dioxide Geysers, Major Metallic Magma, etc. '
   'Source field: bodies[].volcanismType.';
 
-COMMENT ON COLUMN bodies.atmosphereType IS
+COMMENT ON COLUMN bodies.atmospheretype IS
   'Planets only. Dominant atmosphere composition/density label. '
   'Enum: No atmosphere, Nitrogen, Carbon dioxide, Ammonia, Water, Oxygen, etc. (50+ values). '
   'Source field: bodies[].atmosphereType.';
 
-COMMENT ON COLUMN bodies.terraformingState IS
+COMMENT ON COLUMN bodies.terraformingstate IS
   'Planets only. Terraforming status. Enum: Not terraformable, Terraformable, Terraforming, Terraformed. '
   'Source field: bodies[].terraformingState.';
 
-COMMENT ON COLUMN bodies.reserveLevel IS
+COMMENT ON COLUMN bodies.reservelevel IS
   'Planets only. Mining reserve level of the planet or its rings. '
   'Enum: Depleted, Low, Common, Major, Pristine. Source field: bodies[].reserveLevel.';
 
-COMMENT ON COLUMN bodies.mainStar IS
+COMMENT ON COLUMN bodies.mainstar IS
   'Stars only. TRUE if this is the primary/arrival star of the system. Source field: bodies[].mainStar.';
 
 COMMENT ON COLUMN bodies.age IS
   'Stars only. Age of the star in millions of solar years. Source field: bodies[].age.';
 
-COMMENT ON COLUMN bodies.spectralClass IS
+COMMENT ON COLUMN bodies.spectralclass IS
   'Stars only. Stellar spectral classification code (e.g. G2, K5, DA0, N0). '
   'Follows the MKK system with white dwarf and exotic variants. Source field: bodies[].spectralClass.';
 
@@ -169,20 +169,20 @@ COMMENT ON COLUMN bodies.luminosity IS
   'Stars only. Yerkes luminosity class of the star (e.g. V = main sequence, Ia = supergiant, VII = white dwarf). '
   'Source field: bodies[].luminosity.';
 
-COMMENT ON COLUMN bodies.absoluteMagnitude IS
+COMMENT ON COLUMN bodies.absolutemagnitude IS
   'Stars only. Absolute magnitude of the star (lower = brighter). Source field: bodies[].absoluteMagnitude.';
 
-COMMENT ON COLUMN bodies.solarMasses IS
+COMMENT ON COLUMN bodies.solarmasses IS
   'Stars only. Mass of the star as a ratio of Sol''s mass. Source field: bodies[].solarMasses.';
 
-COMMENT ON COLUMN bodies.solarRadius IS
+COMMENT ON COLUMN bodies.solarradius IS
   'Stars only. Radius of the star as a ratio of Sol''s radius. Source field: bodies[].solarRadius.';
 
-COMMENT ON COLUMN bodies.atmosphereComposition IS
+COMMENT ON COLUMN bodies.atmospherecomposition IS
   'Planets only. JSONB object mapping element/compound name to percentage share (e.g. {"Nitrogen": 78.0}). '
   'GIN-indexed for element membership queries. Source field: bodies[].atmosphereComposition.';
 
-COMMENT ON COLUMN bodies.solidComposition IS
+COMMENT ON COLUMN bodies.solidcomposition IS
   'Planets only. JSONB object mapping solid material name to percentage share (e.g. {"Rock": 70.0, "Metal": 30.0}). '
   'GIN-indexed for material queries. Source field: bodies[].solidComposition.';
 

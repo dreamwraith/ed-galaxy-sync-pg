@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS body_belts (
     name TEXT NOT NULL,
     type TEXT NOT NULL,
     mass DOUBLE PRECISION NOT NULL,
-    innerRadius DOUBLE PRECISION NOT NULL,
-    outerRadius DOUBLE PRECISION NOT NULL,
+    innerradius DOUBLE PRECISION NOT NULL,
+    outerradius DOUBLE PRECISION NOT NULL,
     density DOUBLE PRECISION,
     update_dtm TIMESTAMP DEFAULT (now() AT TIME ZONE 'utc'),
     PRIMARY KEY (body_id64, name)
@@ -35,10 +35,10 @@ COMMENT ON COLUMN body_belts.type IS
 COMMENT ON COLUMN body_belts.mass IS
   'Mass of the belt in megatonnes. Source field: bodies[].belts[].mass.';
 
-COMMENT ON COLUMN body_belts.innerRadius IS
+COMMENT ON COLUMN body_belts.innerradius IS
   'Inner boundary radius of the belt in kilometres. Source field: bodies[].belts[].innerRadius.';
 
-COMMENT ON COLUMN body_belts.outerRadius IS
+COMMENT ON COLUMN body_belts.outerradius IS
   'Outer boundary radius of the belt in kilometres. Source field: bodies[].belts[].outerRadius.';
 
 COMMENT ON COLUMN body_belts.density IS

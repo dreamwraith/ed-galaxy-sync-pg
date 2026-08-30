@@ -10,22 +10,22 @@ CREATE INDEX IF NOT EXISTS idx_systems_name ON systems (name);
 
 CREATE INDEX IF NOT EXISTS idx_systems_name_trgm ON systems USING gin (name gin_trgm_ops);
 
-CREATE INDEX IF NOT EXISTS idx_systems_controlling_power ON systems (controllingPower)
+CREATE INDEX IF NOT EXISTS idx_systems_controlling_power ON systems (controllingpower)
 WHERE
-    controllingPower IS NOT NULL;
+    controllingpower IS NOT NULL;
 
 -- 2. bodies indexes
 CREATE INDEX IF NOT EXISTS idx_bodies_system ON bodies (system_id64);
 
 CREATE INDEX IF NOT EXISTS idx_bodies_subtype ON bodies (subtype);
 
-CREATE INDEX IF NOT EXISTS idx_bodies_reserveLevel ON bodies (reserveLevel);
+CREATE INDEX IF NOT EXISTS idx_bodies_reserveLevel ON bodies (reservelevel);
 
 CREATE INDEX IF NOT EXISTS idx_bodies_materials ON bodies USING gin (materials);
 
-CREATE INDEX IF NOT EXISTS idx_bodies_atmosphereComposition ON bodies USING gin (atmosphereComposition);
+CREATE INDEX IF NOT EXISTS idx_bodies_atmosphereComposition ON bodies USING gin (atmospherecomposition);
 
-CREATE INDEX IF NOT EXISTS idx_bodies_solidComposition ON bodies USING gin (solidComposition);
+CREATE INDEX IF NOT EXISTS idx_bodies_solidComposition ON bodies USING gin (solidcomposition);
 
 CREATE INDEX IF NOT EXISTS idx_bodies_gravity ON bodies (gravity DESC)
 WHERE

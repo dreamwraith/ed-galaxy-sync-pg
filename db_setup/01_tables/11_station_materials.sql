@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS station_materials (
     category TEXT,
     stock INTEGER DEFAULT 0,
     demand INTEGER DEFAULT 0,
-    buyPrice INTEGER DEFAULT 0,
-    sellPrice INTEGER DEFAULT 0,
+    buyprice INTEGER DEFAULT 0,
+    sellprice INTEGER DEFAULT 0,
     update_dtm TIMESTAMP DEFAULT (now() AT TIME ZONE 'utc'),
     PRIMARY KEY (market_id, material_id)
 );
@@ -47,10 +47,10 @@ COMMENT ON COLUMN station_materials.stock IS
 COMMENT ON COLUMN station_materials.demand IS
   'Units demanded by the carrier owner.';
 
-COMMENT ON COLUMN station_materials.buyPrice IS
+COMMENT ON COLUMN station_materials.buyprice IS
   'Price in credits at which the carrier sells material to commanders.';
 
-COMMENT ON COLUMN station_materials.sellPrice IS
+COMMENT ON COLUMN station_materials.sellprice IS
   'Price in credits at which the carrier buys material from commanders.';
 
 COMMENT ON COLUMN station_materials.update_dtm IS

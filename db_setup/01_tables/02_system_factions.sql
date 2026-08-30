@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS system_factions (
     allegiance TEXT,
     government TEXT,
     influence DOUBLE PRECISION,
-    activeStates JSONB,
-    pendingStates JSONB,
-    recoveringStates JSONB,
+    activestates JSONB,
+    pendingstates JSONB,
+    recoveringstates JSONB,
     update_dtm TIMESTAMP DEFAULT (now() AT TIME ZONE 'utc'),
     PRIMARY KEY (system_id64, name)
 );
@@ -46,15 +46,15 @@ COMMENT ON COLUMN system_factions.influence IS
   'Influence share of the faction in this system, in the range 0.0–1.0. '
   'All factions in a system sum to approximately 1.0. Source field: factions[].influence.';
 
-COMMENT ON COLUMN system_factions.activeStates IS
+COMMENT ON COLUMN system_factions.activestates IS
   'JSONB array of currently active BGS states for this faction [{state, trend}, ...]. '
   'Source field: factions[].activeStates.';
 
-COMMENT ON COLUMN system_factions.pendingStates IS
+COMMENT ON COLUMN system_factions.pendingstates IS
   'JSONB array of pending (upcoming) BGS states for this faction [{state, trend}, ...]. '
   'Source field: factions[].pendingStates.';
 
-COMMENT ON COLUMN system_factions.recoveringStates IS
+COMMENT ON COLUMN system_factions.recoveringstates IS
   'JSONB array of recovering (fading) BGS states for this faction [{state, trend}, ...]. '
   'Source field: factions[].recoveringStates.';
 

@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS body_rings (
     name TEXT NOT NULL,
     type TEXT NOT NULL,
     mass DOUBLE PRECISION NOT NULL,
-    innerRadius DOUBLE PRECISION NOT NULL,
-    outerRadius DOUBLE PRECISION NOT NULL,
+    innerradius DOUBLE PRECISION NOT NULL,
+    outerradius DOUBLE PRECISION NOT NULL,
     density DOUBLE PRECISION,
     signals JSONB,
     update_dtm TIMESTAMP DEFAULT (now() AT TIME ZONE 'utc'),
@@ -41,11 +41,11 @@ COMMENT ON COLUMN body_rings.type IS
 COMMENT ON COLUMN body_rings.mass IS
   'Mass of the ring in megatonnes. Source field: bodies[].rings[].mass.';
 
-COMMENT ON COLUMN body_rings.innerRadius IS
+COMMENT ON COLUMN body_rings.innerradius IS
   'Inner boundary radius of the ring in kilometres from the body centre. '
   'Source field: bodies[].rings[].innerRadius.';
 
-COMMENT ON COLUMN body_rings.outerRadius IS
+COMMENT ON COLUMN body_rings.outerradius IS
   'Outer boundary radius of the ring in kilometres from the body centre. '
   'Source field: bodies[].rings[].outerRadius.';
 
