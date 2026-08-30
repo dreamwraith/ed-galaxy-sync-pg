@@ -25,6 +25,7 @@ Beluga Liner:
   - Beluga_Liner
 Caspian Explorer:
   - Caspian_Explorer
+  - Explorer_Nx
 Cobra Mk III:
   - Cobra_Mk_III
 Cobra Mk IV:
@@ -90,11 +91,11 @@ Krait Phantom:
   - Krait_Light
 Lynx Highliner:
   - Lynx_Highliner
+  - Mediumtransport01
 Mamba:
   - Mamba
 Mandalay:
   - Mandalay
-  - Explorer_Nx
 Orca:
   - Orca
 Panther Clipper Mk II:
@@ -117,7 +118,6 @@ Type-7 Transporter:
   - Type7
 Type-8 Transporter:
   - Type-8_Transporter
-  - Mediumtransport01
   - Type8
 Type-9 Heavy:
   - Type-9_Heavy

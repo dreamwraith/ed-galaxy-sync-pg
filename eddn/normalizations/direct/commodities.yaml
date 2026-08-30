@@ -913,3 +913,32 @@ Yaso Kondi Leaf:
 Zeessze Ant Grub Glue:
   - Zeessze_Ant_Grub_Glue
   - ZeesszeAntGlue
+# ---------------------------------------------------------------------------
+# New Surface Mining Commodities (Confirmed from Test Server)
+# ---------------------------------------------------------------------------
+Bastnasite:
+  - bastnasite
+Deuterium:
+  - deuterium
+Diamond:
+  - diamond
+Helium:
+  - helium
+Helium-3:
+  - helium3
+Iridium:
+  - iridium
+Magnesite:
+  - magnesite
+Olivine:
+  - olivine
+Periclase Dunite:
+  - periclasedunite
+Quartz Pyroxenite:
+  - quartzpyroxenite
+Ruby:
+  - ruby
+Sapphire:
+  - sapphire
+Thortveitite:
+  - thortveitite

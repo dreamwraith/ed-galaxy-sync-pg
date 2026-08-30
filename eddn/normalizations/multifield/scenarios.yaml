@@ -725,6 +725,15 @@ Operations_CounterAttack_Megaship:
   name: Tactical Takedown
   signal_type: Operations
   severity: null
+# Ground-side extreme CZ spawned as a sub-objective site during an Operation (not a top-level
+# Operation scenario). The 6 confirmed top-level Operations are: Tactical Takedown, Reclamation
+# Point, Biohazard Takedown, Firestorm Rescue, Rapid Response, Terminal Prosecution.
+# No public documentation for this token yet as of 2026-08-27 — name is best-guess pending
+# in-game UI confirmation. Signal observed twice in system_signals.raw_name.
+Operations_ExtremeCZ_BodySite:
+  name: Extreme Combat Zone (Surface)
+  signal_type: Operations
+  severity: null
 # The Runner is the player-squad megaship that acts as spawn base for all operations
 Operations_Runner:
   name: Operation Runner
