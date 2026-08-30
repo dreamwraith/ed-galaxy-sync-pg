@@ -8,21 +8,21 @@ CREATE TABLE IF NOT EXISTS stations (
     body_source_id64 BIGINT,
     market_id BIGINT NOT NULL,
     name TEXT NOT NULL,
-    realName TEXT,
-    carrierName TEXT,
+    realname TEXT,
+    carriername TEXT,
     type TEXT,
     state TEXT,
-    distanceToArrival DOUBLE PRECISION,
+    distancetoarrival DOUBLE PRECISION,
     latitude DOUBLE PRECISION,
     longitude DOUBLE PRECISION,
     allegiance TEXT,
     government TEXT,
-    controllingFaction TEXT,
-    controllingFactionState TEXT,
-    primaryEconomy TEXT,
-    secondaryEconomy TEXT,
+    controllingfaction TEXT,
+    controllingfactionstate TEXT,
+    primaryeconomy TEXT,
+    secondaryeconomy TEXT,
     economies JSONB,
-    carrierDockingAccess TEXT,
+    carrierdockingaccess TEXT,
     pad_large INTEGER,
     pad_medium INTEGER,
     pad_small INTEGER,
@@ -63,11 +63,11 @@ COMMENT ON COLUMN stations.name IS
   'In-game name of the station (e.g. "Jameson Memorial", "Hutton Orbital"). '
   'Source field: stations[].name.';
 
-COMMENT ON COLUMN stations.realName IS
+COMMENT ON COLUMN stations.realname IS
   'For colonisation-built stations: the ''real'' construction name, which may differ from the '
   'player-assigned display name. Source field: stations[].realName.';
 
-COMMENT ON COLUMN stations.carrierName IS
+COMMENT ON COLUMN stations.carriername IS
   'For Drake-Class Fleet Carriers: the player-assigned carrier name (e.g. "DSSA Explorer''s Haven"). '
   'NULL for non-carrier stations. Source field: stations[].carrierName.';
 
@@ -83,7 +83,7 @@ COMMENT ON COLUMN stations.state IS
   'Enum: Construction, Damaged, DamagedHuman, UnderAttack, UnderRepairs, or NULL (operational). '
   'Source field: stations[].state.';
 
-COMMENT ON COLUMN stations.distanceToArrival IS
+COMMENT ON COLUMN stations.distancetoarrival IS
   'Distance from the system arrival point to this station, in light-seconds (ls). '
   'Source field: stations[].distanceToArrival.';
 
@@ -101,18 +101,18 @@ COMMENT ON COLUMN stations.allegiance IS
 COMMENT ON COLUMN stations.government IS
   'Government type of the station. Same enum as systems.government. Source field: stations[].government.';
 
-COMMENT ON COLUMN stations.controllingFaction IS
+COMMENT ON COLUMN stations.controllingfaction IS
   'Name of the minor faction that controls this station. Source field: stations[].controllingFaction.';
 
-COMMENT ON COLUMN stations.controllingFactionState IS
+COMMENT ON COLUMN stations.controllingfactionstate IS
   'BGS state of the controlling faction at this station. Same state enum as system_factions.state. '
   'Source field: stations[].controllingFactionState.';
 
-COMMENT ON COLUMN stations.primaryEconomy IS
+COMMENT ON COLUMN stations.primaryeconomy IS
   'Primary economy type of the station. Same enum as systems.primaryEconomy. '
   'Source field: stations[].primaryEconomy.';
 
-COMMENT ON COLUMN stations.secondaryEconomy IS
+COMMENT ON COLUMN stations.secondaryeconomy IS
   'Secondary economy type of the station. Same enum as systems.primaryEconomy. '
   'Source field: stations[].secondaryEconomy.';
 
@@ -120,7 +120,7 @@ COMMENT ON COLUMN stations.economies IS
   'JSONB object mapping economy type name to its proportional share at this station '
   '(e.g. {"High Tech": 0.75, "Industrial": 0.25}). Source field: stations[].economies.';
 
-COMMENT ON COLUMN stations.carrierDockingAccess IS
+COMMENT ON COLUMN stations.carrierdockingaccess IS
   'Fleet carriers only. Docking permission setting: "all", "friends", "squadron", etc. '
   'Source field: stations[].carrierDockingAccess.';
 

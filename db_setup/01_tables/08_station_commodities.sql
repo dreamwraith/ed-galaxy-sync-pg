@@ -7,11 +7,11 @@ CREATE TABLE IF NOT EXISTS station_commodities (
     name TEXT,
     symbol TEXT,
     category TEXT,
-    commodityId INTEGER,
+    commodityid INTEGER,
     demand INTEGER,
     supply INTEGER,
-    buyPrice INTEGER,
-    sellPrice INTEGER,
+    buyprice INTEGER,
+    sellprice INTEGER,
     update_dtm TIMESTAMP DEFAULT (now() AT TIME ZONE 'utc'),
     PRIMARY KEY (market_id, commodityid)
 );
@@ -39,7 +39,7 @@ COMMENT ON COLUMN station_commodities.category IS
   'Medicines, Metals, Minerals, Salvage, Slavery, Technology, Textiles, Waste, Weapons. '
   'Source field: market.commodities[].category.';
 
-COMMENT ON COLUMN station_commodities.commodityId IS
+COMMENT ON COLUMN station_commodities.commodityid IS
   'Frontier numeric identifier of the commodity. Part of the composite primary key. '
   'Source field: market.commodities[].commodityId.';
 
@@ -51,11 +51,11 @@ COMMENT ON COLUMN station_commodities.supply IS
   'Station''s available supply of this commodity in units. 0 means the station does not sell it. '
   'Source field: market.commodities[].supply.';
 
-COMMENT ON COLUMN station_commodities.buyPrice IS
+COMMENT ON COLUMN station_commodities.buyprice IS
   'Price in credits at which a player can purchase this commodity from the station. '
   'Source field: market.commodities[].buyPrice.';
 
-COMMENT ON COLUMN station_commodities.sellPrice IS
+COMMENT ON COLUMN station_commodities.sellprice IS
   'Price in credits at which a player can sell this commodity to the station. '
   'Source field: market.commodities[].sellPrice.';
 

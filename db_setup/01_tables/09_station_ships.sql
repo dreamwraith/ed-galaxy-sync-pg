@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS station_ships (
     market_id BIGINT NOT NULL,
     name TEXT,
     symbol TEXT,
-    shipId INTEGER,
+    shipid INTEGER,
     update_dtm TIMESTAMP DEFAULT (now() AT TIME ZONE 'utc'),
     PRIMARY KEY (market_id, shipid)
 );
@@ -28,7 +28,7 @@ COMMENT ON COLUMN station_ships.symbol IS
   'Frontier internal symbol/key for the ship (e.g. "$Anaconda_Name;"). '
   'Source field: shipyard.ships[].symbol.';
 
-COMMENT ON COLUMN station_ships.shipId IS
+COMMENT ON COLUMN station_ships.shipid IS
   'Frontier numeric identifier of the ship. Part of the composite primary key. '
   'Source field: shipyard.ships[].shipId.';
 

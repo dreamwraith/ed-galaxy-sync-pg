@@ -8,20 +8,20 @@ CREATE TABLE IF NOT EXISTS systems (
     coords cube,
     allegiance TEXT,
     government TEXT,
-    primaryEconomy TEXT,
-    secondaryEconomy TEXT,
+    primaryeconomy TEXT,
+    secondaryeconomy TEXT,
     security TEXT,
     population BIGINT,
-    bodyCount INTEGER,
-    controllingPower TEXT,
-    powerState TEXT,
-    powerStateControlProgress DOUBLE PRECISION,
-    powerStateReinforcement DOUBLE PRECISION,
-    powerStateUndermining DOUBLE PRECISION,
+    bodycount INTEGER,
+    controllingpower TEXT,
+    powerstate TEXT,
+    powerstatecontrolprogress DOUBLE PRECISION,
+    powerstatereinforcement DOUBLE PRECISION,
+    powerstateundermining DOUBLE PRECISION,
     powers JSONB,
-    controllingFaction JSONB,
-    powerConflictProgress JSONB,
-    thargoidWar JSONB,
+    controllingfaction JSONB,
+    powerconflictprogress JSONB,
+    thargoidwar JSONB,
     timestamps JSONB,
     update_dtm TIMESTAMP DEFAULT (now() AT TIME ZONE 'utc')
 );
@@ -56,13 +56,13 @@ COMMENT ON COLUMN systems.government IS
   'Feudal, Megaconstruction, None, Patronage, Prison, Prison Colony, Private Ownership, Theocracy, or NULL. '
   'Source field: government.';
 
-COMMENT ON COLUMN systems.primaryEconomy IS
+COMMENT ON COLUMN systems.primaryeconomy IS
   'Primary economy type of the system. '
   'Enum: Agriculture, Colony, Extraction, High Tech, Industrial, Military, None, Prison, '
   'Private Enterprise, Refinery, Repair, Rescue, Service, Terraforming, Tourism, or NULL. '
   'Source field: primaryEconomy.';
 
-COMMENT ON COLUMN systems.secondaryEconomy IS
+COMMENT ON COLUMN systems.secondaryeconomy IS
   'Secondary economy type of the system. Same enum as primaryEconomy. Source field: secondaryEconomy.';
 
 COMMENT ON COLUMN systems.security IS
@@ -71,27 +71,27 @@ COMMENT ON COLUMN systems.security IS
 COMMENT ON COLUMN systems.population IS
   'Total human population of the system. 0 for uninhabited systems. Source field: population.';
 
-COMMENT ON COLUMN systems.bodyCount IS
+COMMENT ON COLUMN systems.bodycount IS
   'Total number of surveyed planets and stars in the system as reported by Spansh. Source field: bodyCount.';
 
-COMMENT ON COLUMN systems.controllingPower IS
+COMMENT ON COLUMN systems.controllingpower IS
   'Name of the Powerplay power that controls this system, or NULL if uncontrolled. '
   'Enum: Aisling Duval, A. Lavigny-Duval, Archon Delaine, Denton Patreus, Edmund Mahon, '
   'Felicia Winters, Jerome Archer, Li Yong-Rui, Nakato Kaine, Pranav Antal, Yuri Grom, Zemina Torval. '
   'Source field: controllingPower.';
 
-COMMENT ON COLUMN systems.powerState IS
+COMMENT ON COLUMN systems.powerstate IS
   'Powerplay state of the system. Enum: Exploited, Fortified, Stronghold, Unoccupied, or NULL. '
   'Source field: powerState.';
 
-COMMENT ON COLUMN systems.powerStateControlProgress IS
+COMMENT ON COLUMN systems.powerstatecontrolprogress IS
   'Progress (0.0–1.0) of the controlling power toward fully controlling this system. '
   'Source field: powerStateControlProgress.';
 
-COMMENT ON COLUMN systems.powerStateReinforcement IS
+COMMENT ON COLUMN systems.powerstatereinforcement IS
   'Powerplay reinforcement score (>=0) for the system. Source field: powerStateReinforcement.';
 
-COMMENT ON COLUMN systems.powerStateUndermining IS
+COMMENT ON COLUMN systems.powerstateundermining IS
   'Powerplay undermining score (>=0) for the system. Source field: powerStateUndermining.';
 
 COMMENT ON COLUMN systems.powers IS
@@ -99,17 +99,17 @@ COMMENT ON COLUMN systems.powers IS
   'GIN-indexed for membership queries (e.g. powers @> ''["Aisling Duval"]''). '
   'Source field: powers.';
 
-COMMENT ON COLUMN systems.controllingFaction IS
+COMMENT ON COLUMN systems.controllingfaction IS
   'JSONB snapshot of the controlling faction object {name, state, allegiance, government, influence, ...}. '
   'Stored as JSONB rather than a foreign key because faction objects are embedded in the source dump '
   'and not normalised. Source field: controllingFaction.';
 
-COMMENT ON COLUMN systems.powerConflictProgress IS
+COMMENT ON COLUMN systems.powerconflictprogress IS
   'JSONB array of {power, progress} objects describing active Powerplay conflict progress in this system. '
   'Each entry maps a power name to its numeric progress value (>=0). '
   'Source field: powerConflictProgress.';
 
-COMMENT ON COLUMN systems.thargoidWar IS
+COMMENT ON COLUMN systems.thargoidwar IS
   'JSONB object describing the current Thargoid War state in this system. '
   'Fields: currentState, successState, failureState (enum strings), progress (0–1), '
   'daysRemaining, portsRemaining (numbers), successReached (boolean). '

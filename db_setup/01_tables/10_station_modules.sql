@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS station_modules (
     market_id BIGINT NOT NULL,
     name TEXT,
     symbol TEXT,
-    moduleId INTEGER,
+    moduleid INTEGER,
     class INTEGER,
     rating TEXT,
     category TEXT,
@@ -30,7 +30,7 @@ COMMENT ON COLUMN station_modules.name IS
 COMMENT ON COLUMN station_modules.symbol IS
   'Frontier internal symbol/key for the module. Source field: outfitting.modules[].symbol.';
 
-COMMENT ON COLUMN station_modules.moduleId IS
+COMMENT ON COLUMN station_modules.moduleid IS
   'Frontier numeric identifier of the module. Part of the composite primary key. '
   'Source field: outfitting.modules[].moduleId.';
 

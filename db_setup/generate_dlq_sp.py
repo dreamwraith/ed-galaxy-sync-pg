@@ -278,14 +278,14 @@ BEGIN
                 END AS coords,
                 {sys_all_expr} AS allegiance,
                 {sys_gov_expr} AS government,
-                {sys_econ_pri_expr} AS primaryEconomy,
-                {sys_econ_sec_expr} AS secondaryEconomy,
+                {sys_econ_pri_expr} AS primaryeconomy,
+                {sys_econ_sec_expr} AS secondaryeconomy,
                 {sys_sec_expr} AS security,
                 CASE WHEN c.raw_message->>'Population' ~ '^[0-9]+$' THEN (c.raw_message->>'Population')::BIGINT ELSE NULL END AS population,
-                c.raw_message->>'ControllingPower' AS controllingPower,
-                c.raw_message->>'PowerplayState' AS powerState,
+                c.raw_message->>'ControllingPower' AS controllingpower,
+                c.raw_message->>'PowerplayState' AS powerstate,
                 c.raw_message->'Powers' AS powers,
-                c.raw_message->'SystemFaction' AS controllingFaction,
+                c.raw_message->'SystemFaction' AS controllingfaction,
                 c.raw_message->'Factions' AS factions,
                 CASE 
                     WHEN (c.raw_message->>'timestamp') IS NOT NULL AND (c.raw_message->>'timestamp') ~ '^\\d{{4}}-\\d{{2}}-\\d{{2}}' 
@@ -296,12 +296,12 @@ BEGIN
         ),
         ins_sys AS (
             INSERT INTO systems (
-                id64, name, coords, allegiance, government, primaryEconomy, secondaryEconomy,
-                security, population, controllingPower, powerState, powers, controllingFaction, update_dtm
+                id64, name, coords, allegiance, government, primaryeconomy, secondaryeconomy,
+                security, population, controllingpower, powerstate, powers, controllingfaction, update_dtm
             )
             SELECT 
-                p.id64, p.name, p.coords, p.allegiance, p.government, p.primaryEconomy, p.secondaryEconomy,
-                p.security, p.population, p.controllingPower, p.powerState, p.powers, p.controllingFaction, p.msg_dtm
+                p.id64, p.name, p.coords, p.allegiance, p.government, p.primaryeconomy, p.secondaryeconomy,
+                p.security, p.population, p.controllingpower, p.powerstate, p.powers, p.controllingfaction, p.msg_dtm
             FROM parsed_sys p
             WHERE p.id64 IS NOT NULL
             ON CONFLICT (id64) DO UPDATE SET
@@ -309,14 +309,14 @@ BEGIN
                 coords = COALESCE(EXCLUDED.coords, systems.coords),
                 allegiance = COALESCE(EXCLUDED.allegiance, systems.allegiance),
                 government = COALESCE(EXCLUDED.government, systems.government),
-                primaryEconomy = COALESCE(EXCLUDED.primaryEconomy, systems.primaryEconomy),
-                secondaryEconomy = COALESCE(EXCLUDED.secondaryEconomy, systems.secondaryEconomy),
+                primaryeconomy = COALESCE(EXCLUDED.primaryeconomy, systems.primaryeconomy),
+                secondaryeconomy = COALESCE(EXCLUDED.secondaryeconomy, systems.secondaryeconomy),
                 security = COALESCE(EXCLUDED.security, systems.security),
                 population = COALESCE(EXCLUDED.population, systems.population),
-                controllingPower = COALESCE(EXCLUDED.controllingPower, systems.controllingPower),
-                powerState = COALESCE(EXCLUDED.powerState, systems.powerState),
+                controllingpower = COALESCE(EXCLUDED.controllingpower, systems.controllingpower),
+                powerstate = COALESCE(EXCLUDED.powerstate, systems.powerstate),
                 powers = COALESCE(EXCLUDED.powers, systems.powers),
-                controllingFaction = COALESCE(EXCLUDED.controllingFaction, systems.controllingFaction),
+                controllingfaction = COALESCE(EXCLUDED.controllingfaction, systems.controllingfaction),
                 update_dtm = GREATEST(systems.update_dtm, EXCLUDED.update_dtm)
             WHERE EXCLUDED.update_dtm >= systems.update_dtm
             RETURNING id64
@@ -384,7 +384,7 @@ BEGIN
             SELECT 
                 c.id,
                 CASE WHEN c.raw_message->>'SystemAddress' ~ '^[0-9]+$' THEN (c.raw_message->>'SystemAddress')::BIGINT ELSE NULL END AS system_id64,
-                CASE WHEN c.raw_message->>'BodyID' ~ '^[0-9]+$' THEN (c.raw_message->>'BodyID')::BIGINT ELSE NULL END AS bodyId,
+                CASE WHEN c.raw_message->>'BodyID' ~ '^[0-9]+$' THEN (c.raw_message->>'BodyID')::BIGINT ELSE NULL END AS bodyid,
                 CASE 
                     WHEN c.raw_message->>'id64' ~ '^[0-9]+$' THEN (c.raw_message->>'id64')::BIGINT
                     WHEN c.raw_message->>'SystemAddress' ~ '^[0-9]+$' AND c.raw_message->>'BodyID' ~ '^[0-9]+$' 
@@ -394,24 +394,24 @@ BEGIN
                 c.raw_message->>'BodyName' AS name,
                 c.raw_message->>'StarType' AS starType,
                 c.raw_message->>'PlanetClass' AS planetClass,
-                {body_sub_expr} AS subType,
-                CASE WHEN c.raw_message->>'DistanceFromArrivalLS' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'DistanceFromArrivalLS')::DOUBLE PRECISION ELSE NULL END AS distanceToArrival,
-                CASE WHEN c.raw_message->>'OrbitalPeriod' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'OrbitalPeriod')::DOUBLE PRECISION / 86400.0 ELSE NULL END AS orbitalPeriod,
-                CASE WHEN c.raw_message->>'SemiMajorAxis' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'SemiMajorAxis')::DOUBLE PRECISION / 1000.0 ELSE NULL END AS semiMajorAxis,
-                CASE WHEN c.raw_message->>'RotationPeriod' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'RotationPeriod')::DOUBLE PRECISION / 86400.0 ELSE NULL END AS rotationalPeriod,
-                CASE WHEN c.raw_message->>'SurfaceTemperature' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'SurfaceTemperature')::DOUBLE PRECISION ELSE NULL END AS surfaceTemperature,
+                {body_sub_expr} AS subtype,
+                CASE WHEN c.raw_message->>'DistanceFromArrivalLS' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'DistanceFromArrivalLS')::DOUBLE PRECISION ELSE NULL END AS distancetoarrival,
+                CASE WHEN c.raw_message->>'OrbitalPeriod' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'OrbitalPeriod')::DOUBLE PRECISION / 86400.0 ELSE NULL END AS orbitalperiod,
+                CASE WHEN c.raw_message->>'SemiMajorAxis' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'SemiMajorAxis')::DOUBLE PRECISION / 1000.0 ELSE NULL END AS semimajoraxis,
+                CASE WHEN c.raw_message->>'RotationPeriod' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'RotationPeriod')::DOUBLE PRECISION / 86400.0 ELSE NULL END AS rotationalperiod,
+                CASE WHEN c.raw_message->>'SurfaceTemperature' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'SurfaceTemperature')::DOUBLE PRECISION ELSE NULL END AS surfacetemperature,
                 CASE WHEN c.raw_message->>'Radius' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'Radius')::DOUBLE PRECISION / 1000.0 ELSE NULL END AS radius,
-                COALESCE((c.raw_message->>'Landable')::BOOLEAN, FALSE) AS isLandable,
+                COALESCE((c.raw_message->>'Landable')::BOOLEAN, FALSE) AS islandable,
                 CASE WHEN c.raw_message->>'SurfaceGravity' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'SurfaceGravity')::DOUBLE PRECISION / 9.80665 ELSE NULL END AS gravity,
-                CASE WHEN c.raw_message->>'MassEM' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'MassEM')::DOUBLE PRECISION ELSE NULL END AS earthMasses,
-                CASE WHEN c.raw_message->>'SurfacePressure' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'SurfacePressure')::DOUBLE PRECISION / 101325.0 ELSE NULL END AS surfacePressure,
-                CASE WHEN c.raw_message->>'StellarMass' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'StellarMass')::DOUBLE PRECISION ELSE NULL END AS solarMasses,
-                CASE WHEN c.raw_message->>'StarType' IS NOT NULL AND c.raw_message->>'Radius' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'Radius')::DOUBLE PRECISION / 695700000.0 ELSE NULL END AS solarRadius,
-                c.raw_message->>'AtmosphereType' AS atmosphereType,
-                {body_tf_expr} AS terraformingState,
-                {body_reserve_expr} AS reserveLevel,
-                c.raw_message->'AtmosphereComposition' AS atmosphereComposition,
-                c.raw_message->'SolidComposition' AS solidComposition,
+                CASE WHEN c.raw_message->>'MassEM' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'MassEM')::DOUBLE PRECISION ELSE NULL END AS earthmasses,
+                CASE WHEN c.raw_message->>'SurfacePressure' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'SurfacePressure')::DOUBLE PRECISION / 101325.0 ELSE NULL END AS surfacepressure,
+                CASE WHEN c.raw_message->>'StellarMass' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'StellarMass')::DOUBLE PRECISION ELSE NULL END AS solarmasses,
+                CASE WHEN c.raw_message->>'StarType' IS NOT NULL AND c.raw_message->>'Radius' ~ '^-?[0-9]+(\\.[0-9]+)?$' THEN (c.raw_message->>'Radius')::DOUBLE PRECISION / 695700000.0 ELSE NULL END AS solarradius,
+                c.raw_message->>'AtmosphereType' AS atmospheretype,
+                {body_tf_expr} AS terraformingstate,
+                {body_reserve_expr} AS reservelevel,
+                c.raw_message->'AtmosphereComposition' AS atmospherecomposition,
+                c.raw_message->'SolidComposition' AS solidcomposition,
                 c.raw_message->'Materials' AS materials,
                 c.raw_message->'Parents' AS parents,
                 CASE 
@@ -423,41 +423,41 @@ BEGIN
         ),
         ins_bodies AS (
             INSERT INTO bodies (
-                system_id64, id64, bodyId, name, type, subType, distanceToArrival,
-                orbitalPeriod, semiMajorAxis, rotationalPeriod, surfaceTemperature, radius, isLandable, gravity, earthMasses,
-                surfacePressure, solarMasses, solarRadius, atmosphereType, terraformingState, reserveLevel, atmosphereComposition,
-                solidComposition, materials, parents, update_dtm
+                system_id64, id64, bodyid, name, type, subtype, distancetoarrival,
+                orbitalperiod, semimajoraxis, rotationalperiod, surfacetemperature, radius, islandable, gravity, earthmasses,
+                surfacepressure, solarmasses, solarradius, atmospheretype, terraformingstate, reservelevel, atmospherecomposition,
+                solidcomposition, materials, parents, update_dtm
             )
             SELECT 
-                p.system_id64, p.id64, p.bodyId, p.name,
+                p.system_id64, p.id64, p.bodyid, p.name,
                 CASE WHEN p.starType IS NOT NULL THEN 'Star' ELSE 'Planet' END,
-                p.subType,
-                p.distanceToArrival, p.orbitalPeriod, p.semiMajorAxis, p.rotationalPeriod, p.surfaceTemperature, p.radius, p.isLandable,
-                p.gravity, p.earthMasses, p.surfacePressure, p.solarMasses, p.solarRadius, p.atmosphereType, p.terraformingState,
-                p.reserveLevel, p.atmosphereComposition, p.solidComposition, p.materials, p.parents, p.msg_dtm
+                p.subtype,
+                p.distancetoarrival, p.orbitalperiod, p.semimajoraxis, p.rotationalperiod, p.surfacetemperature, p.radius, p.islandable,
+                p.gravity, p.earthmasses, p.surfacepressure, p.solarmasses, p.solarradius, p.atmospheretype, p.terraformingstate,
+                p.reservelevel, p.atmospherecomposition, p.solidcomposition, p.materials, p.parents, p.msg_dtm
             FROM parsed_body p
             WHERE p.id64 IS NOT NULL
             ON CONFLICT (id64) DO UPDATE SET
                 name = COALESCE(EXCLUDED.name, bodies.name),
                 type = COALESCE(EXCLUDED.type, bodies.type),
-                subType = COALESCE(EXCLUDED.subType, bodies.subType),
-                distanceToArrival = COALESCE(EXCLUDED.distanceToArrival, bodies.distanceToArrival),
-                orbitalPeriod = COALESCE(EXCLUDED.orbitalPeriod, bodies.orbitalPeriod),
-                semiMajorAxis = COALESCE(EXCLUDED.semiMajorAxis, bodies.semiMajorAxis),
-                rotationalPeriod = COALESCE(EXCLUDED.rotationalPeriod, bodies.rotationalPeriod),
-                surfaceTemperature = COALESCE(EXCLUDED.surfaceTemperature, bodies.surfaceTemperature),
+                subtype = COALESCE(EXCLUDED.subtype, bodies.subtype),
+                distancetoarrival = COALESCE(EXCLUDED.distancetoarrival, bodies.distancetoarrival),
+                orbitalperiod = COALESCE(EXCLUDED.orbitalperiod, bodies.orbitalperiod),
+                semimajoraxis = COALESCE(EXCLUDED.semimajoraxis, bodies.semimajoraxis),
+                rotationalperiod = COALESCE(EXCLUDED.rotationalperiod, bodies.rotationalperiod),
+                surfacetemperature = COALESCE(EXCLUDED.surfacetemperature, bodies.surfacetemperature),
                 radius = COALESCE(EXCLUDED.radius, bodies.radius),
-                isLandable = COALESCE(EXCLUDED.isLandable, bodies.isLandable),
+                islandable = COALESCE(EXCLUDED.islandable, bodies.islandable),
                 gravity = COALESCE(EXCLUDED.gravity, bodies.gravity),
-                earthMasses = COALESCE(EXCLUDED.earthMasses, bodies.earthMasses),
-                surfacePressure = COALESCE(EXCLUDED.surfacePressure, bodies.surfacePressure),
-                solarMasses = COALESCE(EXCLUDED.solarMasses, bodies.solarMasses),
-                solarRadius = COALESCE(EXCLUDED.solarRadius, bodies.solarRadius),
-                atmosphereType = COALESCE(EXCLUDED.atmosphereType, bodies.atmosphereType),
-                terraformingState = COALESCE(EXCLUDED.terraformingState, bodies.terraformingState),
-                reserveLevel = COALESCE(EXCLUDED.reserveLevel, bodies.reserveLevel),
-                atmosphereComposition = COALESCE(EXCLUDED.atmosphereComposition, bodies.atmosphereComposition),
-                solidComposition = COALESCE(EXCLUDED.solidComposition, bodies.solidComposition),
+                earthmasses = COALESCE(EXCLUDED.earthmasses, bodies.earthmasses),
+                surfacepressure = COALESCE(EXCLUDED.surfacepressure, bodies.surfacepressure),
+                solarmasses = COALESCE(EXCLUDED.solarmasses, bodies.solarmasses),
+                solarradius = COALESCE(EXCLUDED.solarradius, bodies.solarradius),
+                atmospheretype = COALESCE(EXCLUDED.atmospheretype, bodies.atmospheretype),
+                terraformingstate = COALESCE(EXCLUDED.terraformingstate, bodies.terraformingstate),
+                reservelevel = COALESCE(EXCLUDED.reservelevel, bodies.reservelevel),
+                atmospherecomposition = COALESCE(EXCLUDED.atmospherecomposition, bodies.atmospherecomposition),
+                solidcomposition = COALESCE(EXCLUDED.solidcomposition, bodies.solidcomposition),
                 materials = COALESCE(EXCLUDED.materials, bodies.materials),
                 parents = COALESCE(EXCLUDED.parents, bodies.parents),
                 update_dtm = GREATEST(bodies.update_dtm, EXCLUDED.update_dtm)
@@ -509,12 +509,12 @@ BEGIN
                 {station_type_expr} AS type,
                 {sta_all_expr} AS allegiance,
                 {sta_gov_expr} AS government,
-                {sta_econ_pri_expr} AS primaryEconomy,
-                COALESCE(c.raw_message->>'DistFromStarLS', c.raw_message->>'DistanceFromArrivalLS')::DOUBLE PRECISION AS distanceToArrival,
+                {sta_econ_pri_expr} AS primaryeconomy,
+                COALESCE(c.raw_message->>'DistFromStarLS', c.raw_message->>'DistanceFromArrivalLS')::DOUBLE PRECISION AS distancetoarrival,
                 {sta_state_expr} AS state,
-                {sta_fac_state_expr} AS controllingFactionState,
-                {sta_dock_expr} AS carrierDockingAccess,
-                c.raw_message->'StationFaction'->>'Name' AS controllingFaction,
+                {sta_fac_state_expr} AS controllingfactionstate,
+                {sta_dock_expr} AS carrierdockingaccess,
+                c.raw_message->'StationFaction'->>'Name' AS controllingfaction,
                 c.raw_message->'StationServices' AS services,
                 CASE WHEN c.raw_message->'LandingPads'->>'Large' ~ '^[0-9]+$' THEN (c.raw_message->'LandingPads'->>'Large')::INTEGER ELSE NULL END AS pad_large,
                 CASE WHEN c.raw_message->'LandingPads'->>'Medium' ~ '^[0-9]+$' THEN (c.raw_message->'LandingPads'->>'Medium')::INTEGER ELSE NULL END AS pad_medium,
@@ -528,13 +528,13 @@ BEGIN
         ),
         ins_stations AS (
             INSERT INTO stations (
-                system_id64, market_id, name, type, allegiance, government, primaryEconomy,
-                distanceToArrival, state, controllingFactionState, carrierDockingAccess, controllingFaction,
+                system_id64, market_id, name, type, allegiance, government, primaryeconomy,
+                distancetoarrival, state, controllingfactionstate, carrierdockingaccess, controllingfaction,
                 pad_large, pad_medium, pad_small, update_dtm
             )
             SELECT 
-                p.system_id64, p.market_id, p.name, p.type, p.allegiance, p.government, p.primaryEconomy,
-                p.distanceToArrival, p.state, p.controllingFactionState, p.carrierDockingAccess, p.controllingFaction,
+                p.system_id64, p.market_id, p.name, p.type, p.allegiance, p.government, p.primaryeconomy,
+                p.distancetoarrival, p.state, p.controllingfactionstate, p.carrierdockingaccess, p.controllingfaction,
                 p.pad_large, p.pad_medium, p.pad_small, p.msg_dtm
             FROM parsed_station p
             WHERE p.system_id64 IS NOT NULL AND p.market_id IS NOT NULL AND p.name IS NOT NULL
@@ -544,12 +544,12 @@ BEGIN
                 type = COALESCE(EXCLUDED.type, stations.type),
                 allegiance = COALESCE(EXCLUDED.allegiance, stations.allegiance),
                 government = COALESCE(EXCLUDED.government, stations.government),
-                primaryEconomy = COALESCE(EXCLUDED.primaryEconomy, stations.primaryEconomy),
-                distanceToArrival = COALESCE(EXCLUDED.distanceToArrival, stations.distanceToArrival),
+                primaryeconomy = COALESCE(EXCLUDED.primaryeconomy, stations.primaryeconomy),
+                distancetoarrival = COALESCE(EXCLUDED.distancetoarrival, stations.distancetoarrival),
                 state = COALESCE(EXCLUDED.state, stations.state),
-                controllingFactionState = COALESCE(EXCLUDED.controllingFactionState, stations.controllingFactionState),
-                carrierDockingAccess = COALESCE(EXCLUDED.carrierDockingAccess, stations.carrierDockingAccess),
-                controllingFaction = COALESCE(EXCLUDED.controllingFaction, stations.controllingFaction),
+                controllingfactionstate = COALESCE(EXCLUDED.controllingfactionstate, stations.controllingfactionstate),
+                carrierdockingaccess = COALESCE(EXCLUDED.carrierdockingaccess, stations.carrierdockingaccess),
+                controllingfaction = COALESCE(EXCLUDED.controllingfaction, stations.controllingfaction),
                 pad_large = COALESCE(EXCLUDED.pad_large, stations.pad_large),
                 pad_medium = COALESCE(EXCLUDED.pad_medium, stations.pad_medium),
                 pad_small = COALESCE(EXCLUDED.pad_small, stations.pad_small),
@@ -598,9 +598,9 @@ BEGIN
                 item->>'name' AS raw_name,
                 {comm_name_expr} AS name,
                 {comm_cat_expr} AS category,
-                CASE WHEN item->>'buyPrice' ~ '^[0-9]+$' THEN (item->>'buyPrice')::INTEGER ELSE 0 END AS buyPrice,
-                CASE WHEN item->>'sellPrice' ~ '^[0-9]+$' THEN (item->>'sellPrice')::INTEGER ELSE 0 END AS sellPrice,
-                CASE WHEN item->>'meanPrice' ~ '^[0-9]+$' THEN (item->>'meanPrice')::INTEGER ELSE 0 END AS meanPrice,
+                CASE WHEN item->>'buyPrice' ~ '^[0-9]+$' THEN (item->>'buyPrice')::INTEGER ELSE 0 END AS buyprice,
+                CASE WHEN item->>'sellPrice' ~ '^[0-9]+$' THEN (item->>'sellPrice')::INTEGER ELSE 0 END AS sellprice,
+                CASE WHEN item->>'meanPrice' ~ '^[0-9]+$' THEN (item->>'meanPrice')::INTEGER ELSE 0 END AS meanprice,
                 CASE WHEN item->>'demand' ~ '^[0-9]+$' THEN (item->>'demand')::INTEGER ELSE 0 END AS demand,
                 CASE WHEN item->>'stock' ~ '^[0-9]+$' THEN (item->>'stock')::INTEGER ELSE 0 END AS stock,
                 CASE 
@@ -613,17 +613,17 @@ BEGIN
         ),
         ins_comm AS (
             INSERT INTO station_commodities (
-                market_id, name, category, buyPrice, sellPrice, meanPrice, demand, stock, update_dtm
+                market_id, name, category, buyprice, sellprice, meanprice, demand, stock, update_dtm
             )
             SELECT 
-                p.market_id, p.name, p.category, p.buyPrice, p.sellPrice, p.meanPrice, p.demand, p.stock, p.msg_dtm
+                p.market_id, p.name, p.category, p.buyprice, p.sellprice, p.meanprice, p.demand, p.stock, p.msg_dtm
             FROM parsed_comm p
             WHERE p.market_id IS NOT NULL AND p.name IS NOT NULL
             ON CONFLICT (market_id, name) DO UPDATE SET
                 category = COALESCE(EXCLUDED.category, station_commodities.category),
-                buyPrice = EXCLUDED.buyPrice,
-                sellPrice = EXCLUDED.sellPrice,
-                meanPrice = EXCLUDED.meanPrice,
+                buyprice = EXCLUDED.buyprice,
+                sellprice = EXCLUDED.sellprice,
+                meanprice = EXCLUDED.meanprice,
                 demand = EXCLUDED.demand,
                 stock = EXCLUDED.stock,
                 update_dtm = GREATEST(station_commodities.update_dtm, EXCLUDED.update_dtm)
@@ -994,7 +994,7 @@ BEGIN
                 item->>'category' AS category,
                 CASE WHEN item->>'stock' ~ '^[0-9]+$' THEN (item->>'stock')::INTEGER ELSE 0 END AS stock,
                 CASE WHEN item->>'demand' ~ '^[0-9]+$' THEN (item->>'demand')::INTEGER ELSE 0 END AS demand,
-                CASE WHEN item->>'price' ~ '^[0-9]+$' THEN (item->>'price')::INTEGER ELSE 0 END AS buyPrice,
+                CASE WHEN item->>'price' ~ '^[0-9]+$' THEN (item->>'price')::INTEGER ELSE 0 END AS buyprice,
                 CASE 
                     WHEN (c.raw_message->>'timestamp') IS NOT NULL AND (c.raw_message->>'timestamp') ~ '^\\d{{4}}-\\d{{2}}-\\d{{2}}' 
                     THEN (c.raw_message->>'timestamp')::TIMESTAMP 
@@ -1005,10 +1005,10 @@ BEGIN
         ),
         ins_mats AS (
             INSERT INTO station_materials (
-                market_id, carrier_id, material_id, name, symbol, category, stock, demand, buyPrice, update_dtm
+                market_id, carrier_id, material_id, name, symbol, category, stock, demand, buyprice, update_dtm
             )
             SELECT 
-                p.market_id, p.carrier_id, p.material_id, p.name, p.symbol, p.category, p.stock, p.demand, p.buyPrice, p.msg_dtm
+                p.market_id, p.carrier_id, p.material_id, p.name, p.symbol, p.category, p.stock, p.demand, p.buyprice, p.msg_dtm
             FROM parsed_mat p
             WHERE p.market_id IS NOT NULL AND p.material_id IS NOT NULL AND p.name IS NOT NULL
             ON CONFLICT (market_id, material_id) DO UPDATE SET
@@ -1018,7 +1018,7 @@ BEGIN
                 category = COALESCE(EXCLUDED.category, station_materials.category),
                 stock = EXCLUDED.stock,
                 demand = EXCLUDED.demand,
-                buyPrice = EXCLUDED.buyPrice,
+                buyprice = EXCLUDED.buyprice,
                 update_dtm = GREATEST(station_materials.update_dtm, EXCLUDED.update_dtm)
             WHERE EXCLUDED.update_dtm >= station_materials.update_dtm
             RETURNING market_id
