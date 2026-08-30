@@ -621,3 +621,55 @@ def test_transformers_guard_system_id64_le_1() -> None:
         "StationName": "Port",
     }
     assert journal_station_transformer.transform("https://eddn.edcd.io/schemas/journal/1", {}, invalid_station_message) == []
+
+
+def test_scan_planet_extracts_was_footfalled() -> None:
+    """Validates JournalScanTransformer extracts was_footfalled status from Scan events."""
+    transformer = JournalScanTransformer()
+    schema_ref = "https://eddn.edcd.io/schemas/journal/1"
+    header = {"uploaderID": "Cmdr"}
+
+    # 1. Planet scan with WasFootfalled: True
+    msg_footfalled = {
+        "event": "Scan",
+        "timestamp": "2026-08-29T12:00:00Z",
+        "SystemAddress": 10477373803,
+        "BodyID": 3,
+        "BodyName": "Sol 3",
+        "PlanetClass": "Earthlike body",
+        "Landable": True,
+        "WasFootfalled": True,
+    }
+    records = transformer.transform(schema_ref, header, msg_footfalled)
+    assert len(records) == 1
+    assert records[0].table_name == "bodies"
+    assert records[0].data["was_footfalled"] is True
+    assert records[0].data["isLandable"] is True
+
+    # 2. Planet scan with WasFootfalled: False
+    msg_unfootfalled = {
+        "event": "Scan",
+        "timestamp": "2026-08-29T12:00:00Z",
+        "SystemAddress": 10477373803,
+        "BodyID": 4,
+        "BodyName": "Sol 4",
+        "PlanetClass": "High metal content body",
+        "Landable": True,
+        "WasFootfalled": False,
+    }
+    records = transformer.transform(schema_ref, header, msg_unfootfalled)
+    assert len(records) == 1
+    assert records[0].data["was_footfalled"] is False
+
+    # 3. Star scan omitting WasFootfalled
+    msg_star = {
+        "event": "Scan",
+        "timestamp": "2026-08-29T12:00:00Z",
+        "SystemAddress": 10477373803,
+        "BodyID": 0,
+        "BodyName": "Sol A",
+        "StarType": "G",
+    }
+    records = transformer.transform(schema_ref, header, msg_star)
+    assert len(records) == 1
+    assert records[0].data["was_footfalled"] is None
