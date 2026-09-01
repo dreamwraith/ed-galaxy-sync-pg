@@ -43,6 +43,7 @@ Planetary Port:
   - SurfaceStation
   - Planetary Settlement
   - Unknown Planetary
+  - DockablePlanetStation
 Settlement:
   - Settlement
   - OnFootSettlement
