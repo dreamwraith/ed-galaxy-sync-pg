@@ -617,6 +617,10 @@ Cactoida Vermis (T):
   - Cactoid_03_T
 Cactoida Vermis (TTS):
   - Cactoid_03_TTS
+  - Cactoida_03_TTS
+Cactoida Vermis (Y):
+  - Cactoid_03_Y
+  - Cactoida_03_Y
 Caeruleum Sinuous Tubers (03):
   - TubeABCD_03
 Calcite Plates (Bl):
@@ -2353,6 +2357,9 @@ Tussock Virgam (M):
 Tussock Virgam (T):
   - Tussock_14_T
   - Tussocks_14_T
+Tussock Virgam (Y):
+  - Tussock_14_Y
+  - Tussocks_14_Y
 Umbrella Mollusc (Dark):
   - L_Org_Moll03_V3_Dark
 Umbrella Mollusc (Def):
