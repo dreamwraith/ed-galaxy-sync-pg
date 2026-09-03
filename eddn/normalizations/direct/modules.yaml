@@ -1576,9 +1576,15 @@ Heatsink Emitter:
 # ---------------------------------------------------------------------------
 Large Planetary Vehicle Hangar:
   - Int_largebuggybay_size2_class3
+  - Int_largebuggybay_size2_class3_free
   - Int_largebuggybay_size4_class3
+  - Int_largebuggybay_size4_class3_free
   - Int_largebuggybay_size6_class3
+  - Int_largebuggybay_size6_class3_free
 Mk II Large Planetary Vehicle Hangar:
   - Int_mkiilargebuggybay_size2_class3
+  - Int_mkiilargebuggybay_size2_class3_free
   - Int_mkiilargebuggybay_size4_class3
+  - Int_mkiilargebuggybay_size4_class3_free
   - Int_mkiilargebuggybay_size6_class3
+  - Int_mkiilargebuggybay_size6_class3_free
