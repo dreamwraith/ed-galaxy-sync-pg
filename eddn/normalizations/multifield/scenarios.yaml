@@ -731,7 +731,7 @@ Operations_CounterAttack_Megaship:
 # No public documentation for this token yet as of 2026-08-27 — name is best-guess pending
 # in-game UI confirmation. Signal observed twice in system_signals.raw_name.
 Operations_ExtremeCZ_BodySite:
-  name: Extreme Combat Zone (Surface)
+  name: Under Siege
   signal_type: Operations
   severity: null
 # The Runner is the player-squad megaship that acts as spawn base for all operations
