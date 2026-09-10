@@ -84,6 +84,7 @@ Basic Discovery Scanner:
   - Int_StellarBodyDiscoveryScanner_Standard_free
 Beam Laser:
   - Beam_Laser
+  - Overloaded_Beam_Laser
   - Hpt_BeamLaser_Fixed_Huge
   - Hpt_BeamLaser_Fixed_Large
   - Hpt_BeamLaser_Fixed_Medium
@@ -107,6 +108,7 @@ Bi-Weave Shield Generator:
   - Int_ShieldGenerator_Size8_Class3_Fast
 Burst Laser:
   - Burst_Laser
+  - Regenerative_Burst_Laser
   - Hpt_PulseLaserBurst_Fixed_Huge
   - Hpt_PulseLaserBurst_Fixed_Large
   - Hpt_PulseLaserBurst_Fixed_Medium
@@ -126,6 +128,7 @@ Business Class Passenger Cabin:
   - Int_PassengerCabin_Size6_Class2
 Cannon:
   - Cannon
+  - Force_Impact_Cannon
   - Hpt_Cannon_Fixed_Huge
   - Hpt_Cannon_Fixed_Large
   - Hpt_Cannon_Fixed_Medium
@@ -1270,6 +1273,7 @@ Rocket Propelled FSD Disruptor:
 Seeker Missile Rack:
   - Seeker_Missile_Rack
   - Drag Seeker Missile Rack
+  - Exposing_Missiles
   - Lightweight Thermal Seeker Missile Rack
   - Lockdown Seeker Missile Rack
   - Hpt_BasicMissileRack_Fixed_Large

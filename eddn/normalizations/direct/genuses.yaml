@@ -27,6 +27,7 @@ Aleoida:
   - Aleoida Coronamus (Y)
   - Aleoida Gravis (A)
   - Aleoida Gravis (B)
+  - Aleoida Gravis (D)
   - Aleoida Gravis (F)
   - Aleoida Gravis (K)
   - Aleoida Gravis (L)
@@ -162,6 +163,8 @@ Aleoida:
   - Aleoids_04_Y
   - Aleoids_05_A
   - Aleoids_05_B
+  - Aleoida_05_D
+  - Aleoids_05_D
   - Aleoids_05_F
   - Aleoids_05_K
   - Aleoids_05_L
@@ -1961,6 +1964,7 @@ Stratum:
   - Stratum Cucumisis (M)
   - Stratum Cucumisis (T)
   - Stratum Cucumisis (TTS)
+  - Stratum Cucumisis (W)
   - Stratum Cucumisis (Y)
   - Stratum Excutitus (Ae)
   - Stratum Excutitus (D)
@@ -2062,6 +2066,7 @@ Stratum:
   - Stratum_06_M
   - Stratum_06_T
   - Stratum_06_TTS
+  - Stratum_06_W
   - Stratum_06_Y
   - Stratum_07_D
   - Stratum_07_F
