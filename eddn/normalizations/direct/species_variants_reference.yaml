@@ -77,6 +77,9 @@ Aleoida Gravis (A):
 Aleoida Gravis (B):
   - Aleoida_05_B
   - Aleoids_05_B
+Aleoida Gravis (D):
+  - Aleoida_05_D
+  - Aleoids_05_D
 Aleoida Gravis (F):
   - Aleoida_05_F
   - Aleoids_05_F
@@ -1692,6 +1695,8 @@ Stratum Cucumisis (T):
   - Stratum_06_T
 Stratum Cucumisis (TTS):
   - Stratum_06_TTS
+Stratum Cucumisis (W):
+  - Stratum_06_W
 Stratum Cucumisis (Y):
   - Stratum_06_Y
 Stratum Excutitus (Ae):

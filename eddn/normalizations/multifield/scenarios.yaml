@@ -554,6 +554,18 @@ SAA_SignalType_Geological:
   name: Geological Surface Signal
   signal_type: Geological
   severity: null
+PlanetaryMiningLocation:
+  name: Planetary Mining Location
+  signal_type: ResourceExtraction
+  severity: null
+PlanetaryMiningLocation_Name:
+  name: Planetary Mining Location
+  signal_type: ResourceExtraction
+  severity: null
+SAA_Unknown_Signal:#type=$PlanetaryMiningLocation:
+  name: Planetary Mining Location
+  signal_type: ResourceExtraction
+  severity: null
 # ==========================================================================
 # Fleet Carriers & Strongholds (2 entries)
 # ==========================================================================
@@ -756,3 +768,138 @@ Operations_Runner:
 #   name: Terminal Prosecution
 #   signal_type: Operations
 #   severity: null
+# ==========================================================================
+# Watson POI Scenarios (Odyssey planetary surface POIs, 33 entries)
+# ==========================================================================
+POIScenario_Watson_Wreckage_Buggy_01_Easy:
+  name: Minor Wreckage
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Wreckage_Buggy_01_Medium:
+  name: Minor Wreckage
+  signal_type: GenericPOI
+  severity: Medium
+POIScenario_Watson_Wreckage_Buggy_01_Hard:
+  name: Minor Wreckage
+  signal_type: GenericPOI
+  severity: High
+POIScenario_Watson_Wreckage_Buggy_01_Salvage_Easy:
+  name: Minor Wreckage
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Wreckage_Buggy_01_Salvage_Medium:
+  name: Minor Wreckage
+  signal_type: GenericPOI
+  severity: Medium
+POIScenario_Watson_Wreckage_Probe_01_Salvage_Easy:
+  name: Impact Site
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Wreckage_Probe_01_Medium:
+  name: Impact Site
+  signal_type: GenericPOI
+  severity: Medium
+POIScenario_Watson_Wreckage_Probe_01_Hard:
+  name: Impact Site
+  signal_type: GenericPOI
+  severity: High
+POIScenario_Watson_Wreckage_Satellite_01_Salvage_Easy:
+  name: Impact Site
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Wreckage_Satellite_01_Medium:
+  name: Impact Site
+  signal_type: GenericPOI
+  severity: Medium
+POIScenario_Watson_Wreckage_Satellite_01_Salvage_Medium:
+  name: Impact Site
+  signal_type: GenericPOI
+  severity: Medium
+POIScenario_Watson_Wreckage_Satellite_01_Hard:
+  name: Impact Site
+  signal_type: GenericPOI
+  severity: High
+POIScenario_Watson_Wrecks_Eagle_01_Salvage_Easy:
+  name: Crash Site
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Wrecks_Eagle_01_Hard:
+  name: Crash Site
+  signal_type: GenericPOI
+  severity: High
+POIScenario_Watson_Wrecks_Sidewinder_01_Salvage_Easy:
+  name: Crash Site
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Wrecks_Sidewinder_01_Salvage_Medium:
+  name: Crash Site
+  signal_type: GenericPOI
+  severity: Medium
+POIScenario_Watson_Smugglers_Cache_02_Easy:
+  name: Irregular Markers
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Smugglers_Cache_02_Heist_Easy:
+  name: Irregular Markers
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Smugglers_Cache_01_Medium:
+  name: Irregular Markers
+  signal_type: GenericPOI
+  severity: Medium
+POIScenario_Watson_Smugglers_Cache_02_Heist_Medium:
+  name: Irregular Markers
+  signal_type: GenericPOI
+  severity: Medium
+POIScenario_Watson_Smugglers_Cache_01_Hard:
+  name: Irregular Markers
+  signal_type: GenericPOI
+  severity: High
+POIScenario_Watson_Abandoned_Buggy_01_Easy:
+  name: Distress Beacon
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Abandoned_Buggy_01_Salvage_Easy:
+  name: Distress Beacon
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Abandoned_Buggy_01_Salvage_Medium:
+  name: Distress Beacon
+  signal_type: GenericPOI
+  severity: Medium
+POIScenario_Watson_Damaged_Eagle_01_Easy:
+  name: Distress Beacon
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Damaged_Eagle_01_Salvage_Easy:
+  name: Distress Beacon
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Damaged_Eagle_01_Assassination_Easy:
+  name: Encrypted Signal
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Damaged_Eagle_01_Assassination_Hard:
+  name: Encrypted Signal
+  signal_type: GenericPOI
+  severity: High
+POIScenario_Watson_Damaged_Sidewinder_01_Easy:
+  name: Distress Beacon
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Damaged_Sidewinder_01_Salvage_Easy:
+  name: Distress Beacon
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Damaged_Sidewinder_01_Assassination_Easy:
+  name: Encrypted Signal
+  signal_type: GenericPOI
+  severity: Low
+POIScenario_Watson_Damaged_Sidewinder_01_Assassination_Medium:
+  name: Encrypted Signal
+  signal_type: GenericPOI
+  severity: Medium
+POIScenario_Watson_Damaged_Sidewinder_01_Assassination_Hard:
+  name: Encrypted Signal
+  signal_type: GenericPOI
+  severity: High
