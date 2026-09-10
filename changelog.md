@@ -5,6 +5,36 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-09-10
+
+### Added
+* **First Footfall Tracking (`was_footfalled`)**: Added `was_footfalled BOOLEAN` column to bodies table DDL (`03_bodies.sql`) and updated `JournalScanTransformer` to extract `WasFootfalled` from live EDDN scan events (`tests/test_eddn_transformers.py`).
+* **Timestamp & Drift Protection**: Added `EDDNUtils.is_valid_timestamp()` rejecting timestamps earlier than Elite Dangerous release date (2014-12-16) or greater than 24 hours into the future, routing invalid payloads to the DLQ and preventing permanent `update_dtm` clock-drift lockouts in PostgreSQL `GREATEST()` upserts.
+* **Corrupted Packet Guards**: Added `SystemAddress <= 1` guard across `router.py`, `journal_jump.py`, `journal_scan.py`, `journal_station.py`, and `fss_signal.py`, and `market_id <= 0` guard across `commodity.py`, `shipyard.py`, and `fc_materials.py`.
+* **Station & POI Name Sanitization**: Added `EDDNUtils.sanitize_station_name()` to automatically strip leading `$`, trailing `;`, and trailing settlement security indicators (`+`, `++`, `+++`) across `journal_station.py`, `commodity.py`, and `shipyard.py`.
+* **Odyssey Watson Surface POIs**: Mapped 33 Odyssey Watson surface POI scenarios (`POIScenario_Watson_*`) in `scenarios.yaml` to canonical names (Minor Wreckage, Impact Site, Crash Site, Irregular Markers, Distress Beacon, Encrypted Signal) with appropriate severity ratings (Low, Medium, High).
+* **Conflict Zone Operations**: Added `Operations` canonical signal type to `signal_types.yaml` and mapped On-Foot Extreme Conflict Zone sub-objectives (`Under Siege`, `Reclamation Point`, `Tactical Takedown`, `Operation Runner`) in `scenarios.yaml`.
+* **Exobiology Genera & Variants**: Expanded `genuses.yaml` and `species_variants_reference.yaml` with mappings for `Aleoida Gravis (D)` (`Aleoida_05_D`, `Aleoids_05_D`), `Stratum Cucumisis (W)` (`Stratum_06_W`), `Recepta Umbrux (O)` (`Recepta_01_O`), `Cactoida Vermis (Y)` (`Cactoid_03_Y`), `Tussock Virgam (Y)` (`Tussocks_14_Y`), and added `Bacterias` alias under Bacterium.
+* **Weapon Modules & Surface Mining**: Added aliases for engineered/experimental weapon variants (`Overloaded_Beam_Laser`, `Regenerative_Burst_Laser`, `Force_Impact_Cannon`, `Exposing_Missiles`), `_free` variants for Large Planetary Vehicle Hangars (sizes 2, 4, 6), new Rhino SRV bays, surface mining commodities, and `PlanetaryMiningLocation` surface signals.
+* **StarPos Capture on Discovery**: Captured `StarPos` 3D spatial coordinates on `FSSDiscoveryScan` events in `journal_jump.py`.
+
+### Changed
+* **Database Schema Lowercase Standardization**: Standardized column names, secondary index definitions, and primary key constraints across all table DDL files (`01_systems.sql` through `11_station_materials.sql`, `create_all_indexes.sql`, `add_constraints.sql`) to explicit lowercase to harmonize with PostgreSQL default identifier folding.
+* **DLQ Generator Column Mapping**: Refactored `generate_dlq_sp.py` to target lowercase SQL columns and aliases while maintaining case-sensitive key resolution for raw EDDN JSON payloads.
+* **Station Type Normalization**: Mapped `DockablePlanetStation` to canonical `Planetary Port` in `station_types.yaml`.
+* **Stored Procedures Synchronization**: Regenerated `sp_normalize_galaxy_data.sql` and `sp_process_eddn_dlq.sql` to incorporate updated normalizations and lowercase schema targets.
+
+### Fixed
+* **Ship Alias Miscategorizations**: Corrected misclassified ship model aliases in `ships.yaml`, moving `Explorer_Nx` under Mandalay and `Mediumtransport01` under Type-8 Transporter.
+* **Commodity Noise Filtering**: Filtered unmarketable drone/limpet commodities (`Drones` / `NonMarketable`) from inserting into `station_commodities`.
+* **Signal Clutter Elimination**: Filtered ephemeral personal mission USS signals (`$USS_Type_MissionTarget`) in `fss_signal.py` to prevent table bloat from single-instance player mission sites.
+* **Biological Genus Deduplication**: Deduplicated biological genus arrays in `journal_scan.py` across `FSSBodySignals` and `SAASignalsFound` events.
+
+### Testing
+* **Validation & Guardrail Coverage**: Added unit test coverage in `tests/test_eddn_utils.py` (timestamp boundary checks and station name sanitization), `tests/test_eddn_router.py` (DLQ routing on invalid timestamps/system addresses), and `tests/test_eddn_transformers.py` (footfall parsing, market ID guards, limpet filtering, and genus deduplication).
+
+---
+
 ## [1.1.0] - 2026-08-24
 
 ### Performance

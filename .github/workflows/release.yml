@@ -19,6 +19,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify Tag is on main
+        run: |
+          git fetch origin main
+          if ! git merge-base --is-ancestor HEAD origin/main; then
+            echo "::error::Tag ${{ github.ref_name }} was pushed on a commit that is not in the 'main' branch!"
+            exit 1
+          fi
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
