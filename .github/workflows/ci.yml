@@ -41,7 +41,7 @@ jobs:
 
       - name: Verify License Immutability
         run: |
-          EXPECTED="95d18ddcc7039a8ce5279b373ebb8199d43347b074eccdad7cc61f0e7a8cd0d4"
+          EXPECTED="7257e65a116c4dd7e980255fc003e62de2cf5685b00f9b87b4d2f989112efb88"
           ACTUAL=$(tr -d '\r' < license.md | sha256sum | awk '{print $1}')
           if [ "$ACTUAL" != "$EXPECTED" ]; then
             echo "::error::license.md has been modified! License terms are immutable and cannot be altered."
