@@ -11,7 +11,8 @@ A high-performance replication, ingestion, and analytics engine for bootstrappin
 It seamlessly combines ultra-fast bulk loading of monolithic 500GB+ [Spansh](https://spansh.co.uk) dumps (via an embedded DuckDB vectorized engine) with real-time [EDDN](https://eddn.edcd.io) ZeroMQ live stream replication, canonical token normalization, 3D Euclidean spatial indexing (`cube`), and strict Role-Based Access Control (RBAC).
 
 > [!CAUTION]
-> ### A Note on AI, Software Craft, and Why This Code Exists
+>
+> ## A Note on AI, Software Craft, and Why This Code Exists
 >
 > I want to be upfront and blunt about how AI was used on this project, where I draw a hard line in the sand, and more importantly, how I feel about it on a more broad level.
 >
